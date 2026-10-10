@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b132b" />
+      <stop offset="50%" stop-color="#1c2541" />
+      <stop offset="100%" stop-color="#090e1a" />
+    </linearGradient>
+
+    <!-- Gold Accent Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="35%" stop-color="#eab308" />
+      <stop offset="70%" stop-color="#ca8a04" />
+      <stop offset="100%" stop-color="#854d0e" />
+    </linearGradient>
+
+    <!-- Royal Blue Gradient -->
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <!-- Subtle Glow Filter -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Deep Background Circle -->
+  <circle cx="250" cy="250" r="242" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="4"/>
+
+  <!-- Ornate Outer Gold Ring -->
+  <circle cx="250" cy="250" r="232" fill="none" stroke="url(#goldGrad)" stroke-width="3" stroke-dasharray="8 4" opacity="0.85"/>
+  <circle cx="250" cy="250" r="226" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Subtle Atomic / Crystal Lattice Geometry (Representing Metallurgy & Materials Science) -->
+  <g opacity="0.18" stroke="#93c5fd" stroke-width="1.5" fill="none">
+    <polygon points="250,70 380,145 380,295 250,370 120,295 120,145" />
+    <line x1="250" y1="70" x2="250" y2="370" />
+    <line x1="120" y1="145" x2="380" y2="295" />
+    <line x1="380" y1="145" x2="120" y2="295" />
+    <circle cx="250" cy="70" r="6" fill="#38bdf8" />
+    <circle cx="380" cy="145" r="6" fill="#38bdf8" />
+    <circle cx="380" cy="295" r="6" fill="#38bdf8" />
+    <circle cx="250" cy="370" r="6" fill="#38bdf8" />
+    <circle cx="120" cy="295" r="6" fill="#38bdf8" />
+    <circle cx="120" cy="145" r="6" fill="#38bdf8" />
+  </g>
+
+  <!-- Scholar / Executive Silhouette -->
+  <g id="figure" transform="translate(0, 25)">
+    <!-- Shoulders & Academic Blazer / Suit -->
+    <path d="M135 410 C140 310, 190 280, 250 280 C310 280, 360 310, 365 410 Z" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    
+    <!-- White Dress Shirt & Collar -->
+    <polygon points="250,345 220,295 280,295" fill="#f8fafc"/>
+    <!-- Gold / Burgundy Executive Tie -->
+    <polygon points="245,305 255,305 260,395 250,410 240,395" fill="url(#goldGrad)"/>
+
+    <!-- Suit Lapels -->
+    <polygon points="200,320 225,295 240,360 215,410" fill="#0f172a"/>
+    <polygon points="300,320 275,295 260,360 285,410" fill="#0f172a"/>
+
+    <!-- Neck -->
+    <rect x="235" y="240" width="30" height="55" rx="8" fill="#e2e8f0"/>
+
+    <!-- Head / Jaw -->
+    <ellipse cx="250" cy="210" rx="54" ry="62" fill="#f1f5f9"/>
+
+    <!-- Distinguished Hair (Silver/Grey, Academic) -->
+    <path d="M196 205 C192 155, 215 140, 250 140 C285 140, 308 155, 304 205 C300 152, 200 152, 196 205 Z" fill="#94a3b8"/>
+    <path d="M192 210 C190 180, 202 165, 215 165 C205 185, 200 205, 198 225 Z" fill="#cbd5e1"/>
+    <path d="M308 210 C310 180, 298 165, 285 165 C295 185, 300 205, 302 225 Z" fill="#cbd5e1"/>
+
+    <!-- Distinguished Scholar Eyeglasses -->
+    <g stroke="#0f172a" stroke-width="3.5" fill="none">
+      <rect x="216" y="196" width="28" height="20" rx="6"/>
+      <rect x="256" y="196" width="28" height="20" rx="6"/>
+      <line x1="244" y1="205" x2="256" y2="205"/>
+      <line x1="204" y1="202" x2="216" y2="202"/>
+      <line x1="284" y1="202" x2="296" y2="202"/>
+    </g>
+
+    <!-- Warm Demeanor Smile line -->
+    <path d="M236 242 Q250 252 264 242" stroke="#64748b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Golden Academic Laurel / Medal Emblem -->
+  <g transform="translate(250, 410)">
+    <!-- Plaque Plate -->
+    <rect x="-140" y="-18" width="280" height="42" rx="21" fill="#090e1a" stroke="url(#goldGrad)" stroke-width="2"/>
+    <text x="0" y="8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="800" fill="#fef08a" text-anchor="middle" letter-spacing="2">PROF. E. S. DWARAKADASA</text>
+  </g>
+
+  <!-- Small IISc & Space emblem accents -->
+  <g transform="translate(65, 65)">
+    <circle cx="0" cy="0" r="26" fill="#0f172a" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <text x="0" y="4" font-family="serif" font-size="12" font-weight="bold" fill="#fef08a" text-anchor="middle">IISc</text>
+  </g>
+
+  <g transform="translate(435, 65)">
+    <circle cx="0" cy="0" r="26" fill="#0f172a" stroke="url(#blueGrad)" stroke-width="1.5"/>
+    <text x="0" y="4" font-family="sans-serif" font-size="10" font-weight="bold" fill="#38bdf8" text-anchor="middle">KHMD</text>
+  </g>
+</svg>
