@@ -14,6 +14,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
+  <!-- Leaflet Enterprise Map Styles -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -547,158 +550,44 @@
 
         <!-- Main Map & Inspector Dashboard -->
         <div class="map-dashboard">
-          <!-- Left Column: Interactive Vector World Map -->
+          <!-- Left Column: Interactive Geographic Enterprise Map Engine -->
           <div class="map-view-column">
-            <div class="map-svg-wrapper">
-              <svg class="world-map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" aria-label="Interactive World Map of Prof. Dwarakadasa's Career">
-                <defs>
-                  <!-- Map Filters and Gradients -->
-                  <radialGradient id="hqGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
-                    <stop offset="100%" stop-color="#ca8a04" stop-opacity="0"/>
-                  </radialGradient>
-                  <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#0a2540" stop-opacity="0.03"/>
-                    <stop offset="100%" stop-color="#0284c7" stop-opacity="0.08"/>
-                  </linearGradient>
-                </defs>
+            <!-- Map Interactive Floating Controls & Mode Switcher -->
+            <div class="map-toolbar">
+              <div class="map-toolbar-group">
+                <button id="map-btn-reset-view" class="map-tool-btn" type="button" title="Fit Global Footprint View">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                  </svg>
+                  <span>World Overview</span>
+                </button>
+                <button id="map-btn-focus-mission" class="map-tool-btn" type="button" title="Smoothly Zoom to Selected Mission">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M3 12h3m12 0h3M12 3v3m0 12v3"></path>
+                  </svg>
+                  <span>Focus City</span>
+                </button>
+              </div>
 
-                <!-- Background Subtle Waterbody Tint -->
-                <rect width="1000" height="500" rx="16" fill="url(#oceanGrad)"/>
+              <div class="map-layer-selector">
+                <button class="layer-pill-btn active" data-map-layer="voyager" type="button" title="Cartographic Map">Map</button>
+                <button class="layer-pill-btn" data-map-layer="satellite" type="button" title="Satellite Imagery">Satellite</button>
+                <button class="layer-pill-btn" data-map-layer="dark" type="button" title="Tactical Dark Mode">Dark</button>
+              </div>
+            </div>
 
-                <!-- Coordinate Grid Lines -->
-                <g class="map-grid">
-                  <!-- Latitude parallels -->
-                  <line x1="40" y1="100" x2="960" y2="100" class="map-grid-line"/>
-                  <line x1="40" y1="170" x2="960" y2="170" class="map-grid-line"/>
-                  <line x1="40" y1="250" x2="960" y2="250" class="map-equator"/> <!-- Equator -->
-                  <line x1="40" y1="330" x2="960" y2="330" class="map-grid-line"/>
-                  <line x1="40" y1="410" x2="960" y2="410" class="map-grid-line"/>
-                  <!-- Longitude meridians -->
-                  <line x1="200" y1="40" x2="200" y2="460" class="map-grid-line"/>
-                  <line x1="360" y1="40" x2="360" y2="460" class="map-grid-line"/>
-                  <line x1="520" y1="40" x2="520" y2="460" class="map-grid-line"/>
-                  <line x1="680" y1="40" x2="680" y2="460" class="map-grid-line"/>
-                  <line x1="840" y1="40" x2="840" y2="460" class="map-grid-line"/>
-                </g>
+            <!-- Real Geographic Leaflet Map Engine Container -->
+            <div id="real-global-map" class="real-map-container" role="region" aria-label="Interactive Global Career Footprint Map"></div>
 
-                <!-- Stylized Vector Continents -->
-                <g class="map-continents">
-                  <!-- North America -->
-                  <path class="map-landmass" d="M 120,70 L 150,55 L 210,50 L 260,65 L 290,95 L 340,110 L 320,150 L 290,165 L 275,195 L 250,215 L 225,255 L 205,245 L 210,210 L 175,185 L 140,180 L 115,145 L 110,105 Z M 270,35 L 320,40 L 305,70 L 265,55 Z"/>
-                  <!-- South America -->
-                  <path class="map-landmass" d="M 275,260 L 320,270 L 350,305 L 340,355 L 315,410 L 290,445 L 275,415 L 270,360 L 260,315 L 265,275 Z"/>
-                  <!-- Europe & UK -->
-                  <path class="map-landmass" d="M 480,95 L 505,75 L 535,70 L 565,95 L 545,130 L 525,145 L 485,150 L 470,125 Z M 465,90 L 480,85 L 475,110 L 460,105 Z M 510,50 L 535,45 L 530,70 L 510,65 Z"/>
-                  <!-- Africa -->
-                  <path class="map-landmass" d="M 470,165 L 540,160 L 585,195 L 610,240 L 575,305 L 555,370 L 525,395 L 490,340 L 465,260 L 445,210 L 460,180 Z M 605,320 L 620,335 L 610,365 L 595,350 Z"/>
-                  <!-- Asia & Middle East -->
-                  <path class="map-landmass" d="M 570,95 L 630,85 L 720,70 L 830,75 L 900,105 L 880,150 L 830,175 L 790,205 L 760,250 L 710,275 L 685,245 L 665,215 L 615,185 L 580,160 L 565,125 Z"/>
-                  <!-- Indian Subcontinent (Prominent & Defined) -->
-                  <path class="map-landmass" d="M 685,200 L 740,195 L 755,225 L 745,255 L 715,290 L 685,250 L 680,215 Z M 720,295 L 730,305 L 720,315 L 715,305 Z"/>
-                  <!-- Japan -->
-                  <path class="map-landmass" d="M 875,155 L 895,145 L 900,175 L 880,190 Z"/>
-                  <!-- Australia & Oceania -->
-                  <path class="map-landmass" d="M 810,315 L 865,305 L 910,330 L 915,375 L 880,410 L 830,405 L 800,365 Z M 925,415 L 940,430 L 930,450 Z"/>
-                  <!-- Indonesia & Islands -->
-                  <path class="map-landmass" d="M 760,265 L 795,270 L 780,285 Z M 800,280 L 840,285 L 825,300 Z"/>
-                </g>
-
-                <!-- Animated Dynamic Flight / Research Arcs from Bengaluru (715, 248) -->
-                <g class="map-arcs">
-                  <!-- Bengaluru to Maryland USA (286, 159) -->
-                  <path class="map-route-arc" d="M 715,248 Q 500,60 286,159" data-arc-target="maryland"/>
-                  <!-- Bengaluru to Eindhoven Netherlands (515, 116) -->
-                  <path class="map-route-arc" d="M 715,248 Q 615,140 515,116" data-arc-target="eindhoven"/>
-                  <!-- Bengaluru to Clausthal Germany (529, 115) -->
-                  <path class="map-route-arc" d="M 715,248 Q 622,145 529,115" data-arc-target="clausthal"/>
-                  <!-- Bengaluru to Baghdad Iraq (623, 178) -->
-                  <path class="map-route-arc" d="M 715,248 Q 669,190 623,178" data-arc-target="baghdad"/>
-                  <!-- Bengaluru to Tokyo Japan (888, 170) -->
-                  <path class="map-route-arc" d="M 715,248 Q 801,170 888,170" data-arc-target="tokyo"/>
-                  <!-- Bengaluru to Shenyang China (843, 149) -->
-                  <path class="map-route-arc" d="M 715,248 Q 779,165 843,149" data-arc-target="shenyang"/>
-                  <!-- Bengaluru to Trombay Mumbai (702, 228) -->
-                  <path class="map-route-arc national" d="M 715,248 Q 708,238 702,228" data-arc-target="trombay"/>
-                  <!-- Bengaluru to Varanasi BHU (730, 206) -->
-                  <path class="map-route-arc national" d="M 715,248 Q 722,227 730,206" data-arc-target="varanasi"/>
-                  <!-- Bengaluru to Central Indian Ocean (708, 322) -->
-                  <path class="map-route-arc deepsea" d="M 715,248 Q 711,285 708,322" data-arc-target="indianocean"/>
-                </g>
-
-                <!-- Interactive Location Pins -->
-                <g class="map-pins-layer">
-                  
-                  <!-- 1. BENGALURU, INDIA (PRIMARY HQ & IISC) -->
-                  <g class="map-pin active" id="pin-bengaluru" data-loc="bengaluru" data-cat="national" transform="translate(715, 248)">
-                    <circle class="pin-ping" r="9" fill="#f59e0b" opacity="0.6"/>
-                    <circle r="14" fill="url(#hqGlow)"/>
-                    <circle class="pin-center" r="6" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
-                    <!-- Star Symbol on Bangalore HQ -->
-                    <polygon points="0,-4 1.2,-1.2 4,-1.2 1.8,0.6 2.6,3.4 0,1.8 -2.6,3.4 -1.8,0.6 -4,-1.2 -1.2,-1.2" fill="#0f172a"/>
-                  </g>
-
-                  <!-- 2. COLLEGE PARK, MARYLAND, USA -->
-                  <g class="map-pin" id="pin-maryland" data-loc="maryland" data-cat="deputation" transform="translate(286, 159)">
-                    <circle class="pin-ping" r="7" fill="#0284c7" opacity="0.5"/>
-                    <circle class="pin-center" r="5" fill="#0284c7" stroke="#ffffff" stroke-width="1.8"/>
-                  </g>
-
-                  <!-- 3. EINDHOVEN, NETHERLANDS -->
-                  <g class="map-pin" id="pin-eindhoven" data-loc="eindhoven" data-cat="lab" transform="translate(515, 116)">
-                    <circle class="pin-ping" r="7" fill="#10b981" opacity="0.5"/>
-                    <circle class="pin-center" r="5" fill="#10b981" stroke="#ffffff" stroke-width="1.8"/>
-                  </g>
-
-                  <!-- 4. CLAUSTHAL-ZELLERFELD, GERMANY -->
-                  <g class="map-pin" id="pin-clausthal" data-loc="clausthal" data-cat="deputation" transform="translate(529, 115)">
-                    <circle class="pin-ping" r="7" fill="#0284c7" opacity="0.5"/>
-                    <circle class="pin-center" r="5" fill="#0284c7" stroke="#ffffff" stroke-width="1.8"/>
-                  </g>
-
-                  <!-- 5. BAGHDAD, IRAQ -->
-                  <g class="map-pin" id="pin-baghdad" data-loc="baghdad" data-cat="deputation" transform="translate(623, 178)">
-                    <circle class="pin-ping" r="7" fill="#0284c7" opacity="0.5"/>
-                    <circle class="pin-center" r="5" fill="#0284c7" stroke="#ffffff" stroke-width="1.8"/>
-                  </g>
-
-                  <!-- 6. TOKYO, JAPAN -->
-                  <g class="map-pin" id="pin-tokyo" data-loc="tokyo" data-cat="lab" transform="translate(888, 170)">
-                    <circle class="pin-ping" r="7" fill="#10b981" opacity="0.5"/>
-                    <circle class="pin-center" r="5" fill="#10b981" stroke="#ffffff" stroke-width="1.8"/>
-                  </g>
-
-                  <!-- 7. SHENYANG, CHINA -->
-                  <g class="map-pin" id="pin-shenyang" data-loc="shenyang" data-cat="deputation" transform="translate(843, 149)">
-                    <circle class="pin-ping" r="7" fill="#0284c7" opacity="0.5"/>
-                    <circle class="pin-center" r="5" fill="#0284c7" stroke="#ffffff" stroke-width="1.8"/>
-                  </g>
-
-                  <!-- 8. TROMBAY, MUMBAI, INDIA -->
-                  <g class="map-pin" id="pin-trombay" data-loc="trombay" data-cat="national" transform="translate(702, 228)">
-                    <circle class="pin-ping" r="6" fill="#8b5cf6" opacity="0.5"/>
-                    <circle class="pin-center" r="4.5" fill="#8b5cf6" stroke="#ffffff" stroke-width="1.6"/>
-                  </g>
-
-                  <!-- 9. VARANASI, INDIA -->
-                  <g class="map-pin" id="pin-varanasi" data-loc="varanasi" data-cat="national" transform="translate(730, 206)">
-                    <circle class="pin-ping" r="6" fill="#8b5cf6" opacity="0.5"/>
-                    <circle class="pin-center" r="4.5" fill="#8b5cf6" stroke="#ffffff" stroke-width="1.6"/>
-                  </g>
-
-                  <!-- 10. CENTRAL INDIAN OCEAN (5,100M DEEP-SEA) -->
-                  <g class="map-pin" id="pin-indianocean" data-loc="indianocean" data-cat="mission" transform="translate(708, 322)">
-                    <circle class="pin-ping" r="8" fill="#0d9488" opacity="0.7"/>
-                    <circle class="pin-center" r="5" fill="#0d9488" stroke="#ffffff" stroke-width="1.8"/>
-                  </g>
-
-                  <!-- 11. ESWARAHALLI, HASSAN, KARNATAKA -->
-                  <g class="map-pin" id="pin-eswarahalli" data-loc="eswarahalli" data-cat="national" transform="translate(710, 252)">
-                    <circle class="pin-center" r="3.5" fill="#ca8a04" stroke="#ffffff" stroke-width="1.2"/>
-                  </g>
-
-                </g>
-              </svg>
+            <!-- Live Legend Overlay -->
+            <div class="map-live-legend">
+              <span class="legend-chip"><span class="legend-dot gold"></span> IISc Bengaluru HQ</span>
+              <span class="legend-chip"><span class="legend-dot blue"></span> Deputations &amp; Fellowships</span>
+              <span class="legend-chip"><span class="legend-dot green"></span> Microscopy Labs</span>
+              <span class="legend-chip"><span class="legend-dot teal"></span> Deep-Sea (5,100m)</span>
             </div>
           </div>
 
@@ -1551,6 +1440,9 @@
       <polyline points="18 15 12 9 6 15"></polyline>
     </svg>
   </button>
+
+  <!-- Leaflet Map Engine -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
   <!-- JavaScript Bundle -->
   <script src="js/main.js"></script>
