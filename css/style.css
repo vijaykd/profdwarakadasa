@@ -402,13 +402,23 @@ section {
 .hero-profile-wrapper {
   position: relative;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 360px;
+}
+
+.hero-avatar-container {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto;
 }
 
 .hero-avatar-frame {
   position: relative;
   width: 320px;
   height: 320px;
-  margin: 0 auto;
   border-radius: 50%;
   padding: 8px;
   background: linear-gradient(135deg, var(--gold), var(--accent), #1e3a8a);
@@ -426,7 +436,7 @@ section {
 .hero-badge-floating {
   position: absolute;
   bottom: 8px;
-  right: 12px;
+  right: 6px;
   background: var(--bg-surface);
   border: 1px solid var(--gold-border);
   padding: 0.5rem 1rem;
@@ -438,6 +448,139 @@ section {
   font-weight: 700;
   color: var(--text-primary);
   box-shadow: var(--shadow-lg);
+  z-index: 5;
+}
+
+/* Hero Left Column: Executive Profiles & Credentials Panel (Fills Bald Space) */
+.hero-profile-card {
+  width: 100%;
+  margin-top: 1.75rem;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.15rem;
+  box-shadow: var(--shadow-md);
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.hero-profile-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold-border);
+}
+
+.profile-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  padding-bottom: 0.65rem;
+  margin-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.profile-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-link-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.profile-link-item:hover {
+  background: var(--primary-light);
+  border-color: var(--primary-border);
+  transform: translateX(3px);
+}
+
+.profile-link-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.profile-link-icon.wiki-icon {
+  background: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  font-family: var(--font-serif);
+}
+
+[data-theme="dark"] .profile-link-icon.wiki-icon {
+  background: #1e293b;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+.profile-link-icon.rg-icon {
+  background: rgba(0, 204, 187, 0.12);
+  color: #009688;
+  border: 1px solid rgba(0, 204, 187, 0.3);
+}
+
+.profile-link-icon.orcid-icon {
+  background: rgba(166, 206, 57, 0.15);
+  color: #729b19;
+  border: 1px solid rgba(166, 206, 57, 0.35);
+}
+
+.profile-link-icon.iisc-icon {
+  background: var(--gold-light);
+  color: var(--gold);
+  border: 1px solid var(--gold-border);
+  font-size: 0.65rem;
+}
+
+.profile-link-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.profile-link-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.profile-link-sub {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+.profile-link-arrow {
+  color: var(--text-muted);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.profile-link-item:hover .profile-link-arrow {
+  color: var(--accent);
+  transform: translateX(2px);
 }
 
 .hero-content {
@@ -528,10 +671,37 @@ section {
 }
 
 .hero-ctas {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0;
+}
+
+.hero-ctas .btn {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 1280px) {
+  .hero-ctas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-ctas .btn:last-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-ctas {
+    grid-template-columns: 1fr;
+  }
+  .hero-ctas .btn:last-child {
+    grid-column: span 1;
+  }
 }
 
 .btn {

@@ -91,15 +91,67 @@
         <div class="hero-grid">
           <!-- Portrait & Distinctions Frame -->
           <div class="hero-profile-wrapper">
-            <div class="hero-avatar-glow"></div>
-            <div class="hero-avatar-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Picture_of_Prof._E.S.Dwarakadasa.jpg" alt="Prof. E. S. Dwarakadasa Official Portrait" class="hero-avatar-img" onerror="this.onerror=null; this.src='assets/images/profile-placeholder.svg';">
+            <div class="hero-avatar-container">
+              <div class="hero-avatar-glow"></div>
+              <div class="hero-avatar-frame">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Picture_of_Prof._E.S.Dwarakadasa.jpg" alt="Prof. E. S. Dwarakadasa Official Portrait" class="hero-avatar-img" onerror="this.onerror=null; this.src='assets/images/profile-placeholder.svg';">
+              </div>
+              <div class="hero-badge-floating">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                <span>1000 Engineers of the World</span>
+              </div>
             </div>
-            <div class="hero-badge-floating">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              <span>1000 Engineers of the World</span>
+
+            <!-- Verified Profiles & Distinctions Card (Fills Left Space & Balances Hero) -->
+            <div class="hero-profile-card">
+              <div class="profile-card-header">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8.5" cy="7" r="4"></circle>
+                  <polyline points="17 11 19 13 23 9"></polyline>
+                </svg>
+                <span>Academic &amp; Research Profiles</span>
+              </div>
+
+              <div class="profile-links-list">
+                <a href="https://en.wikipedia.org/wiki/E._S._Dwarakadasa" target="_blank" rel="noopener noreferrer" class="profile-link-item" title="Wikipedia Biography">
+                  <span class="profile-link-icon wiki-icon">W</span>
+                  <div class="profile-link-info">
+                    <span class="profile-link-name">Wikipedia Biography</span>
+                    <span class="profile-link-sub">Biographical Encyclopedia</span>
+                  </div>
+                  <svg class="profile-link-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+
+                <a href="https://www.researchgate.net/profile/Dwarakadasa-Eswarahalli" target="_blank" rel="noopener noreferrer" class="profile-link-item" title="ResearchGate Profile">
+                  <span class="profile-link-icon rg-icon">RG</span>
+                  <div class="profile-link-info">
+                    <span class="profile-link-name">ResearchGate</span>
+                    <span class="profile-link-sub">2,165+ Citations &bull; 150+ Papers</span>
+                  </div>
+                  <svg class="profile-link-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+
+                <a href="https://orcid.org/0000-0001-5947-6335" target="_blank" rel="noopener noreferrer" class="profile-link-item" title="ORCID Official ID">
+                  <span class="profile-link-icon orcid-icon">iD</span>
+                  <div class="profile-link-info">
+                    <span class="profile-link-name">ORCID Record</span>
+                    <span class="profile-link-sub">0000-0001-5947-6335</span>
+                  </div>
+                  <svg class="profile-link-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+
+                <a href="https://iisc.ac.in" target="_blank" rel="noopener noreferrer" class="profile-link-item" title="IISc Bangalore Faculty Archive">
+                  <span class="profile-link-icon iisc-icon">IISc</span>
+                  <div class="profile-link-info">
+                    <span class="profile-link-name">IISc Faculty Archive</span>
+                    <span class="profile-link-sub">Dept. of Materials Engineering</span>
+                  </div>
+                  <svg class="profile-link-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -143,7 +195,7 @@
               Over four decades of foundational metallurgical research at IISc Bangalore and two decades of industrial leadership. Key contributor to India’s strategic defense and space missions—including <strong>Al-Li alloys for the Light Combat Aircraft (LCA Tejas)</strong>, <strong>high-damping Naval propeller alloys</strong>, <strong>extreme deep-sea titanium corrosion studies at 5,100 meters</strong>, and <strong>2,000+ space-grade hybrid microelectronic subsystems for ISRO's Chandrayaan</strong> missions.
             </p>
 
-            <!-- Call to Actions -->
+            <!-- Call to Actions (Balanced 3-Column Executive Grid) -->
             <div class="hero-ctas">
               <a href="#breakthroughs" class="btn btn-primary">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -162,7 +214,7 @@
                   <line x1="16" y1="17" x2="8" y2="17"></line>
                   <polyline points="10 9 9 9 8 9"></polyline>
                 </svg>
-                Industry Failure Analysis &amp; Advisory
+                Industry Advisory &amp; Forensics
               </a>
 
               <a href="#publications" class="btn btn-outline">
@@ -171,40 +223,7 @@
                   <path d="M6 6h10"></path>
                   <path d="M6 10h10"></path>
                 </svg>
-                150+ Publications
-              </a>
-            </div>
-
-            <!-- Scholar Index Badges -->
-            <div class="hero-scholar-links">
-              <span class="scholar-badge" style="font-weight: 700; color: var(--text-muted); background: none; border: none; padding-left: 0;">Profiles:</span>
-              <a href="https://en.wikipedia.org/wiki/E._S._Dwarakadasa" target="_blank" rel="noopener noreferrer" class="scholar-badge" title="Wikipedia Biography">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="16" x2="12" y2="12"></line>
-                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-                Wikipedia
-              </a>
-              <a href="https://www.researchgate.net/profile/Dwarakadasa-Eswarahalli" target="_blank" rel="noopener noreferrer" class="scholar-badge" title="ResearchGate Profile">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M2 12h20M12 2v20"></path>
-                </svg>
-                ResearchGate (2,165+ Citations)
-              </a>
-              <a href="https://orcid.org/0000-0001-5947-6335" target="_blank" rel="noopener noreferrer" class="scholar-badge" title="ORCID iD">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M10 8v8"></path>
-                  <path d="M14 8h-2v8h2a3 3 0 0 0 0-6"></path>
-                </svg>
-                ORCID: 0000-0001-5947-6335
-              </a>
-              <a href="https://iisc.ac.in" target="_blank" rel="noopener noreferrer" class="scholar-badge" title="IISc Alumni &amp; Faculty Archive">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                </svg>
-                IISc Bengaluru Archive
+                150+ Peer-Reviewed Papers
               </a>
             </div>
           </div>
