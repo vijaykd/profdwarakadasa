@@ -396,7 +396,7 @@ section {
   display: grid;
   grid-template-columns: 360px 1fr;
   gap: 4rem;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .hero-profile-wrapper {
