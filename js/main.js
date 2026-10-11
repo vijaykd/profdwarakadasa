@@ -4,6 +4,12 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Ensure the page always starts cleanly at the top on initial load
+  if ('scrollRestoration' in history && !window.location.hash) {
+    history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  }
+
   initTheme();
   initNavigation();
   initReadingProgress();
@@ -605,7 +611,19 @@ function initInteractiveMap() {
     locCards.forEach(card => {
       if (card.getAttribute('data-loc-target') === key) {
         card.classList.add('active');
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        // Only scroll the horizontal cards container if user explicitly interacted; never scroll window
+        if (shouldFly) {
+          const grid = card.closest('.map-loc-grid');
+          if (grid) {
+            const cardLeft = card.offsetLeft;
+            const cardWidth = card.offsetWidth;
+            const gridWidth = grid.offsetWidth;
+            grid.scrollTo({
+              left: cardLeft - (gridWidth / 2) + (cardWidth / 2),
+              behavior: 'smooth'
+            });
+          }
+        }
       } else {
         card.classList.remove('active');
       }
