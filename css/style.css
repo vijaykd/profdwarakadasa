@@ -2268,12 +2268,16 @@ textarea.form-control {
 
 .map-view-column {
   position: relative;
-  background: #090e17;
+  background: #f1f5f9;
   border-right: 1.5px solid var(--border-light);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   min-height: 520px;
+}
+
+[data-theme="dark"] .map-view-column {
+  background: #091124;
 }
 
 .geo-map-container {
@@ -2282,7 +2286,7 @@ textarea.form-control {
   min-height: 520px;
   position: relative;
   overflow: hidden;
-  background: #080f1d;
+  background: #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2290,8 +2294,8 @@ textarea.form-control {
   user-select: none;
 }
 
-.geo-map-container:active {
-  cursor: grabbing;
+[data-theme="dark"] .geo-map-container {
+  background: #091124;
 }
 
 .geo-world-map {
@@ -2310,8 +2314,156 @@ textarea.form-control {
 }
 
 [data-theme="dark"] .geo-map-ocean {
-  fill: #080f1d;
+  fill: #091124;
 }
+
+/* Floating Enterprise Map Toolbar */
+.map-toolbar {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.map-toolbar-group {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 3px;
+  gap: 2px;
+}
+
+[data-theme="dark"] .map-toolbar-group {
+  background: rgba(15, 23, 42, 0.92);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+.map-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 32px;
+  padding: 0 0.85rem;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.map-tool-btn svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.map-tool-btn:hover {
+  background: rgba(2, 132, 199, 0.1);
+  color: var(--accent);
+}
+
+.map-tool-btn:active {
+  transform: scale(0.97);
+}
+
+/* Zoom Controls Stepper */
+.map-toolbar-group.zoom-controls {
+  padding: 2px 4px;
+  gap: 2px;
+}
+
+.map-tool-btn.zoom-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+}
+
+.map-tool-btn.zoom-btn svg {
+  color: var(--text-primary);
+}
+
+.map-tool-btn.zoom-btn:hover {
+  background: rgba(2, 132, 199, 0.12);
+  color: var(--accent);
+}
+
+.map-tool-btn.zoom-btn:hover svg {
+  color: var(--accent);
+}
+
+.zoom-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border-medium);
+  display: inline-block;
+  margin: 0 1px;
+}
+
+/* Live Legend Glassmorphic Pill */
+.map-live-legend {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  padding: 0.45rem 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .map-live-legend {
+  background: rgba(15, 23, 42, 0.92);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+.legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-dot.gold { background: #f59e0b; box-shadow: 0 0 4px rgba(245, 158, 11, 0.6); }
+.legend-dot.blue { background: #0284c7; }
+.legend-dot.green { background: #10b981; }
+.legend-dot.teal { background: #0d9488; }
+.legend-dot.purple { background: #8b5cf6; }
 
 /* Graticule Coordinates Grid */
 .geo-graticules .graticule-line {
@@ -2424,36 +2576,30 @@ textarea.form-control {
   }
 }
 
-/* Interactive Pins with Pulsing Radar Rings */
+/* Precision Geospatial Pins */
 .geo-pin {
   cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .geo-pin:hover,
 .geo-pin.active {
-  filter: drop-shadow(0 0 2px currentColor);
+  filter: drop-shadow(0 0 2.5px currentColor);
 }
 
-.geo-pin .pin-radar-ring {
-  animation: pinRadarPulse 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-  transform-origin: center;
+.pin-halo {
+  transition: opacity 0.25s ease, stroke 0.25s ease;
   pointer-events: none;
 }
 
-.geo-pin.active .pin-radar-ring {
-  animation: pinRadarPulseActive 1.6s ease-out infinite;
+.geo-pin:hover .pin-halo {
+  opacity: 0.55 !important;
 }
 
-.pin-radar-ring.gold { fill: #f59e0b; opacity: 0.4; }
-.pin-radar-ring.blue { fill: #0284c7; opacity: 0.35; }
-.pin-radar-ring.green { fill: #10b981; opacity: 0.35; }
-.pin-radar-ring.purple { fill: #8b5cf6; opacity: 0.35; }
-.pin-radar-ring.teal { fill: #0d9488; opacity: 0.4; }
-
-.pin-halo {
-  fill: #f59e0b;
-  opacity: 0.25;
+.geo-pin.active .pin-halo {
+  opacity: 0.7 !important;
+  stroke: #f59e0b;
+  stroke-width: 0.4px;
 }
 
 .pin-core-circle {
@@ -2461,19 +2607,13 @@ textarea.form-control {
   transform-origin: center;
 }
 
-.geo-pin:hover .pin-core-circle,
+.geo-pin:hover .pin-core-circle {
+  stroke-width: 0.45px;
+}
+
 .geo-pin.active .pin-core-circle {
-  transform: scale(1.45);
-}
-
-@keyframes pinRadarPulse {
-  0% { transform: scale(0.6); opacity: 0.85; }
-  80%, 100% { transform: scale(2.4); opacity: 0; }
-}
-
-@keyframes pinRadarPulseActive {
-  0% { transform: scale(0.5); opacity: 1; }
-  100% { transform: scale(3.0); opacity: 0; }
+  stroke-width: 0.55px;
+  stroke: #ffffff;
 }
 
 /* Floating Interactive Tooltip */
@@ -2733,16 +2873,24 @@ textarea.form-control {
 
 @media (max-width: 640px) {
   .map-view-column,
-  .real-map-container {
+  .real-map-container,
+  .geo-map-container {
     min-height: 380px;
   }
   .map-toolbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.4rem;
     top: 0.6rem;
     left: 0.6rem;
     right: 0.6rem;
+  }
+  .map-tool-btn {
+    height: 28px;
+    padding: 0 0.55rem;
+    font-size: 0.75rem;
+    gap: 0.3rem;
+  }
+  .map-tool-btn.zoom-btn {
+    width: 28px;
+    height: 28px;
   }
   .map-live-legend {
     display: none;

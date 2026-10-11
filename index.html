@@ -603,13 +603,14 @@
                 <button id="map-btn-zoom-in" class="map-tool-btn zoom-btn" type="button" title="Zoom In" aria-label="Zoom In">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
+                <span class="zoom-divider"></span>
                 <button id="map-btn-zoom-out" class="map-tool-btn zoom-btn" type="button" title="Zoom Out" aria-label="Zoom Out">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
               </div>
             </div>
 
-            <!-- Real Geographic Leaflet Map Engine Container -->
+            <!-- Real Geographic Natural Earth Map Engine Container -->
             <div id="geo-map-container" class="geo-map-container" role="region" aria-label="Interactive Realistic Natural Earth World Map">
               <svg id="geo-world-map" class="geo-world-map" viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-label="Realistic Natural Earth World Map of Prof. Dwarakadasa's Global Career">
   <defs>
@@ -625,8 +626,8 @@
     </radialGradient>
   </defs>
 
-  <!-- Ocean Surface -->
-  <rect x="0" y="0" width="360" height="180" class="geo-map-ocean"/>
+  <!-- Ocean Surface (Extends far beyond viewport boundaries to prevent letterbox seams) -->
+  <rect x="-200" y="-100" width="760" height="380" class="geo-map-ocean"/>
 
   <!-- Graticule Grid Lines (Latitudes & Longitudes) -->
   <g class="geo-graticules">
@@ -674,59 +675,69 @@
     <g class="map-geo-pins-layer">
       <!-- 1. Bengaluru HQ -->
       <g class="geo-pin active" id="geopin-bengaluru" data-loc="bengaluru" data-cat="national" transform="translate(77.5671, 13.0219)">
-        <circle class="pin-radar-ring gold" r="4.2"/>
-        <circle class="pin-halo gold" r="2.6"/>
+        <circle class="pin-halo gold" r="3.2" fill="#f59e0b" opacity="0.35"/>
         <circle class="pin-core-circle gold" r="1.8" fill="#f59e0b" stroke="#ffffff" stroke-width="0.35"/>
         <polygon points="0,-0.8 0.25,-0.25 0.8,-0.25 0.35,0.1 0.5,0.7 0,0.35 -0.5,0.7 -0.35,0.1 -0.8,-0.25 -0.25,-0.25" fill="#0f172a"/>
       </g>
       <!-- 2. Maryland USA -->
       <g class="geo-pin" id="geopin-maryland" data-loc="maryland" data-cat="deputation" transform="translate(-76.9378, 38.9897)">
-        <circle class="pin-radar-ring blue" r="3.4"/>
+        <circle class="pin-halo blue" r="2.5" fill="#0284c7" opacity="0.3"/>
         <circle class="pin-core-circle blue" r="1.3" fill="#0284c7" stroke="#ffffff" stroke-width="0.3"/>
+        <circle r="0.4" fill="#ffffff"/>
       </g>
       <!-- 3. Eindhoven Netherlands -->
       <g class="geo-pin" id="geopin-eindhoven" data-loc="eindhoven" data-cat="lab" transform="translate(5.4697, 51.4416)">
-        <circle class="pin-radar-ring green" r="3.4"/>
+        <circle class="pin-halo green" r="2.5" fill="#10b981" opacity="0.3"/>
         <circle class="pin-core-circle green" r="1.3" fill="#10b981" stroke="#ffffff" stroke-width="0.3"/>
+        <circle r="0.4" fill="#ffffff"/>
       </g>
       <!-- 4. Trombay Mumbai -->
       <g class="geo-pin" id="geopin-trombay" data-loc="trombay" data-cat="national" transform="translate(72.9234, 19.0060)">
-        <circle class="pin-radar-ring purple" r="2.8"/>
-        <circle class="pin-core-circle purple" r="1.1" fill="#8b5cf6" stroke="#ffffff" stroke-width="0.25"/>
+        <circle class="pin-halo purple" r="2.3" fill="#8b5cf6" opacity="0.3"/>
+        <circle class="pin-core-circle purple" r="1.2" fill="#8b5cf6" stroke="#ffffff" stroke-width="0.25"/>
+        <circle r="0.4" fill="#ffffff"/>
       </g>
       <!-- 5. Baghdad Iraq -->
       <g class="geo-pin" id="geopin-baghdad" data-loc="baghdad" data-cat="deputation" transform="translate(44.4502, 33.3152)">
-        <circle class="pin-radar-ring blue" r="3.2"/>
+        <circle class="pin-halo blue" r="2.5" fill="#0284c7" opacity="0.3"/>
         <circle class="pin-core-circle blue" r="1.3" fill="#0284c7" stroke="#ffffff" stroke-width="0.3"/>
+        <circle r="0.4" fill="#ffffff"/>
       </g>
       <!-- 6. Tokyo Japan -->
       <g class="geo-pin" id="geopin-tokyo" data-loc="tokyo" data-cat="lab" transform="translate(139.3565, 35.7058)">
-        <circle class="pin-radar-ring green" r="3.4"/>
+        <circle class="pin-halo green" r="2.5" fill="#10b981" opacity="0.3"/>
         <circle class="pin-core-circle green" r="1.3" fill="#10b981" stroke="#ffffff" stroke-width="0.3"/>
+        <circle r="0.4" fill="#ffffff"/>
       </g>
       <!-- 7. Shenyang China -->
       <g class="geo-pin" id="geopin-shenyang" data-loc="shenyang" data-cat="deputation" transform="translate(123.4190, 41.7656)">
-        <circle class="pin-radar-ring blue" r="3.2"/>
+        <circle class="pin-halo blue" r="2.5" fill="#0284c7" opacity="0.3"/>
         <circle class="pin-core-circle blue" r="1.3" fill="#0284c7" stroke="#ffffff" stroke-width="0.3"/>
+        <circle r="0.4" fill="#ffffff"/>
       </g>
       <!-- 8. Varanasi BHU -->
       <g class="geo-pin" id="geopin-varanasi" data-loc="varanasi" data-cat="national" transform="translate(82.9913, 25.2677)">
-        <circle class="pin-radar-ring purple" r="2.8"/>
-        <circle class="pin-core-circle purple" r="1.1" fill="#8b5cf6" stroke="#ffffff" stroke-width="0.25"/>
+        <circle class="pin-halo purple" r="2.3" fill="#8b5cf6" opacity="0.3"/>
+        <circle class="pin-core-circle purple" r="1.2" fill="#8b5cf6" stroke="#ffffff" stroke-width="0.25"/>
+        <circle r="0.4" fill="#ffffff"/>
       </g>
       <!-- 9. Clausthal Germany -->
       <g class="geo-pin" id="geopin-clausthal" data-loc="clausthal" data-cat="deputation" transform="translate(10.3374, 51.8052)">
-        <circle class="pin-radar-ring blue" r="3.4"/>
+        <circle class="pin-halo blue" r="2.5" fill="#0284c7" opacity="0.3"/>
         <circle class="pin-core-circle blue" r="1.3" fill="#0284c7" stroke="#ffffff" stroke-width="0.3"/>
+        <circle r="0.4" fill="#ffffff"/>
       </g>
       <!-- 10. Central Indian Ocean (5,100m Deep-Sea) -->
       <g class="geo-pin" id="geopin-indianocean" data-loc="indianocean" data-cat="mission" transform="translate(76.5000, -12.5000)">
-        <circle class="pin-radar-ring teal" r="3.8"/>
+        <circle class="pin-halo teal" r="2.8" fill="#0d9488" opacity="0.35"/>
         <circle class="pin-core-circle teal" r="1.4" fill="#0d9488" stroke="#ffffff" stroke-width="0.3"/>
+        <circle r="0.4" fill="#ffffff"/>
       </g>
       <!-- 11. Eswarahalli Hassan -->
       <g class="geo-pin" id="geopin-eswarahalli" data-loc="eswarahalli" data-cat="national" transform="translate(75.9868, 13.0072)">
-        <circle class="pin-core-circle gold" r="0.9" fill="#ca8a04" stroke="#ffffff" stroke-width="0.2"/>
+        <circle class="pin-halo gold" r="2.0" fill="#ca8a04" opacity="0.3"/>
+        <circle class="pin-core-circle gold" r="1.0" fill="#ca8a04" stroke="#ffffff" stroke-width="0.25"/>
+        <circle r="0.35" fill="#ffffff"/>
       </g>
     </g>
 
