@@ -2190,333 +2190,257 @@ textarea.form-control {
   min-height: 520px;
 }
 
-.real-map-container {
+.geo-map-container {
   width: 100%;
   height: 100%;
   min-height: 520px;
-  background: #0b132b;
-  z-index: 1;
-  outline: none;
-}
-
-/* Floating Executive Map Toolbar */
-.map-toolbar {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  right: 1rem;
-  z-index: 500;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.75rem;
-  pointer-events: none;
-}
-
-.map-toolbar-group,
-.map-layer-selector {
-  pointer-events: auto;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-full);
-  padding: 0.25rem 0.4rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-}
-
-[data-theme="dark"] .map-toolbar-group,
-[data-theme="dark"] .map-layer-selector {
-  background: rgba(11, 19, 43, 0.88);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-}
-
-.map-tool-btn,
-.layer-pill-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  font-family: var(--font-sans);
-}
-
-.map-tool-btn:hover,
-.layer-pill-btn:hover {
-  color: var(--accent);
-  background: rgba(2, 132, 199, 0.1);
-}
-
-.layer-pill-btn.active {
-  background: var(--accent);
-  color: #ffffff;
-  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
-}
-
-[data-theme="dark"] .layer-pill-btn.active {
-  background: var(--accent);
-  color: #060a12;
-}
-
-/* Floating Live Legend Overlay */
-.map-live-legend {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  z-index: 500;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  padding: 0.45rem 0.85rem;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-full);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  pointer-events: none;
-}
-
-[data-theme="dark"] .map-live-legend {
-  background: rgba(11, 19, 43, 0.88);
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-.legend-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.legend-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.legend-dot.gold { background: var(--gold); }
-.legend-dot.blue { background: #0284c7; }
-.legend-dot.green { background: #10b981; }
-.legend-dot.teal { background: #0d9488; }
-
-/* Custom Enterprise Markers with Radar Ripple Pulse */
-.custom-map-marker {
   position: relative;
-  width: 32px;
-  height: 32px;
+  overflow: hidden;
+  background: #080f1d;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: grab;
+  user-select: none;
 }
 
-.marker-pulse-ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 22px;
-  height: 22px;
-  margin-top: -11px;
-  margin-left: -11px;
-  border-radius: 50%;
-  border: 2px solid currentColor;
-  opacity: 0.85;
-  animation: radarPingAnimation 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-  pointer-events: none;
+.geo-map-container:active {
+  cursor: grabbing;
 }
 
-.marker-core-dot {
-  position: relative;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: currentColor;
-  border: 2.5px solid #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
+.geo-world-map {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  display: block;
+  overflow: hidden;
+  transition: transform 0.1s ease-out;
 }
 
-.custom-map-marker:hover .marker-core-dot,
-.custom-map-marker.active-marker .marker-core-dot {
-  transform: scale(1.45);
-  box-shadow: 0 0 16px currentColor;
+/* Ocean Base Styling */
+.geo-map-ocean {
+  fill: #f1f5f9;
+  transition: fill var(--transition-normal);
 }
 
-.custom-map-marker.active-marker .marker-pulse-ring {
-  width: 36px;
-  height: 36px;
-  margin-top: -18px;
-  margin-left: -18px;
-  animation: radarPingActive 1.6s ease-out infinite;
+[data-theme="dark"] .geo-map-ocean {
+  fill: #080f1d;
 }
 
-/* Category-specific Marker Tints */
-.marker-hq {
-  color: #f59e0b;
+/* Graticule Coordinates Grid */
+.geo-graticules .graticule-line {
+  stroke: rgba(148, 163, 184, 0.35);
+  stroke-width: 0.25px;
+  stroke-dasharray: 0.8 1.2;
 }
 
-.marker-hq .marker-core-dot {
-  width: 18px;
-  height: 18px;
-  background: linear-gradient(135deg, #f59e0b, #ca8a04);
+[data-theme="dark"] .geo-graticules .graticule-line {
+  stroke: rgba(255, 255, 255, 0.08);
 }
 
-.marker-deputation {
-  color: #0284c7;
+.graticule-line.equator {
+  stroke: rgba(2, 132, 199, 0.5) !important;
+  stroke-width: 0.4px !important;
+  stroke-dasharray: 2 1.5 !important;
 }
 
-.marker-lab {
-  color: #10b981;
+.graticule-line.prime-meridian {
+  stroke: rgba(202, 138, 4, 0.45) !important;
+  stroke-width: 0.4px !important;
 }
 
-.marker-national {
-  color: #8b5cf6;
+/* Natural Earth Real Vector Continents */
+.country {
+  fill: #ffffff;
+  stroke: #cbd5e1;
+  stroke-width: 0.2px;
+  stroke-linejoin: round;
+  transition: fill var(--transition-fast), stroke var(--transition-fast);
 }
 
-.marker-mission {
-  color: #0d9488;
+[data-theme="dark"] .country {
+  fill: #131d31;
+  stroke: #1e293b;
 }
 
-@keyframes radarPingAnimation {
-  0% { transform: scale(0.6); opacity: 0.9; }
-  80%, 100% { transform: scale(2.6); opacity: 0; }
+/* India Primary HQ Highlight */
+.country.IND {
+  fill: #fef3c7 !important;
+  stroke: #f59e0b !important;
+  stroke-width: 0.5px !important;
+  filter: drop-shadow(0 0 1px rgba(245, 158, 11, 0.5));
 }
 
-@keyframes radarPingActive {
-  0% { transform: scale(0.4); opacity: 1; }
-  100% { transform: scale(3.2); opacity: 0; }
+[data-theme="dark"] .country.IND {
+  fill: #221a0c !important;
+  stroke: #f59e0b !important;
+  stroke-width: 0.5px !important;
 }
 
-/* Fluid Animated Great-Circle Flight Paths */
-.leaflet-flight-path {
+/* Key Global Partner Countries (USA, NLD, DEU, JPN, CHN, IRQ) */
+.country.NLD,
+.country.DEU,
+.country.USA,
+.country.JPN,
+.country.CHN,
+.country.IRQ {
+  fill: #f0f9ff !important;
+  stroke: #0284c7 !important;
+  stroke-width: 0.35px !important;
+}
+
+[data-theme="dark"] .country.NLD,
+[data-theme="dark"] .country.DEU,
+[data-theme="dark"] .country.USA,
+[data-theme="dark"] .country.JPN,
+[data-theme="dark"] .country.CHN,
+[data-theme="dark"] .country.IRQ {
+  fill: #0c2340 !important;
+  stroke: #38bdf8 !important;
+  stroke-width: 0.35px !important;
+}
+
+/* Animated Great-Circle Flight Paths */
+.geo-flight-arc {
+  fill: none;
   stroke: #0284c7;
-  stroke-width: 2.2px;
-  stroke-dasharray: 7 6;
+  stroke-width: 0.55px;
+  stroke-dasharray: 2.2 1.4;
   stroke-linecap: round;
   opacity: 0.75;
-  animation: flightFlowAnim 24s linear infinite;
+  animation: arcBeamFlow 22s linear infinite;
   pointer-events: none;
-  transition: all 0.3s ease;
+  transition: stroke 0.3s, stroke-width 0.3s, opacity 0.3s;
 }
 
-.leaflet-flight-path.active-route {
+.geo-flight-arc.active-arc {
   stroke: #f59e0b !important;
-  stroke-width: 3.8px !important;
+  stroke-width: 1.1px !important;
   opacity: 1 !important;
-  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.9));
-  animation: flightFlowAnim 8s linear infinite;
+  filter: drop-shadow(0 0 1.5px rgba(245, 158, 11, 0.95));
+  animation: arcBeamFlow 8s linear infinite;
 }
 
-@keyframes flightFlowAnim {
+.geo-flight-arc.national {
+  stroke: #ca8a04;
+  stroke-width: 0.45px;
+}
+
+.geo-flight-arc.deepsea {
+  stroke: #0d9488;
+  stroke-width: 0.55px;
+  stroke-dasharray: 1.6 1.2;
+}
+
+@keyframes arcBeamFlow {
   to {
-    stroke-dashoffset: -260;
+    stroke-dashoffset: -40;
   }
 }
 
-/* Leaflet Custom UI & Popups */
-.leaflet-bar {
-  border: 1px solid var(--border-medium) !important;
-  border-radius: var(--radius-md) !important;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+/* Interactive Pins with Pulsing Radar Rings */
+.geo-pin {
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.leaflet-bar a {
-  background-color: rgba(255, 255, 255, 0.92) !important;
-  color: var(--text-primary) !important;
-  border-bottom: 1px solid var(--border-light) !important;
-  transition: all var(--transition-fast);
+.geo-pin:hover,
+.geo-pin.active {
+  filter: drop-shadow(0 0 2px currentColor);
 }
 
-[data-theme="dark"] .leaflet-bar a {
-  background-color: rgba(15, 23, 42, 0.92) !important;
-  color: #f1f5f9 !important;
-  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+.geo-pin .pin-radar-ring {
+  animation: pinRadarPulse 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  transform-origin: center;
+  pointer-events: none;
 }
 
-.leaflet-bar a:hover {
-  background-color: var(--accent) !important;
-  color: #ffffff !important;
+.geo-pin.active .pin-radar-ring {
+  animation: pinRadarPulseActive 1.6s ease-out infinite;
 }
 
-.leaflet-popup-content-wrapper {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  border-radius: var(--radius-lg) !important;
-  border: 1px solid var(--border-medium) !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
-  padding: 0 !important;
+.pin-radar-ring.gold { fill: #f59e0b; opacity: 0.4; }
+.pin-radar-ring.blue { fill: #0284c7; opacity: 0.35; }
+.pin-radar-ring.green { fill: #10b981; opacity: 0.35; }
+.pin-radar-ring.purple { fill: #8b5cf6; opacity: 0.35; }
+.pin-radar-ring.teal { fill: #0d9488; opacity: 0.4; }
+
+.pin-halo {
+  fill: #f59e0b;
+  opacity: 0.25;
 }
 
-[data-theme="dark"] .leaflet-popup-content-wrapper {
-  background: rgba(15, 23, 42, 0.95) !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+.pin-core-circle {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center;
 }
 
-.leaflet-popup-tip {
-  background: rgba(255, 255, 255, 0.95) !important;
+.geo-pin:hover .pin-core-circle,
+.geo-pin.active .pin-core-circle {
+  transform: scale(1.45);
 }
 
-[data-theme="dark"] .leaflet-popup-tip {
-  background: rgba(15, 23, 42, 0.95) !important;
+@keyframes pinRadarPulse {
+  0% { transform: scale(0.6); opacity: 0.85; }
+  80%, 100% { transform: scale(2.4); opacity: 0; }
 }
 
-.leaflet-popup-content {
-  margin: 0.85rem 1rem !important;
-  font-family: var(--font-sans) !important;
-  line-height: 1.4 !important;
+@keyframes pinRadarPulseActive {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(3.0); opacity: 0; }
 }
 
-.map-popup-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+/* Floating Interactive Tooltip */
+.geo-map-tooltip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 600;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  font-family: var(--font-sans);
+  max-width: 260px;
 }
 
-.map-popup-tag {
+[data-theme="dark"] .geo-map-tooltip {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.geo-map-tooltip .tooltip-tag {
   font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--accent);
+  margin-bottom: 0.2rem;
 }
 
-.map-popup-city {
-  font-size: 0.95rem;
+.geo-map-tooltip .tooltip-city {
+  font-size: 0.9375rem;
   font-weight: 800;
   color: var(--text-primary);
+  line-height: 1.25;
 }
 
-.map-popup-inst {
-  font-size: 0.775rem;
+.geo-map-tooltip .tooltip-inst {
+  font-size: 0.75rem;
   color: var(--text-secondary);
   font-weight: 500;
+  margin-top: 0.2rem;
 }
 
-.map-popup-year {
+.geo-map-tooltip .tooltip-year {
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--gold);
+  margin-top: 0.2rem;
 }
 
 /* Location Inspector Sidebar Card */

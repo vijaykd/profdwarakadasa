@@ -358,7 +358,6 @@ function initInteractiveMap() {
       role: 'Emeritus Professor (IISc) • CEO & MD (KHMD)',
       desc: 'The central epicenter of Prof. Dwarakadasa’s career. Spanning 42 continuous years on the faculty of IISc’s Department of Metallurgy (Materials Engineering), guiding 28 Ph.D. scholars, pioneering LCA Tejas Al-Li alloys, and serving as CEO & MD of KHMD delivering over 2,000 space-grade subsystems for ISRO\'s Chandrayaan missions.',
       coords: [13.0219, 77.5671],
-      zoom: 12,
       order: 1
     },
     maryland: {
@@ -372,7 +371,6 @@ function initInteractiveMap() {
       role: 'Postdoctoral Fellow, Department of Mechanical Engineering',
       desc: 'Conducted advanced postdoctoral research in physical metallurgy, focusing on dislocation mechanics, solute-vacancy interactions, and precipitation hardening in advanced structural alloys.',
       coords: [38.9897, -76.9378],
-      zoom: 8,
       order: 2
     },
     eindhoven: {
@@ -386,21 +384,19 @@ function initInteractiveMap() {
       role: 'Advanced TEM Certification Specialist',
       desc: 'Underwent intensive specialized training in Transmission Electron Microscopy (TEM), mastering high-resolution interfacial imaging and microstructural defect diagnosis.',
       coords: [51.4416, 5.4697],
-      zoom: 9,
       order: 3
     },
-    trombay: {
-      flag: '🇮🇳',
-      category: 'Nuclear Metallurgy',
-      categoryClass: 'gold',
-      cat: 'national',
-      year: 'June – Sept 1979',
-      city: 'Trombay, Mumbai, India',
-      inst: 'Bhabha Atomic Research Centre (BARC)',
-      role: 'UGC Senior National Research Associate',
-      desc: 'Investigated nuclear-grade structural materials and high-temperature phase equilibria within the Department of Metallurgy at India’s premier nuclear science center.',
-      coords: [19.0060, 72.9234],
-      zoom: 10,
+    clausthal: {
+      flag: '🇩🇪',
+      category: 'Research Fellowship',
+      categoryClass: '',
+      cat: 'deputation',
+      year: '1997–1998 & 1998–1999',
+      city: 'Clausthal-Zellerfeld, Germany',
+      inst: 'Technische Universität Clausthal (TU Clausthal)',
+      role: 'Visiting Fellow & Research Fellow, Dept. of Mechanical Engg.',
+      desc: 'Conducted collaborative German-Indian research on metal matrix composites, cyclic deformation, and high-temperature wear mechanisms in Lower Saxony.',
+      coords: [51.8052, 10.3374],
       order: 4
     },
     baghdad: {
@@ -414,7 +410,6 @@ function initInteractiveMap() {
       role: 'Professor, Dept. of Production & Metallurgy',
       desc: 'Selected for official Government of India deputation to establish research laboratories, commission specialized metallurgical testing equipment, and guide postgraduate scholars.',
       coords: [33.3152, 44.4502],
-      zoom: 9,
       order: 5
     },
     tokyo: {
@@ -428,7 +423,6 @@ function initInteractiveMap() {
       role: 'Advanced Specialist in Electron Microscopy',
       desc: 'Advanced certification and experimental investigations in Scanning Electron Microscopy (SEM) and analytical Transmission Electron Microscopy (TEM) at JEOL headquarters.',
       coords: [35.7058, 139.3565],
-      zoom: 9,
       order: 6
     },
     shenyang: {
@@ -442,8 +436,20 @@ function initInteractiveMap() {
       role: 'Visiting Professor in Metallurgical Engineering',
       desc: 'Delivered keynote lectures and specialist university courses on aluminium alloy development, dynamic strain aging, and aerospace alloy strengthening.',
       coords: [41.7656, 123.4190],
-      zoom: 8,
       order: 7
+    },
+    trombay: {
+      flag: '🇮🇳',
+      category: 'Nuclear Metallurgy',
+      categoryClass: 'gold',
+      cat: 'national',
+      year: 'June – Sept 1979',
+      city: 'Trombay, Mumbai, India',
+      inst: 'Bhabha Atomic Research Centre (BARC)',
+      role: 'UGC Senior National Research Associate',
+      desc: 'Investigated nuclear-grade structural materials and high-temperature phase equilibria within the Department of Metallurgy at India’s premier nuclear science center.',
+      coords: [19.0060, 72.9234],
+      order: 8
     },
     varanasi: {
       flag: '🇮🇳',
@@ -456,21 +462,6 @@ function initInteractiveMap() {
       role: 'BHUMET Golden Jubilee Professor',
       desc: 'Conducted endowed Golden Jubilee professorship lectures at BHU\'s Department of Metallurgical Engineering, sharing aerospace alloy research with faculty and graduate researchers.',
       coords: [25.2677, 82.9913],
-      zoom: 10,
-      order: 8
-    },
-    clausthal: {
-      flag: '🇩🇪',
-      category: 'Research Fellowship',
-      categoryClass: '',
-      cat: 'deputation',
-      year: '1997–1998 & 1998–1999',
-      city: 'Clausthal-Zellerfeld, Germany',
-      inst: 'Technische Universität Clausthal (TU Clausthal)',
-      role: 'Visiting Fellow & Research Fellow, Dept. of Mechanical Engg.',
-      desc: 'Conducted collaborative German-Indian research on metal matrix composites, cyclic deformation, and high-temperature wear mechanisms in Lower Saxony.',
-      coords: [51.8052, 10.3374],
-      zoom: 9,
       order: 9
     },
     indianocean: {
@@ -484,7 +475,6 @@ function initInteractiveMap() {
       role: 'Principal Metallurgical Investigator',
       desc: 'Anchored Ti-6Al-4V titanium test specimens at an extreme depth of 5,100 meters under intense hydrostatic pressure, confirming zero detectable corrosion and supreme passivation.',
       coords: [-12.5000, 76.5000],
-      zoom: 6,
       order: 10
     },
     eswarahalli: {
@@ -498,17 +488,25 @@ function initInteractiveMap() {
       role: 'Roots of Academic Dynasty',
       desc: 'The ancestral Karnataka village from which all 14 siblings graduated in engineering, 7 achieved doctorates (Ph.D.s), and 8 became alumni of the Indian Institute of Science.',
       coords: [13.0072, 75.9868],
-      zoom: 11,
       order: 11
     }
   };
 
   const keys = Object.keys(mapData);
   let currentIndex = 0;
-  const defaultCenter = [22.0, 48.0];
-  const defaultZoom = 2.6;
 
-  // UI Elements
+  // DOM Elements
+  const svgMap = document.getElementById('geo-world-map');
+  const mapContainer = document.getElementById('geo-map-container');
+  if (!svgMap || !mapContainer) return;
+
+  const tooltip = document.getElementById('geo-map-tooltip');
+  const pinElements = document.querySelectorAll('.geo-pin');
+  const flightArcs = document.querySelectorAll('.geo-flight-arc');
+  const locCards = document.querySelectorAll('.loc-card');
+  const filterBtns = document.querySelectorAll('.map-filter-btn');
+
+  // Dossier Inspector UI Elements
   const dossierTag = document.getElementById('dossier-tag');
   const dossierYear = document.getElementById('dossier-year');
   const dossierCity = document.getElementById('dossier-city');
@@ -519,198 +517,72 @@ function initInteractiveMap() {
   const prevBtn = document.getElementById('dossier-prev-btn');
   const nextBtn = document.getElementById('dossier-next-btn');
 
-  const locCards = document.querySelectorAll('.loc-card');
-  const filterBtns = document.querySelectorAll('.map-filter-btn');
+  // Map Toolbar Buttons
   const btnResetView = document.getElementById('map-btn-reset-view');
   const btnFocusMission = document.getElementById('map-btn-focus-mission');
-  const layerPills = document.querySelectorAll('.layer-pill-btn');
+  const btnZoomIn = document.getElementById('map-btn-zoom-in');
+  const btnZoomOut = document.getElementById('map-btn-zoom-out');
 
-  // Verify Leaflet availability
-  const mapElement = document.getElementById('real-global-map');
-  if (!mapElement || typeof L === 'undefined') {
-    console.warn('Leaflet map engine container or library not ready.');
-    return;
-  }
+  // Camera ViewBox State
+  let currentViewBox = [0, 0, 360, 180];
+  let animFrameId = null;
 
-  // Initialize Leaflet Map
-  const map = L.map('real-global-map', {
-    center: defaultCenter,
-    zoom: defaultZoom,
-    minZoom: 2,
-    maxZoom: 17,
-    scrollWheelZoom: false,
-    zoomControl: false
-  });
+  // Smooth ViewBox Animation with Cubic Ease-Out
+  function animateViewBox(targetVB, duration = 750) {
+    if (animFrameId) cancelAnimationFrame(animFrameId);
+    const startVB = [...currentViewBox];
+    const startTime = performance.now();
 
-  // Position Zoom Control top-right
-  L.control.zoom({ position: 'topright' }).addTo(map);
+    function step(time) {
+      const elapsed = time - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const t = 1 - Math.pow(1 - progress, 3);
 
-  // Basemap Tile Providers
-  const tileLayers = {
-    voyager: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19
-    }),
-    dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19
-    }),
-    satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: '&copy; Esri &mdash; Earthstar Geographics',
-      maxZoom: 17
-    })
-  };
+      currentViewBox = [
+        startVB[0] + (targetVB[0] - startVB[0]) * t,
+        startVB[1] + (targetVB[1] - startVB[1]) * t,
+        startVB[2] + (targetVB[2] - startVB[2]) * t,
+        startVB[3] + (targetVB[3] - startVB[3]) * t
+      ];
 
-  // Set initial tile layer according to site theme
-  const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
-  let activeTileLayerKey = initialTheme === 'dark' ? 'dark' : 'voyager';
-  tileLayers[activeTileLayerKey].addTo(map);
+      svgMap.setAttribute(
+        'viewBox',
+        `${currentViewBox[0].toFixed(2)} ${currentViewBox[1].toFixed(2)} ${currentViewBox[2].toFixed(2)} ${currentViewBox[3].toFixed(2)}`
+      );
 
-  // Update active pill UI
-  function updateLayerPillsUI(activeKey) {
-    layerPills.forEach(pill => {
-      if (pill.getAttribute('data-map-layer') === activeKey) {
-        pill.classList.add('active');
+      if (progress < 1) {
+        animFrameId = requestAnimationFrame(step);
       } else {
-        pill.classList.remove('active');
+        currentViewBox = [...targetVB];
+        svgMap.setAttribute(
+          'viewBox',
+          `${currentViewBox[0].toFixed(2)} ${currentViewBox[1].toFixed(2)} ${currentViewBox[2].toFixed(2)} ${currentViewBox[3].toFixed(2)}`
+        );
+        animFrameId = null;
       }
-    });
-  }
-  updateLayerPillsUI(activeTileLayerKey);
-
-  // Switch Tile Layer Function
-  function switchTileLayer(layerKey) {
-    if (layerKey === activeTileLayerKey) return;
-    map.removeLayer(tileLayers[activeTileLayerKey]);
-    tileLayers[layerKey].addTo(map);
-    activeTileLayerKey = layerKey;
-    updateLayerPillsUI(layerKey);
-  }
-
-  // Layer Selector Pill Handlers
-  layerPills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      const targetLayer = pill.getAttribute('data-map-layer');
-      if (targetLayer && tileLayers[targetLayer]) {
-        switchTileLayer(targetLayer);
-      }
-    });
-  });
-
-  // Auto-switch tile layer when global site theme changes
-  const themeToggleBtn = document.getElementById('theme-toggle-btn');
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-      setTimeout(() => {
-        const newTheme = document.documentElement.getAttribute('data-theme');
-        if (newTheme === 'dark' && activeTileLayerKey === 'voyager') {
-          switchTileLayer('dark');
-        } else if (newTheme === 'light' && activeTileLayerKey === 'dark') {
-          switchTileLayer('voyager');
-        }
-      }, 50);
-    });
-  }
-
-  // Spherical Great-Circle Interpolation for Authentic Flight Arcs
-  function getGreatCirclePoints(start, end, numPoints = 40) {
-    const points = [];
-    const lat1 = start[0] * Math.PI / 180;
-    const lon1 = start[1] * Math.PI / 180;
-    const lat2 = end[0] * Math.PI / 180;
-    const lon2 = end[1] * Math.PI / 180;
-
-    const d = 2 * Math.asin(Math.sqrt(
-      Math.pow(Math.sin((lat1 - lat2) / 2), 2) +
-      Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin((lon1 - lon2) / 2), 2)
-    ));
-
-    if (d === 0) return [start, end];
-
-    for (let i = 0; i <= numPoints; i++) {
-      const f = i / numPoints;
-      const A = Math.sin((1 - f) * d) / Math.sin(d);
-      const B = Math.sin(f * d) / Math.sin(d);
-
-      const x = A * Math.cos(lat1) * Math.cos(lon1) + B * Math.cos(lat2) * Math.cos(lon2);
-      const y = A * Math.cos(lat1) * Math.sin(lon1) + B * Math.cos(lat2) * Math.sin(lon2);
-      const z = A * Math.sin(lat1) + B * Math.sin(lat2);
-
-      const lat = Math.atan2(z, Math.sqrt(x * x + y * y)) * 180 / Math.PI;
-      const lon = Math.atan2(y, x) * 180 / Math.PI;
-      points.push([lat, lon]);
     }
-    return points;
+
+    animFrameId = requestAnimationFrame(step);
   }
 
-  // Create Custom Interactive Markers & Flight Routes
-  const markers = {};
-  const flightRoutes = {};
-  const bngCoords = mapData.bengaluru.coords;
+  // Zoom By Factor
+  function zoomBy(factor) {
+    const currentCenterX = currentViewBox[0] + currentViewBox[2] / 2;
+    const currentCenterY = currentViewBox[1] + currentViewBox[3] / 2;
 
-  // Build Flight Arcs radiating from IISc Bengaluru
-  keys.forEach(key => {
-    if (key === 'bengaluru') return;
-    const dest = mapData[key];
-    const arcPoints = getGreatCirclePoints(bngCoords, dest.coords);
+    let newW = currentViewBox[2] * factor;
+    newW = Math.max(25, Math.min(360, newW));
+    let newH = newW / 2;
 
-    const routePolyline = L.polyline(arcPoints, {
-      className: 'leaflet-flight-path',
-      weight: 2.2,
-      opacity: 0.75,
-      smoothFactor: 1
-    }).addTo(map);
+    let minX = currentCenterX - newW / 2;
+    let minY = currentCenterY - newH / 2;
+    minX = Math.max(0, Math.min(360 - newW, minX));
+    minY = Math.max(0, Math.min(180 - newH, minY));
 
-    flightRoutes[key] = routePolyline;
-  });
+    animateViewBox([minX, minY, newW, newH], 450);
+  }
 
-  // Build Markers with Pulsing Radar Ripple Rings
-  keys.forEach(key => {
-    const loc = mapData[key];
-    const isHQ = key === 'bengaluru';
-
-    const customIcon = L.divIcon({
-      className: 'custom-map-marker-wrapper',
-      html: `
-        <div class="custom-map-marker marker-${loc.cat} ${isHQ ? 'marker-hq' : ''}" id="map-marker-${key}">
-          <div class="marker-pulse-ring"></div>
-          <div class="marker-core-dot">
-            ${isHQ ? '<svg width="9" height="9" viewBox="0 0 24 24" fill="#0f172a"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>' : ''}
-          </div>
-        </div>
-      `,
-      iconSize: [32, 32],
-      iconAnchor: [16, 16],
-      popupAnchor: [0, -18]
-    });
-
-    const marker = L.marker(loc.coords, { icon: customIcon }).addTo(map);
-
-    // Custom Glassmorphic Popup
-    const popupContent = `
-      <div class="map-popup-card">
-        <span class="map-popup-tag">${loc.flag} ${loc.category}</span>
-        <div class="map-popup-city">${loc.city}</div>
-        <div class="map-popup-inst">${loc.inst}</div>
-        <div class="map-popup-year">${loc.year}</div>
-      </div>
-    `;
-    marker.bindPopup(popupContent, {
-      closeButton: false,
-      autoPan: false,
-      offset: [0, -12]
-    });
-
-    marker.on('click', () => {
-      renderLocation(key, false);
-    });
-
-    markers[key] = marker;
-  });
-
-  // Render Selected Location & Synchronize Dossier, Cards, Routes, and Camera
+  // Render Selected Location & Synchronize All Interface Panels
   function renderLocation(key, shouldFly = true) {
     const data = mapData[key];
     if (!data) return;
@@ -739,45 +611,77 @@ function initInteractiveMap() {
       }
     });
 
-    // Update Active Marker UI & Pulsing Animation
-    keys.forEach(k => {
-      const markerEl = document.getElementById(`map-marker-${k}`);
-      if (markerEl) {
-        if (k === key) {
-          markerEl.classList.add('active-marker');
-        } else {
-          markerEl.classList.remove('active-marker');
-        }
+    // Update Active Pin in SVG
+    pinElements.forEach(pin => {
+      if (pin.getAttribute('data-loc') === key) {
+        pin.classList.add('active');
+        if (pin.parentNode) pin.parentNode.appendChild(pin);
+      } else {
+        pin.classList.remove('active');
       }
     });
-
-    // Open active marker popup
-    if (markers[key]) {
-      markers[key].openPopup();
-    }
 
     // Highlight Corresponding Flight Route Arc
-    Object.keys(flightRoutes).forEach(routeKey => {
-      const polyline = flightRoutes[routeKey];
-      const el = polyline.getElement();
-      if (el) {
-        if (routeKey === key) {
-          el.classList.add('active-route');
-        } else {
-          el.classList.remove('active-route');
-        }
+    flightArcs.forEach(arc => {
+      if (arc.getAttribute('data-arc-target') === key) {
+        arc.classList.add('active-arc');
+        if (arc.parentNode) arc.parentNode.appendChild(arc);
+      } else {
+        arc.classList.remove('active-arc');
       }
     });
 
-    // Fluid Camera Glide (flyTo)
-    if (shouldFly && map) {
-      map.flyTo(data.coords, data.zoom, {
-        animate: true,
-        duration: 1.4,
-        easeLinearity: 0.25
-      });
+    // Fluid Camera Glide (viewBox animation)
+    if (shouldFly) {
+      const targetCenterX = 180 + data.coords[1];
+      const targetCenterY = 90 - data.coords[0];
+      const targetW = 64;
+      const targetH = 32;
+      let minX = targetCenterX - targetW / 2;
+      let minY = targetCenterY - targetH / 2;
+      minX = Math.max(0, Math.min(360 - targetW, minX));
+      minY = Math.max(0, Math.min(180 - targetH, minY));
+      animateViewBox([minX, minY, targetW, targetH], 800);
     }
   }
+
+  // Interactive Pins: Hover Tooltip & Click Selection
+  pinElements.forEach(pin => {
+    const locKey = pin.getAttribute('data-loc');
+    const data = mapData[locKey];
+    if (!data) return;
+
+    pin.addEventListener('mouseenter', () => {
+      if (!tooltip) return;
+      tooltip.innerHTML = `
+        <div class="tooltip-tag">${data.flag} ${data.category}</div>
+        <div class="tooltip-city">${data.city}</div>
+        <div class="tooltip-inst">${data.inst}</div>
+        <div class="tooltip-year">${data.year}</div>
+      `;
+      tooltip.style.display = 'block';
+    });
+
+    pin.addEventListener('mousemove', (e) => {
+      if (!tooltip || tooltip.style.display === 'none') return;
+      const rect = mapContainer.getBoundingClientRect();
+      let left = e.clientX - rect.left + 14;
+      let top = e.clientY - rect.top - 14;
+      if (left + 230 > rect.width) left = e.clientX - rect.left - 235;
+      if (top < 10) top = 10;
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+    });
+
+    pin.addEventListener('mouseleave', () => {
+      if (tooltip) tooltip.style.display = 'none';
+    });
+
+    pin.addEventListener('click', (e) => {
+      e.stopPropagation();
+      renderLocation(locKey, true);
+    });
+  });
 
   // Location Cards Click Handlers
   locCards.forEach(card => {
@@ -805,13 +709,7 @@ function initInteractiveMap() {
   // Toolbar Handlers: World Overview & Focus Mission
   if (btnResetView) {
     btnResetView.addEventListener('click', () => {
-      map.flyTo(defaultCenter, defaultZoom, {
-        animate: true,
-        duration: 1.5,
-        easeLinearity: 0.25
-      });
-      // Close popups in overview
-      map.closePopup();
+      animateViewBox([0, 0, 360, 180], 800);
     });
   }
 
@@ -821,6 +719,128 @@ function initInteractiveMap() {
     });
   }
 
+  if (btnZoomIn) {
+    btnZoomIn.addEventListener('click', () => {
+      zoomBy(0.7);
+    });
+  }
+
+  if (btnZoomOut) {
+    btnZoomOut.addEventListener('click', () => {
+      zoomBy(1.4);
+    });
+  }
+
+  // Drag-to-Pan on Map Surface
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let dragStartVB = [...currentViewBox];
+
+  mapContainer.addEventListener('mousedown', (e) => {
+    if (e.target.closest('button') || e.target.closest('.geo-pin')) return;
+    if (animFrameId) cancelAnimationFrame(animFrameId);
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    dragStartVB = [...currentViewBox];
+    mapContainer.style.cursor = 'grabbing';
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const rect = mapContainer.getBoundingClientRect();
+    const dx = ((e.clientX - dragStartX) / rect.width) * dragStartVB[2];
+    const dy = ((e.clientY - dragStartY) / rect.height) * dragStartVB[3];
+
+    let newMinX = dragStartVB[0] - dx;
+    let newMinY = dragStartVB[1] - dy;
+    newMinX = Math.max(-10, Math.min(370 - dragStartVB[2], newMinX));
+    newMinY = Math.max(-5, Math.min(185 - dragStartVB[3], newMinY));
+
+    currentViewBox[0] = newMinX;
+    currentViewBox[1] = newMinY;
+    svgMap.setAttribute(
+      'viewBox',
+      `${newMinX.toFixed(2)} ${newMinY.toFixed(2)} ${currentViewBox[2].toFixed(2)} ${currentViewBox[3].toFixed(2)}`
+    );
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      mapContainer.style.cursor = '';
+    }
+  });
+
+  // Touch Support for Mobile Drag
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchStartVB = [...currentViewBox];
+  let isTouching = false;
+
+  mapContainer.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      if (e.target.closest('button') || e.target.closest('.geo-pin')) return;
+      isTouching = true;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchStartVB = [...currentViewBox];
+    }
+  }, { passive: true });
+
+  mapContainer.addEventListener('touchmove', (e) => {
+    if (!isTouching || e.touches.length !== 1) return;
+    const rect = mapContainer.getBoundingClientRect();
+    const dx = ((e.touches[0].clientX - touchStartX) / rect.width) * touchStartVB[2];
+    const dy = ((e.touches[0].clientY - touchStartY) / rect.height) * touchStartVB[3];
+
+    let newMinX = touchStartVB[0] - dx;
+    let newMinY = touchStartVB[1] - dy;
+    newMinX = Math.max(-10, Math.min(370 - touchStartVB[2], newMinX));
+    newMinY = Math.max(-5, Math.min(185 - touchStartVB[3], newMinY));
+
+    currentViewBox[0] = newMinX;
+    currentViewBox[1] = newMinY;
+    svgMap.setAttribute(
+      'viewBox',
+      `${newMinX.toFixed(2)} ${newMinY.toFixed(2)} ${currentViewBox[2].toFixed(2)} ${currentViewBox[3].toFixed(2)}`
+    );
+  }, { passive: true });
+
+  mapContainer.addEventListener('touchend', () => {
+    isTouching = false;
+  });
+
+  // Mouse Wheel Zoom
+  mapContainer.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (animFrameId) cancelAnimationFrame(animFrameId);
+
+    const rect = mapContainer.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const svgX = currentViewBox[0] + (mouseX / rect.width) * currentViewBox[2];
+    const svgY = currentViewBox[1] + (mouseY / rect.height) * currentViewBox[3];
+
+    const zoomFactor = e.deltaY < 0 ? 0.88 : 1.14;
+    let newW = currentViewBox[2] * zoomFactor;
+    newW = Math.max(25, Math.min(360, newW));
+    let newH = newW / 2;
+
+    let newMinX = svgX - (mouseX / rect.width) * newW;
+    let newMinY = svgY - (mouseY / rect.height) * newH;
+    newMinX = Math.max(0, Math.min(360 - newW, newMinX));
+    newMinY = Math.max(0, Math.min(180 - newH, newMinY));
+
+    currentViewBox = [newMinX, newMinY, newW, newH];
+    svgMap.setAttribute(
+      'viewBox',
+      `${newMinX.toFixed(2)} ${newMinY.toFixed(2)} ${newW.toFixed(2)} ${newH.toFixed(2)}`
+    );
+  }, { passive: false });
+
   // Category Filter Bar Handlers
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -829,31 +849,19 @@ function initInteractiveMap() {
 
       const filter = btn.getAttribute('data-map-filter');
 
-      // Filter Markers and Flight Routes
-      const visibleCoords = [];
+      // Filter Pins
+      pinElements.forEach(pin => {
+        const cat = pin.getAttribute('data-cat');
+        const isMatch = (filter === 'all' || cat === filter);
+        pin.style.display = isMatch ? '' : 'none';
+      });
 
-      keys.forEach(key => {
-        const item = mapData[key];
-        const isMatch = (filter === 'all' || item.cat === filter);
-        const marker = markers[key];
-        const route = flightRoutes[key];
-
-        if (marker) {
-          if (isMatch) {
-            if (!map.hasLayer(marker)) map.addLayer(marker);
-            visibleCoords.push(item.coords);
-          } else {
-            if (map.hasLayer(marker)) map.removeLayer(marker);
-          }
-        }
-
-        if (route) {
-          if (isMatch) {
-            if (!map.hasLayer(route)) map.addLayer(route);
-          } else {
-            if (map.hasLayer(route)) map.removeLayer(route);
-          }
-        }
+      // Filter Flight Route Arcs
+      flightArcs.forEach(arc => {
+        const targetLoc = arc.getAttribute('data-arc-target');
+        const item = mapData[targetLoc];
+        const isMatch = (filter === 'all' || (item && item.cat === filter));
+        arc.style.display = isMatch ? '' : 'none';
       });
 
       // Filter Quick Cards
@@ -866,27 +874,22 @@ function initInteractiveMap() {
         }
       });
 
-      // Select first visible and fit bounds or center
-      const firstVisible = Array.from(locCards).find(c => c.style.display !== 'none');
-      if (firstVisible) {
-        const firstKey = firstVisible.getAttribute('data-loc-target');
-        renderLocation(firstKey, false);
-      }
-
-      if (visibleCoords.length > 1 && filter !== 'all') {
-        const bounds = L.latLngBounds(visibleCoords);
-        map.flyToBounds(bounds, { padding: [50, 50], duration: 1.2 });
+      // If current selected mission is hidden by filter, switch to first visible
+      const currentItem = mapData[keys[currentIndex]];
+      if (filter !== 'all' && currentItem && currentItem.cat !== filter) {
+        const firstVisibleKey = keys.find(k => mapData[k].cat === filter);
+        if (firstVisibleKey) {
+          renderLocation(firstVisibleKey, true);
+        }
       } else if (filter === 'all') {
-        map.flyTo(defaultCenter, defaultZoom, { duration: 1.2 });
+        animateViewBox([0, 0, 360, 180], 700);
       }
     });
   });
 
-  // Render initial location (Bengaluru HQ) without jarring camera jump
+  // Render initial location (Bengaluru HQ) smoothly without jarring camera jump
   setTimeout(() => {
     renderLocation('bengaluru', false);
-    // Invalidate map size to ensure sharp tile rendering once DOM is fully drawn
-    map.invalidateSize();
-  }, 250);
+  }, 100);
 }
 
