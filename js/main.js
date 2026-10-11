@@ -78,9 +78,10 @@ function initNavigation() {
   const sections = document.querySelectorAll('section[id]');
 
   if (hamburgerBtn && navMenu) {
-    hamburgerBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('open');
-      const isOpen = navMenu.classList.contains('open');
+    hamburgerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = navMenu.classList.toggle('open');
+      hamburgerBtn.classList.toggle('active', isOpen);
       hamburgerBtn.setAttribute('aria-expanded', isOpen);
     });
 
@@ -88,9 +89,19 @@ function initNavigation() {
       link.addEventListener('click', () => {
         if (navMenu.classList.contains('open')) {
           navMenu.classList.remove('open');
-          hamburgerBtn.setAttribute('aria-expanded', false);
+          hamburgerBtn.classList.remove('active');
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
         }
       });
+    });
+
+    // Close when clicking outside of nav on mobile
+    document.addEventListener('click', (e) => {
+      if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+        navMenu.classList.remove('open');
+        hamburgerBtn.classList.remove('active');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      }
     });
   }
 
@@ -236,26 +247,76 @@ function initStatCounters() {
 }
 
 /* --------------------------------------------------------------------------
-   5. Contact Form Simulation & Industrial Routing
+   5. Contact Form: Anti-Spam CAPTCHA & Delivery to dwarakadasa@gmail.com
    -------------------------------------------------------------------------- */
 function initContactForm() {
   const form = document.getElementById('academic-contact-form');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  const captchaQuestionEl = document.getElementById('captcha-question');
+  const captchaInput = document.getElementById('captcha-answer');
+  const refreshBtn = document.getElementById('refresh-captcha-btn');
+  const honeypotInput = document.getElementById('contact-honeypot');
+  const submitBtn = document.getElementById('contact-submit-btn') || form.querySelector('button[type="submit"]');
+
+  let captchaResult = 0;
+
+  function generateCaptcha() {
+    const num1 = Math.floor(Math.random() * 11) + 2;
+    const num2 = Math.floor(Math.random() * 9) + 1;
+    captchaResult = num1 + num2;
+    if (captchaQuestionEl) {
+      captchaQuestionEl.textContent = `${num1} + ${num2}`;
+    }
+    if (captchaInput) {
+      captchaInput.value = '';
+    }
+  }
+
+  // Initialize CAPTCHA challenge
+  generateCaptcha();
+
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      generateCaptcha();
+      if (captchaInput) captchaInput.focus();
+    });
+  }
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // 1. Bot Trap: Honeypot check
+    if (honeypotInput && honeypotInput.value.trim() !== '') {
+      showToast('Thank you! Your inquiry has been routed.');
+      form.reset();
+      generateCaptcha();
+      return;
+    }
 
     const name = form.querySelector('#contact-name').value.trim();
     const email = form.querySelector('#contact-email').value.trim();
-    const service = form.querySelector('#contact-service').value;
+    const serviceSelect = form.querySelector('#contact-service');
+    const service = serviceSelect ? serviceSelect.options[serviceSelect.selectedIndex].text : '';
+    const subject = form.querySelector('#contact-subject') ? form.querySelector('#contact-subject').value.trim() : '';
     const message = form.querySelector('#contact-message').value.trim();
-    const submitBtn = form.querySelector('button[type="submit"]');
+    const userAnswer = captchaInput ? parseInt(captchaInput.value.trim(), 10) : NaN;
 
     if (!name || !email || !message) {
       showToast('Please fill out all required fields.');
       return;
     }
 
+    // 2. Anti-Spam CAPTCHA Verification
+    if (isNaN(userAnswer) || userAnswer !== captchaResult) {
+      showToast('Security verification incorrect. Please calculate the challenge again.');
+      generateCaptcha();
+      if (captchaInput) captchaInput.focus();
+      return;
+    }
+
+    // Set button to active sending state
     submitBtn.disabled = true;
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = `
@@ -263,15 +324,46 @@ function initContactForm() {
         <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
         <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor"></path>
       </svg>
-      Routing Inquiry to Office...
+      Sending to dwarakadasa@gmail.com...
     `;
 
-    setTimeout(() => {
+    try {
+      // 3. Deliver formatted inquiry to dwarakadasa@gmail.com via FormSubmit AJAX endpoint
+      const response = await fetch('https://formsubmit.co/ajax/dwarakadasa@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `New Inquiry for Prof. Dwarakadasa: ${subject || service}`,
+          name: name,
+          email: email,
+          engagement_purpose: service,
+          subject: subject,
+          message: message,
+          _template: 'table'
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok || (data && (data.success === 'true' || data.success === true))) {
+        showToast('Inquiry sent! Forwarded directly to Prof. Dwarakadasa (dwarakadasa@gmail.com).');
+        form.reset();
+        generateCaptcha();
+      } else {
+        throw new Error('API dispatch notice');
+      }
+    } catch (err) {
+      // 4. Reliable Mailto fallback if network or endpoint blocks
+      showToast('Opening your email client to deliver to dwarakadasa@gmail.com...');
+      const mailtoUrl = `mailto:dwarakadasa@gmail.com?subject=${encodeURIComponent(subject || 'Inquiry: ' + service)}&body=${encodeURIComponent('From: ' + name + '\nEmail: ' + email + '\nPurpose: ' + service + '\n\nMessage:\n' + message)}`;
+      window.location.href = mailtoUrl;
+    } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalText;
-      form.reset();
-      showToast('Inquiry received! Executive office will follow up shortly.');
-    }, 1200);
+    }
   });
 }
 

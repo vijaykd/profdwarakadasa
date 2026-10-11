@@ -25,8 +25,8 @@
 
   <!-- Realistic Vector World Map Engine (100% Offline / Zero API Keys) -->
 
-  <!-- Main Stylesheet (v2.1 Mobile Flexbox Precision & Alignment) -->
-  <link rel="stylesheet" href="css/style.css?v=2.1">
+  <!-- Main Stylesheet (v2.2 Mobile Navigation & Anti-Spam CAPTCHA) -->
+  <link rel="stylesheet" href="css/style.css?v=2.2">
 </head>
 <body>
 
@@ -83,6 +83,9 @@
           <li><a href="#career" class="nav-link">Career</a></li>
           <li><a href="#publications" class="nav-link">Publications</a></li>
           <li><a href="#awards" class="nav-link">Honors</a></li>
+          <li class="mobile-menu-cta-wrap">
+            <a href="#contact" class="nav-link nav-cta-mobile">Direct Contact &rarr;</a>
+          </li>
         </ul>
       </nav>
 
@@ -1540,9 +1543,9 @@
                   </svg>
                 </div>
                 <div>
-                  <div class="contact-item-title">Official Inquiries</div>
+                  <div class="contact-item-title">Official Inquiries &amp; Advisory</div>
                   <div class="contact-item-val">
-                    <a href="mailto:contact@dwarakadasa.org">contact@dwarakadasa.org</a> / <a href="mailto:khmdl@vsnl.com">khmdl@vsnl.com</a>
+                    <a href="mailto:dwarakadasa@gmail.com">dwarakadasa@gmail.com</a>
                   </div>
                 </div>
               </div>
@@ -1556,6 +1559,11 @@
             </h3>
 
             <form id="academic-contact-form">
+              <!-- Honeypot Bot Trap (hidden from human visitors) -->
+              <div style="display:none !important;" aria-hidden="true">
+                <input type="text" name="_honey" id="contact-honeypot" tabindex="-1" autocomplete="off">
+              </div>
+
               <div class="form-group">
                 <label for="contact-name" class="form-label">Full Name &amp; Title *</label>
                 <input type="text" id="contact-name" class="form-control" required placeholder="e.g. Dr. Rajesh Sharma / Managing Director">
@@ -1588,13 +1596,46 @@
                 <textarea id="contact-message" class="form-control" rows="4" required placeholder="Please provide brief details of the component failure, engineering challenge, or collaboration proposal..."></textarea>
               </div>
 
-              <button type="submit" class="btn btn-gold" style="width: 100%;">
+              <!-- Anti-Spam Security Challenge (CAPTCHA) -->
+              <div class="form-group captcha-group">
+                <div class="captcha-header">
+                  <label for="captcha-answer" class="form-label" style="margin-bottom: 0;">
+                    <span class="captcha-badge">Security Verification</span>
+                    What is <span id="captcha-question" class="captcha-math">...</span>?
+                  </label>
+                  <button type="button" id="refresh-captcha-btn" class="captcha-refresh-btn" title="Generate new challenge" aria-label="Refresh security verification challenge">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="23 4 23 10 17 10"></polyline>
+                      <polyline points="1 20 1 14 7 14"></polyline>
+                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                    <span>Refresh</span>
+                  </button>
+                </div>
+                <div class="captcha-input-row">
+                  <input type="number" id="captcha-answer" class="form-control captcha-input" required placeholder="Enter number" autocomplete="off">
+                  <span class="captcha-hint-text">Anti-spam verification</span>
+                </div>
+              </div>
+
+              <button type="submit" id="contact-submit-btn" class="btn btn-gold" style="width: 100%;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                 </svg>
                 Submit Professional Inquiry
               </button>
+
+              <div class="direct-email-alt">
+                <span>Or email directly:</span>
+                <a href="mailto:dwarakadasa@gmail.com?subject=Inquiry%20for%20Prof.%20E.%20S.%20Dwarakadasa" class="direct-email-link">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  dwarakadasa@gmail.com
+                </a>
+              </div>
             </form>
           </div>
         </div>
@@ -1634,8 +1675,8 @@
 
   
 
-  <!-- JavaScript Bundle (v2.1) -->
-  <script src="js/main.js?v=2.1"></script>
+  <!-- JavaScript Bundle (v2.2 Anti-Spam CAPTCHA & Mobile Drawer) -->
+  <script src="js/main.js?v=2.2"></script>
   <script>
     document.getElementById('copyright-year').textContent = new Date().getFullYear();
   </script>
