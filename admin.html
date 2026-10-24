@@ -866,6 +866,15 @@
         Biography &amp; Heritage
       </button>
 
+      <button type="button" class="tab-btn" data-tab="tab-map">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z"></path>
+        </svg>
+        Global Footprint Map
+      </button>
+
       <button type="button" class="tab-btn" data-tab="tab-career">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"></circle>
@@ -916,6 +925,14 @@
         Office &amp; Inquiries
       </button>
 
+      <button type="button" class="tab-btn" data-tab="tab-settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        Website Settings &amp; SEO
+      </button>
+
       <div class="sidebar-heading">Publish &amp; Sync</div>
 
       <button type="button" class="tab-btn" data-tab="tab-publish">
@@ -938,9 +955,25 @@
         <div class="section-banner">
           <div class="section-banner-info">
             <h2 class="section-banner-title">Hero Profile &amp; Bio</h2>
-            <p class="section-banner-desc">Primary header information, credentials, titles, role pills, and executive summary.</p>
+            <p class="section-banner-desc">Primary header information, credentials, titles, photo, role pills, affiliations, and executive summary.</p>
           </div>
           <button type="button" class="btn btn-gold btn-save-quick">💾 Save Changes</button>
+        </div>
+
+        <!-- Portrait Photo URL & Live Preview -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Portrait Photo URL &amp; Live Preview</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Change image link or upload path</span>
+          </div>
+          <div style="padding: 18px; display: grid; grid-template-columns: 85px 1fr; gap: 18px; align-items: center;">
+            <img id="hero-photo-preview" src="assets/images/prof-dwarakadasa.jpg?v=3" alt="Preview" style="width: 80px; height: 96px; object-fit: cover; border-radius: var(--radius-sm); border: 2px solid var(--gold-border); box-shadow: var(--shadow-sm);">
+            <div>
+              <label class="form-label">Photo Source URL / File Path</label>
+              <input type="text" class="form-control" id="hero-photo-url" data-key="hero.photo_url" placeholder="assets/images/prof-dwarakadasa.jpg?v=3">
+              <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; display: block;">Supports local image paths (e.g. <code>assets/images/...</code>) or any web URL (https://...).</span>
+            </div>
+          </div>
         </div>
 
         <!-- Name & Degrees -->
@@ -996,6 +1029,30 @@
           <div style="padding: 18px;">
             <div id="role-pills-list"></div>
             <button type="button" class="btn-add-item" id="btn-add-pill">+ Add New Role Pill</button>
+          </div>
+        </div>
+
+        <!-- Scholarly Profile Links (Wikipedia, ResearchGate, ORCID, IISc Archive) -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Scholarly Profile Links</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Cards under his portrait</span>
+          </div>
+          <div style="padding: 18px;">
+            <div id="profile-links-list"></div>
+            <button type="button" class="btn-add-item" id="btn-add-profile-link">+ Add New Profile Link</button>
+          </div>
+        </div>
+
+        <!-- Professional Affiliations -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Professional Affiliations</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Current and emeritus affiliations</span>
+          </div>
+          <div style="padding: 18px;">
+            <div id="affiliations-list"></div>
+            <button type="button" class="btn-add-item" id="btn-add-affiliation">+ Add New Affiliation</button>
           </div>
         </div>
 
@@ -1058,6 +1115,27 @@
           </div>
         </div>
 
+        <!-- Section Header Editor -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Section Header &amp; Subtitle</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <label class="form-label">Section Tag (Gold Badge)</label>
+              <input type="text" class="form-control" data-key="breakthroughs_header.tag">
+            </div>
+            <div>
+              <label class="form-label">Section Main Title</label>
+              <input type="text" class="form-control" data-key="breakthroughs_header.title">
+            </div>
+            <div>
+              <label class="form-label">Section Subtitle / Description</label>
+              <textarea class="form-control" data-key="breakthroughs_header.subtitle" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+
         <div id="breakthroughs-container"></div>
         <button type="button" class="btn-add-item" id="btn-add-breakthrough">+ Add New Defense Breakthrough Card</button>
       </section>
@@ -1082,16 +1160,20 @@
 
         <div class="editor-card">
           <div class="editor-card-header">
-            <span class="editor-card-title">Corporate Subtitle &amp; Title</span>
+            <span class="editor-card-title">Corporate Section Header &amp; Facility</span>
           </div>
           <div style="padding: 18px; display: flex; flex-direction: column; gap: 14px;">
             <div>
-              <label class="form-label">Heading</label>
-              <input type="text" class="form-control" id="industry-title" data-key="industry.title">
+              <label class="form-label">Section Tag (Gold Badge)</label>
+              <input type="text" class="form-control" data-key="industry_header.tag">
+            </div>
+            <div>
+              <label class="form-label">Main Heading</label>
+              <input type="text" class="form-control" id="industry-title" data-key="industry_header.title">
             </div>
             <div>
               <label class="form-label">Executive Subheading</label>
-              <input type="text" class="form-control" id="industry-sub" data-key="industry.subtitle">
+              <input type="text" class="form-control" id="industry-sub" data-key="industry_header.subtitle">
             </div>
             <div>
               <label class="form-label">Facility Address</label>
@@ -1139,12 +1221,20 @@
           </div>
           <div style="padding: 18px; display: flex; flex-direction: column; gap: 14px;">
             <div>
+              <label class="form-label">Section Tag (Gold Badge)</label>
+              <input type="text" class="form-control" data-key="about.section_tag">
+            </div>
+            <div>
               <label class="form-label">Section Heading</label>
               <input type="text" class="form-control" id="about-title" data-key="about.section_title">
             </div>
             <div>
               <label class="form-label">Ancestral Subtitle</label>
               <input type="text" class="form-control" id="about-sub" data-key="about.section_subtitle">
+            </div>
+            <div>
+              <label class="form-label">Heritage Feat Card Title</label>
+              <input type="text" class="form-control" data-key="about.heritage_title">
             </div>
           </div>
         </div>
@@ -1182,6 +1272,52 @@
       </section>
 
       <!-- ==============================================================
+           TAB: GLOBAL FOOTPRINT MAP
+           ============================================================== -->
+      <section id="tab-map" class="section-editor-panel">
+        <div class="section-banner">
+          <div class="section-banner-info">
+            <h2 class="section-banner-title">Global Academic &amp; Strategic Footprint</h2>
+            <p class="section-banner-desc">International research missions, visiting professorships across USA, Europe, and Asia.</p>
+          </div>
+          <div class="section-toggle-wrap">
+            <span class="toggle-label">Section Visible:</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-global-map" data-section="global-map" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Section Header &amp; Subtitle</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <label class="form-label">Section Tag (Gold Badge)</label>
+              <input type="text" class="form-control" data-key="map_header.tag">
+            </div>
+            <div>
+              <label class="form-label">Section Main Title</label>
+              <input type="text" class="form-control" data-key="map_header.title">
+            </div>
+            <div>
+              <label class="form-label">Section Subtitle / Description</label>
+              <textarea class="form-control" data-key="map_header.subtitle" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-card" style="padding: 20px;">
+          <h4 style="font-size: 0.95rem; margin-bottom: 6px; color: var(--gold);">🗺️ Interactive World Map Visualization</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            The interactive world map visualizes Prof. Dwarakadasa's international research missions across 4 continents. If you wish to hide the map, simply switch <strong>Section Visible</strong> above to OFF, and it will disappear cleanly from the website and navigation menu.
+          </p>
+        </div>
+      </section>
+
+      <!-- ==============================================================
            TAB 6: CAREER TIMELINE
            ============================================================== -->
       <section id="tab-career" class="section-editor-panel">
@@ -1196,6 +1332,27 @@
               <input type="checkbox" id="toggle-career" data-section="career" checked>
               <span class="toggle-slider"></span>
             </label>
+          </div>
+        </div>
+
+        <!-- Career Section Header Editor -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Section Header &amp; Subtitle</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <label class="form-label">Section Tag (Gold Badge)</label>
+              <input type="text" class="form-control" data-key="career_header.tag">
+            </div>
+            <div>
+              <label class="form-label">Section Main Title</label>
+              <input type="text" class="form-control" data-key="career_header.title">
+            </div>
+            <div>
+              <label class="form-label">Section Subtitle / Description</label>
+              <textarea class="form-control" data-key="career_header.subtitle" rows="2"></textarea>
+            </div>
           </div>
         </div>
 
@@ -1221,6 +1378,27 @@
           </div>
         </div>
 
+        <!-- Endowments Section Header Editor -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Section Header &amp; Subtitle</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <label class="form-label">Section Tag (Gold Badge)</label>
+              <input type="text" class="form-control" data-key="endowments_header.tag">
+            </div>
+            <div>
+              <label class="form-label">Section Main Title</label>
+              <input type="text" class="form-control" data-key="endowments_header.title">
+            </div>
+            <div>
+              <label class="form-label">Section Subtitle / Description</label>
+              <textarea class="form-control" data-key="endowments_header.subtitle" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+
         <div id="endowments-container"></div>
         <button type="button" class="btn-add-item" id="btn-add-endowment">+ Add Institutional Endowment Card</button>
       </section>
@@ -1240,6 +1418,27 @@
               <input type="checkbox" id="toggle-awards" data-section="awards" checked>
               <span class="toggle-slider"></span>
             </label>
+          </div>
+        </div>
+
+        <!-- Awards Section Header Editor -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Section Header &amp; Subtitle</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <label class="form-label">Section Tag (Gold Badge)</label>
+              <input type="text" class="form-control" data-key="awards_header.tag">
+            </div>
+            <div>
+              <label class="form-label">Section Main Title</label>
+              <input type="text" class="form-control" data-key="awards_header.title">
+            </div>
+            <div>
+              <label class="form-label">Section Subtitle / Description</label>
+              <textarea class="form-control" data-key="awards_header.subtitle" rows="2"></textarea>
+            </div>
           </div>
         </div>
 
@@ -1265,6 +1464,27 @@
           </div>
         </div>
 
+        <!-- Publications Section Header Editor -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Section Header &amp; Subtitle</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <label class="form-label">Section Tag (Gold Badge)</label>
+              <input type="text" class="form-control" data-key="publications_header.tag">
+            </div>
+            <div>
+              <label class="form-label">Section Main Title</label>
+              <input type="text" class="form-control" data-key="publications_header.title">
+            </div>
+            <div>
+              <label class="form-label">Section Subtitle / Description</label>
+              <textarea class="form-control" data-key="publications_header.subtitle" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+
         <div id="publications-container"></div>
         <button type="button" class="btn-add-item" id="btn-add-publication">+ Add New Research Publication / Book</button>
       </section>
@@ -1284,6 +1504,27 @@
               <input type="checkbox" id="toggle-mentorship" data-section="mentorship" checked>
               <span class="toggle-slider"></span>
             </label>
+          </div>
+        </div>
+
+        <!-- Mentorship Section Header Editor -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Section Header &amp; Subtitle</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <label class="form-label">Section Tag (Gold Badge)</label>
+              <input type="text" class="form-control" data-key="mentorship_header.tag">
+            </div>
+            <div>
+              <label class="form-label">Section Main Title</label>
+              <input type="text" class="form-control" data-key="mentorship_header.title">
+            </div>
+            <div>
+              <label class="form-label">Section Subtitle / Description</label>
+              <textarea class="form-control" data-key="mentorship_header.subtitle" rows="2"></textarea>
+            </div>
           </div>
         </div>
 
@@ -1317,7 +1558,7 @@
         <div class="section-banner">
           <div class="section-banner-info">
             <h2 class="section-banner-title">Office &amp; Inquiries</h2>
-            <p class="section-banner-desc">Official email address and corporate &amp; academic offices.</p>
+            <p class="section-banner-desc">Official email address, corporate &amp; academic offices, and inquiry dropdown options.</p>
           </div>
           <div class="section-toggle-wrap">
             <span class="toggle-label">Section Visible:</span>
@@ -1325,6 +1566,27 @@
               <input type="checkbox" id="toggle-contact" data-section="contact" checked>
               <span class="toggle-slider"></span>
             </label>
+          </div>
+        </div>
+
+        <!-- Contact Section Header Editor -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Section Header &amp; Subtitle</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <label class="form-label">Section Tag (Gold Badge)</label>
+              <input type="text" class="form-control" data-key="contact_header.tag">
+            </div>
+            <div>
+              <label class="form-label">Section Main Title</label>
+              <input type="text" class="form-control" data-key="contact_header.title">
+            </div>
+            <div>
+              <label class="form-label">Section Subtitle / Description</label>
+              <textarea class="form-control" data-key="contact_header.subtitle" rows="2"></textarea>
+            </div>
           </div>
         </div>
 
@@ -1350,6 +1612,63 @@
             <div>
               <label class="form-label">IISc Academic Office</label>
               <textarea class="form-control" id="contact-iisc-addr" data-key="contact.iisc_address" rows="4"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form Service Options Editor -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Inquiry Consultation Services (Form Dropdown Options)</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Options selectable by visitors</span>
+          </div>
+          <div style="padding: 18px;">
+            <div id="contact-services-list"></div>
+            <button type="button" class="btn-add-item" id="btn-add-service">+ Add New Consultation Option</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================================
+           TAB: WEBSITE SETTINGS, SEO & FOOTER
+           ============================================================== -->
+      <section id="tab-settings" class="section-editor-panel">
+        <div class="section-banner">
+          <div class="section-banner-info">
+            <h2 class="section-banner-title">Website Settings, SEO &amp; Footer</h2>
+            <p class="section-banner-desc">Global page title, search engine meta description, and footer copyright.</p>
+          </div>
+          <button type="button" class="btn btn-gold btn-save-quick">💾 Save Changes</button>
+        </div>
+
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Search Engine Optimization (SEO) &amp; Browser Tab</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+            <div>
+              <label class="form-label">Browser Tab Title (&lt;title&gt;)</label>
+              <input type="text" class="form-control" data-key="meta.page_title">
+            </div>
+            <div>
+              <label class="form-label">Google Search Meta Description</label>
+              <textarea class="form-control" data-key="meta.description" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <span class="editor-card-title">Website Footer Information</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+            <div>
+              <label class="form-label">Copyright Notice Line</label>
+              <input type="text" class="form-control" data-key="footer.copyright">
+            </div>
+            <div>
+              <label class="form-label">Footer Tagline &amp; Affiliations Summary</label>
+              <input type="text" class="form-control" data-key="footer.tagline">
             </div>
           </div>
         </div>
@@ -1609,6 +1928,8 @@
       if (!currentData.sections_visibility) currentData.sections_visibility = {};
       if (!currentData.hero) currentData.hero = {};
       if (!currentData.hero.role_pills) currentData.hero.role_pills = [];
+      if (!currentData.hero.profile_links) currentData.hero.profile_links = [];
+      if (!currentData.hero.affiliations) currentData.hero.affiliations = [];
       if (!currentData.stats) currentData.stats = [];
       if (!currentData.about) currentData.about = {};
       if (!currentData.about.family_metrics) currentData.about.family_metrics = [];
@@ -1620,6 +1941,18 @@
       if (!currentData.publications) currentData.publications = [];
       if (!currentData.mentorship) currentData.mentorship = { stats: [], alumni: [] };
       if (!currentData.contact) currentData.contact = {};
+      if (!currentData.contact.services) currentData.contact.services = [];
+      if (!currentData.breakthroughs_header) currentData.breakthroughs_header = {};
+      if (!currentData.industry_header) currentData.industry_header = {};
+      if (!currentData.career_header) currentData.career_header = {};
+      if (!currentData.endowments_header) currentData.endowments_header = {};
+      if (!currentData.awards_header) currentData.awards_header = {};
+      if (!currentData.publications_header) currentData.publications_header = {};
+      if (!currentData.map_header) currentData.map_header = {};
+      if (!currentData.mentorship_header) currentData.mentorship_header = {};
+      if (!currentData.contact_header) currentData.contact_header = {};
+      if (!currentData.footer) currentData.footer = {};
+      if (!currentData.meta) currentData.meta = {};
 
       renderAllSections();
     }
@@ -1653,6 +1986,12 @@
         }
       });
 
+      // Photo preview
+      const preview = document.getElementById('hero-photo-preview');
+      if (preview && currentData.hero && currentData.hero.photo_url) {
+        preview.src = currentData.hero.photo_url;
+      }
+
       // 2. Section Visibility Toggles
       document.querySelectorAll('[data-section]').forEach(toggle => {
         const sec = toggle.getAttribute('data-section');
@@ -1663,29 +2002,36 @@
       // 3. Render Role Pills
       renderRolePills();
 
-      // 4. Render Stats
+      // 4. Render Profile Links & Affiliations
+      renderProfileLinks();
+      renderAffiliations();
+
+      // 5. Render Stats
       renderStats();
 
-      // 5. Render Family Metrics
+      // 6. Render Family Metrics
       renderFamilyMetrics();
 
-      // 6. Render Breakthroughs
+      // 7. Render Breakthroughs
       renderBreakthroughs();
 
-      // 7. Render Career Milestones
+      // 8. Render Career Milestones
       renderCareer();
 
-      // 8. Render Endowments
+      // 9. Render Endowments
       renderEndowments();
 
-      // 9. Render Awards
+      // 10. Render Awards
       renderAwards();
 
-      // 10. Render Publications
+      // 11. Render Publications
       renderPublications();
 
-      // 11. Render Mentorship Stats & Alumni
+      // 12. Render Mentorship Stats & Alumni
       renderMentorship();
+
+      // 13. Render Contact Services Dropdown Options
+      renderContactServices();
     }
 
     /* ROLE PILLS */
@@ -1713,6 +2059,108 @@
       currentData.hero.role_pills.push('New Role or Distinction');
       renderRolePills();
     });
+
+    /* HERO PHOTO PREVIEW LISTENER */
+    const photoUrlInput = document.getElementById('hero-photo-url');
+    if (photoUrlInput) {
+      photoUrlInput.addEventListener('input', () => {
+        const preview = document.getElementById('hero-photo-preview');
+        if (preview) {
+          preview.src = photoUrlInput.value || 'assets/images/prof-dwarakadasa.jpg?v=3';
+        }
+      });
+    }
+
+    /* PROFILE LINKS */
+    function renderProfileLinks() {
+      const container = document.getElementById('profile-links-list');
+      if (!container) return;
+      container.innerHTML = '';
+      (currentData.hero.profile_links || []).forEach((l, idx) => {
+        const div = document.createElement('div');
+        div.className = 'item-card';
+        div.style.padding = '12px';
+        div.style.marginBottom = '10px';
+        div.innerHTML = `
+          <div class="item-card-top" style="margin-bottom: 8px;">
+            <span class="item-card-index">Profile Link #${idx + 1} &bull; ${l.name || 'Link'}</span>
+            <button type="button" class="btn-delete-item" onclick="deleteProfileLink(${idx})">🗑️ Delete</button>
+          </div>
+          <div style="display: grid; grid-template-columns: 140px 140px 1fr 90px; gap: 8px;">
+            <div>
+              <label class="form-label">Link Name</label>
+              <input type="text" class="form-control pl-name" data-idx="${idx}" value="${l.name || ''}" placeholder="e.g. Wikipedia">
+            </div>
+            <div>
+              <label class="form-label">Sublabel</label>
+              <input type="text" class="form-control pl-sub" data-idx="${idx}" value="${l.sub || ''}" placeholder="e.g. Biography">
+            </div>
+            <div>
+              <label class="form-label">Destination URL</label>
+              <input type="url" class="form-control pl-url" data-idx="${idx}" value="${l.url || ''}" placeholder="https://...">
+            </div>
+            <div>
+              <label class="form-label">Icon / Tag</label>
+              <input type="text" class="form-control pl-icon" data-idx="${idx}" value="${l.icon || ''}" placeholder="W">
+            </div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    window.deleteProfileLink = (idx) => {
+      currentData.hero.profile_links.splice(idx, 1);
+      renderProfileLinks();
+    };
+
+    const btnAddProfileLink = document.getElementById('btn-add-profile-link');
+    if (btnAddProfileLink) {
+      btnAddProfileLink.addEventListener('click', () => {
+        if (!currentData.hero.profile_links) currentData.hero.profile_links = [];
+        currentData.hero.profile_links.push({
+          name: 'Scholarly Profile',
+          sub: 'Academic Archive',
+          url: 'https://',
+          icon: 'Link'
+        });
+        renderProfileLinks();
+      });
+    }
+
+    /* HERO AFFILIATIONS */
+    function renderAffiliations() {
+      const container = document.getElementById('affiliations-list');
+      if (!container) return;
+      container.innerHTML = '';
+      (currentData.hero.affiliations || []).forEach((af, idx) => {
+        const div = document.createElement('div');
+        div.style.cssText = 'display: flex; gap: 8px; margin-bottom: 8px; align-items: center;';
+        div.innerHTML = `
+          <input type="text" class="form-control affil-role" data-idx="${idx}" value="${af.role || ''}" placeholder="Role or Department" style="flex: 1;">
+          <input type="text" class="form-control affil-org" data-idx="${idx}" value="${af.org || ''}" placeholder="Institution or Corporation" style="flex: 1;">
+          <button type="button" class="btn-delete-item" onclick="deleteAffiliation(${idx})">🗑️ Delete</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    window.deleteAffiliation = (idx) => {
+      currentData.hero.affiliations.splice(idx, 1);
+      renderAffiliations();
+    };
+
+    const btnAddAffiliation = document.getElementById('btn-add-affiliation');
+    if (btnAddAffiliation) {
+      btnAddAffiliation.addEventListener('click', () => {
+        if (!currentData.hero.affiliations) currentData.hero.affiliations = [];
+        currentData.hero.affiliations.push({
+          role: 'Academic / Industrial Role',
+          org: 'Institution / Organization'
+        });
+        renderAffiliations();
+      });
+    }
 
     /* STATS STRIP */
     function renderStats() {
@@ -2149,6 +2597,36 @@
       renderMentorship();
     });
 
+    /* CONTACT SERVICES DROPDOWN OPTIONS */
+    function renderContactServices() {
+      const container = document.getElementById('contact-services-list');
+      if (!container) return;
+      container.innerHTML = '';
+      (currentData.contact.services || []).forEach((srv, idx) => {
+        const div = document.createElement('div');
+        div.style.cssText = 'display: flex; gap: 8px; margin-bottom: 8px; align-items: center;';
+        div.innerHTML = `
+          <input type="text" class="form-control service-input" data-idx="${idx}" value="${srv}" style="flex: 1;" placeholder="Consultation topic or service description">
+          <button type="button" class="btn-delete-item" onclick="deleteContactService(${idx})">🗑️ Delete</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    window.deleteContactService = (idx) => {
+      currentData.contact.services.splice(idx, 1);
+      renderContactServices();
+    };
+
+    const btnAddService = document.getElementById('btn-add-service');
+    if (btnAddService) {
+      btnAddService.addEventListener('click', () => {
+        if (!currentData.contact.services) currentData.contact.services = [];
+        currentData.contact.services.push('New Consultation / Advisory Inquiry Topic');
+        renderContactServices();
+      });
+    }
+
     /* COLLECT ALL EDITED VALUES BEFORE SAVING */
     function collectAllData() {
       // 1. Direct inputs & contenteditable fields
@@ -2167,6 +2645,26 @@
       // 3. Collect Role Pills
       const pillInputs = document.querySelectorAll('.role-pill-input');
       currentData.hero.role_pills = Array.from(pillInputs).map(inp => inp.value.trim()).filter(Boolean);
+
+      // 3b. Collect Profile Links
+      const profileLinkCards = document.querySelectorAll('#profile-links-list .item-card');
+      currentData.hero.profile_links = Array.from(profileLinkCards).map(c => ({
+        name: c.querySelector('.pl-name')?.value || '',
+        sub: c.querySelector('.pl-sub')?.value || '',
+        url: c.querySelector('.pl-url')?.value || '',
+        icon: c.querySelector('.pl-icon')?.value || ''
+      }));
+
+      // 3c. Collect Affiliations
+      const affilRows = document.querySelectorAll('#affiliations-list > div');
+      currentData.hero.affiliations = Array.from(affilRows).map(r => ({
+        role: r.querySelector('.affil-role')?.value || '',
+        org: r.querySelector('.affil-org')?.value || ''
+      }));
+
+      // 3d. Collect Contact Services
+      const serviceInputs = document.querySelectorAll('.service-input');
+      currentData.contact.services = Array.from(serviceInputs).map(inp => inp.value.trim()).filter(Boolean);
 
       // 4. Collect Stats
       document.querySelectorAll('.stat-num').forEach(el => {

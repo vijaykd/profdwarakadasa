@@ -1073,9 +1073,57 @@ async function initDynamicContent() {
       const el = document.querySelector('.hero-badge-floating span');
       if (el) el.innerHTML = content.hero.badge;
     }
+    if (content.hero.photo_url) {
+      const img = document.querySelector('.hero-avatar-img');
+      if (img) img.src = content.hero.photo_url;
+    }
     if (content.hero.summary) {
       const el = document.querySelector('.hero-summary');
       if (el) el.innerHTML = content.hero.summary;
+    }
+
+    // Profile Links (Left Hero card)
+    if (Array.isArray(content.hero.profile_links) && content.hero.profile_links.length > 0) {
+      const linkList = document.querySelector('.profile-links-list');
+      if (linkList) {
+        linkList.innerHTML = '';
+        content.hero.profile_links.forEach(l => {
+          const a = document.createElement('a');
+          a.href = l.url || '#';
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.className = 'profile-link-item';
+          a.title = l.name || '';
+          a.innerHTML = `
+            <span class="profile-link-icon ${l.icon ? l.icon.toLowerCase() + '-icon' : 'wiki-icon'}">${l.icon || 'W'}</span>
+            <div class="profile-link-info">
+              <span class="profile-link-name">${l.name || ''}</span>
+              <span class="profile-link-sub">${l.sub || ''}</span>
+            </div>
+            <svg class="profile-link-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          `;
+          linkList.appendChild(a);
+        });
+      }
+    }
+
+    // Affiliations
+    if (Array.isArray(content.hero.affiliations) && content.hero.affiliations.length > 0) {
+      const affilWrap = document.querySelector('.hero-affiliations');
+      if (affilWrap) {
+        affilWrap.innerHTML = '';
+        content.hero.affiliations.forEach((af, idx) => {
+          const div = document.createElement('div');
+          div.className = 'affiliation-item';
+          div.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              ${idx === 0 ? '<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path>' : '<rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>'}
+            </svg>
+            <span>${af.role}, <strong>${af.org}</strong></span>
+          `;
+          affilWrap.appendChild(div);
+        });
+      }
     }
 
     // Role Pills
@@ -1384,6 +1432,71 @@ async function initDynamicContent() {
       const iiscEl = document.querySelectorAll('.contact-item-val')[1];
       if (iiscEl) iiscEl.innerHTML = `Department of Materials Engineering<br><strong>Indian Institute of Science (IISc)</strong><br>${content.contact.iisc_address.replace(/\n/g, '<br>')}`;
     }
+
+    // Contact Services Dropdown
+    if (Array.isArray(content.contact.services) && content.contact.services.length > 0) {
+      const selectEl = document.getElementById('contact-service');
+      if (selectEl) {
+        selectEl.innerHTML = '';
+        content.contact.services.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s.toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 30);
+          opt.textContent = s;
+          selectEl.appendChild(opt);
+        });
+      }
+    }
+  }
+
+  // 15. Section Headers (Tag, Title, Subtitle across all sections)
+  const headerMap = {
+    'breakthroughs': content.breakthroughs_header,
+    'industry': content.industry_header,
+    'career': content.career_header,
+    'endowments': content.endowments_header,
+    'awards': content.awards_header,
+    'publications': content.publications_header,
+    'global-map': content.map_header,
+    'mentorship': content.mentorship_header || (content.mentorship ? { tag: content.mentorship.section_tag, title: content.mentorship.title, subtitle: content.mentorship.subtitle } : null),
+    'contact': content.contact_header
+  };
+
+  Object.keys(headerMap).forEach(secId => {
+    const h = headerMap[secId];
+    if (h) {
+      const sec = document.getElementById(secId);
+      if (sec) {
+        const tagEl = sec.querySelector('.section-tag');
+        const titleEl = sec.querySelector('.section-title');
+        const subEl = sec.querySelector('.section-subtitle');
+        if (tagEl && h.tag) tagEl.innerHTML = h.tag;
+        if (titleEl && h.title) titleEl.innerHTML = h.title;
+        if (subEl && h.subtitle) subEl.innerHTML = h.subtitle;
+      }
+    }
+  });
+
+  // 16. Footer & Meta SEO
+  if (content.footer) {
+    if (content.footer.copyright) {
+      const c = document.querySelector('footer p');
+      if (c) c.innerHTML = `&copy; <span id="copyright-year">${new Date().getFullYear()}</span> ${content.footer.copyright}`;
+    }
+    if (content.footer.tagline) {
+      const t = document.querySelectorAll('footer p')[1];
+      if (t) t.innerHTML = content.footer.tagline;
+    }
+  }
+
+  if (content.meta) {
+    if (content.meta.page_title) {
+      document.title = content.meta.page_title;
+    }
+    if (content.meta.description) {
+      const m = document.querySelector('meta[name="description"]');
+      if (m) m.content = content.meta.description;
+    }
+  }
   }
 }
 

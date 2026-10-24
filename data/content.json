@@ -53,6 +53,34 @@
         "url": "https://iisc.ac.in",
         "icon": "IISc"
       }
+    ],
+    "photo_url": "assets/images/prof-dwarakadasa.jpg?v=3",
+    "affiliations": [
+      {
+        "role": "Department of Metallurgy (Materials Engineering)",
+        "org": "Indian Institute of Science (IISc), Bangalore"
+      },
+      {
+        "role": "CEO & Managing Director",
+        "org": "Karnataka Hybrid Micro Devices Limited (KHMD)"
+      }
+    ],
+    "ctas": [
+      {
+        "text": "Defense & Space Contributions",
+        "link": "#breakthroughs",
+        "style": "btn-primary"
+      },
+      {
+        "text": "Industry Advisory & Forensics",
+        "link": "#contact",
+        "style": "btn-gold"
+      },
+      {
+        "text": "150+ Peer-Reviewed Papers",
+        "link": "#publications",
+        "style": "btn-outline"
+      }
     ]
   },
   "stats": [
@@ -350,6 +378,67 @@
   "contact": {
     "email": "dwarakadasa@gmail.com",
     "khmd_address": "Plot No. 104, KIADB Industrial Area, Electronic City Phase 1\nBengaluru, Karnataka 560100, India",
-    "iisc_address": "Department of Materials Engineering\nIndian Institute of Science (IISc)\nBengaluru, Karnataka 560012, India"
+    "iisc_address": "Department of Materials Engineering\nIndian Institute of Science (IISc)\nBengaluru, Karnataka 560012, India",
+    "services": [
+      "Industrial Failure Analysis & Metallurgical Forensic Diagnosis",
+      "Aerospace / Defense Alloy Selection & Heat Treatment",
+      "Space-Grade Hybrid Microelectronics (KHMD Subsystems)",
+      "University / Institutional Board Advisory",
+      "Keynote Address / Plenary Lecture Invitation",
+      "General Scholarly Inquiry"
+    ]
+  },
+  "breakthroughs_header": {
+    "tag": "National Impact & Strategic Engineering",
+    "title": "Pioneering Breakthroughs for India\u2019s Defense & Aerospace",
+    "subtitle": "Groundbreaking metallurgical engineering applied to India\u2019s Light Combat Aircraft, naval submarine propellers, extreme deep-sea expeditions, and precision optical diagnostics."
+  },
+  "industry_header": {
+    "tag": "Corporate Leadership & Space Microelectronics",
+    "title": "Karnataka Hybrid Micro Devices Limited (KHMD)",
+    "subtitle": "CEO & Managing Director since 1990 \u2022 High-Reliability Defense & Space Electronics"
+  },
+  "career_header": {
+    "tag": "Academic Timeline",
+    "title": "Four Decades at IISc Bangalore & International Fellowships",
+    "subtitle": "From Senior Research Assistant in 1961 to Full Professor and Department stalwart, alongside visiting appointments in the USA, Germany, Japan, and the Netherlands."
+  },
+  "endowments_header": {
+    "tag": "Enduring Tributes",
+    "title": "Awards Instituted in His Honour",
+    "subtitle": "Honoring a lifetime of mentorship, entrepreneurship, and scientific rigor through permanent institutional award endowments."
+  },
+  "awards_header": {
+    "tag": "Hall of Fame",
+    "title": "Major Awards, Gold Medals & Fellowships",
+    "subtitle": "National and international commendations spanning five decades of breakthroughs in non-ferrous metallurgy, avionics materials, electron microscopy, and engineering leadership."
+  },
+  "publications_header": {
+    "tag": "Scholarly Works",
+    "title": "Selected Publications & Research Archive",
+    "subtitle": "Search and filter through 150+ peer-reviewed articles across journals including Materials Science & Engineering: A, Metallurgical Transactions, Wear, and Corrosion Science."
+  },
+  "map_header": {
+    "tag": "Global Academic & Strategic Footprint",
+    "title": "International Research Missions & Visiting Professorships",
+    "subtitle": "Decades of keynote addresses, defense delegations, electron microscopy certifications, and visiting appointments across 4 continents."
+  },
+  "mentorship_header": {
+    "tag": "Pedagogy & Academic Tree",
+    "title": "Teaching & Mentorship Legacy",
+    "subtitle": "Guiding 28+ Ph.D. scholars and 45+ Master’s researchers who now hold chair professorships, research directorships, and laboratory leads worldwide."
+  },
+  "contact_header": {
+    "tag": "Advisory & Engagements",
+    "title": "Industrial Consulting & Contact",
+    "subtitle": "Direct portal for Failure Analysis, aerospace alloy consulting, space-grade hybrid electronics inquiries, institutional board advisory, or keynote lectures."
+  },
+  "footer": {
+    "copyright": "Prof. E. S. Dwarakadasa. All rights reserved.",
+    "tagline": "Academic \u2022 Aerospace \u2022 Space-Grade Technology Portal \u2022 Indian Institute of Science & KHMD"
+  },
+  "meta": {
+    "page_title": "Prof. E. S. Dwarakadasa | Metallurgical Luminary, IISc Professor & Tech Executive",
+    "description": "Prof. E. S. Dwarakadasa - Emeritus Professor at Indian Institute of Science (IISc), CEO & MD of Karnataka Hybrid Micro Devices (KHMD), Fellow of INAE, and pioneering metallurgist behind LCA Tejas Al-Li alloys and Chandrayaan space-grade microelectronics."
   }
 }
