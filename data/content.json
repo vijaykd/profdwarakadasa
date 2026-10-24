@@ -1,0 +1,81 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-10-24T09:25:00Z",
+  "hero": {
+    "name": "Prof. E. S. Dwarakadasa",
+    "fullname": "Eswarahalli Sundararajan Dwarakadasa • B.Sc., B.E., M.Sc.(Engg.), Ph.D.(IISc)",
+    "title": "Pioneering Metallurgist, Materials Scientist & Defense/Space Technology Executive",
+    "live_status": "Active in Research • KHMD CEO & MD • IISc Emeritus",
+    "badge": "1000 Engineers of the World",
+    "affiliation_iisc": "Department of Metallurgy (Materials Engineering), Indian Institute of Science (IISc), Bangalore",
+    "affiliation_khmd": "CEO & Managing Director, Karnataka Hybrid Micro Devices Limited (KHMD)",
+    "summary": "Over four decades of foundational metallurgical research at IISc Bangalore and two decades of industrial leadership. Key contributor to India’s strategic defense and space missions—including <strong>Al-Li alloys for the Light Combat Aircraft (LCA Tejas)</strong>, <strong>high-damping Naval propeller alloys</strong>, <strong>extreme deep-sea titanium corrosion studies at 5,100 meters</strong>, and <strong>2,000+ space-grade hybrid microelectronic subsystems for ISRO's Chandrayaan</strong> missions."
+  },
+  "stats": [
+    {
+      "number": "42+",
+      "label": "Years of Service at IISc",
+      "sublabel": "From Senior Research Assistant (1961) to Full Professor (2003)"
+    },
+    {
+      "number": "2,000+",
+      "label": "Space-Grade Subsystems",
+      "sublabel": "Manufactured at KHMD for ISRO, Chandrayaan & DRDO missions"
+    },
+    {
+      "number": "150+",
+      "label": "Peer-Reviewed Papers",
+      "sublabel": "2,165+ citations in deformation, wear, and aerospace metallurgy"
+    },
+    {
+      "number": "28+",
+      "label": "Ph.D. Dissertations Guided",
+      "sublabel": "Alumni leading university departments in Europe and worldwide"
+    }
+  ],
+  "about": {
+    "section_title": "From Eswarahalli: An Extraordinary Dynasty of Scholars",
+    "section_subtitle": "Born on 22 May 1941 in Bangalore to Eswarahalli Rangachar Sundararajan and Eswarahalli Sundararajan Lokamata, tracing family roots to the tranquil hamlet of Eswarahalli in Hassan district, Karnataka.",
+    "heritage_title": "A Historic Academic Feat in India",
+    "heritage_p1": "Prof. E. S. Dwarakadasa is part of an unmatched intellectual legacy. He was raised as one of <strong>14 siblings, including 9 younger brothers</strong>. In an unprecedented testament to educational dedication and parental vision, <strong>every single one of the 14 siblings graduated in Engineering</strong>.",
+    "heritage_p2": "Even more remarkably, <strong>7 of the brothers earned Ph.D. degrees</strong> in engineering and advanced sciences, and <strong>8 of them are proud alumni of the Indian Institute of Science (IISc), Bangalore</strong>. This extraordinary family tradition of scholarship has produced professors, research directors, and engineering pioneers across the world.",
+    "heritage_quote": "A rural family heritage transformed by relentless academic discipline into a legacy of national engineering excellence."
+  },
+  "breakthroughs": [
+    {
+      "domain": "Aerospace • DRDO & ADA Collaboration",
+      "title": "Light Combat Aircraft (LCA Tejas) Alloys",
+      "desc": "Pioneered the development and thermomechanical characterization of lightweight <strong>Aluminium-Lithium (Al-Li 8090)</strong> alloys and <strong>7050 aircraft alloy</strong> for India’s indigenous Light Combat Aircraft (LCA Tejas). Addressed critical stress corrosion cracking, fatigue crack thresholds, and lithium depletion kinetics.",
+      "tags": ["Al-Li 8090-T851", "AA 7050", "ADA / DRDO", "Aircraft Skin"]
+    },
+    {
+      "domain": "Indian Navy • Maritime Warfare",
+      "title": "High-Damping Copper-Manganese Naval Propellers",
+      "desc": "Formulated and optimized high-damping <strong>Copper-Manganese (Cu-Mn) alloys</strong> specifically engineered for Indian Naval ship and submarine propeller applications. The alloy provides unmatched acoustic signature reduction, vibration absorption, and cavitation erosion resistance.",
+      "tags": ["Cu-Mn System", "Cavitation Resistance", "Acoustic Damping", "Indian Navy"]
+    },
+    {
+      "domain": "Ocean Engineering • Extreme Depths",
+      "title": "Deep-Sea Ti-6Al-4V at 5,100 Meters",
+      "desc": "Conducted benchmark deep-sea exposure trials in the Indian Ocean down to depths of <strong>5,100 meters</strong> under intense hydrostatic pressure, proving zero detectable corrosion in titanium Ti-6Al-4V alloys. Laid the scientific foundation for deep-sea submersibles and ocean mining structures.",
+      "tags": ["Ti-6Al-4V", "Deep-Sea Immunity", "Central Indian Basin", "5,100m Depth"]
+    },
+    {
+      "domain": "Advanced Diagnostics • Industrial Forensics",
+      "title": "Industrial Failure Analysis & Forensics",
+      "desc": "Over 40 years as India's foremost independent consultant in forensic engineering and metallurgical failure diagnosis. Consulted on high-pressure steam pipelines, turbine rotor cracking, aerospace landing gears, and chemical reactor vessels.",
+      "tags": ["Failure Analysis", "Forensic Metallurgy", "Fractography", "Industrial Safety"]
+    }
+  ],
+  "industry": {
+    "title": "Pioneering Space & Defense Microelectronics",
+    "subtitle": "Karnataka Hybrid Micro Devices Limited (KHMD) • High-Reliability Electronics",
+    "desc": "As CEO and Managing Director of KHMD for over two decades, Prof. Dwarakadasa spearheaded the domestic development of space-qualified hybrid microelectronic circuits. Under his leadership, KHMD supplied over 2,000 mission-critical modules directly integrated into ISRO launch vehicles, Chandrayaan lunar payloads, and Indian defense avionics systems.",
+    "facility": "Plot No. 104, KIADB Industrial Area, Electronic City Phase 1, Bengaluru 560100"
+  },
+  "contact": {
+    "email": "dwarakadasa@gmail.com",
+    "khmd_address": "Karnataka Hybrid Micro Devices Limited\nPlot No. 104, KIADB Industrial Area, Electronic City Phase 1\nBengaluru, Karnataka 560100, India",
+    "iisc_address": "Department of Materials Engineering\nIndian Institute of Science (IISc)\nBengaluru, Karnataka 560012, India"
+  }
+}

@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal · Prof. E. S. Dwarakadasa</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=4">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=4">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=4">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #070e1b;
+      --bg-surface: #0e1a30;
+      --bg-card: #142342;
+      --bg-input: #0a1424;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-medium: rgba(255, 255, 255, 0.16);
+      --border-focus: #38bdf8;
+      --gold: #f59e0b;
+      --gold-hover: #d97706;
+      --gold-subtle: rgba(245, 158, 11, 0.15);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent: #38bdf8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* ==========================================================================
+       CRYPTOGRAPHIC AUTHENTICATION OVERLAY (SALTED SHA-256)
+       ========================================================================== */
+    #auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 14, 27, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #auth-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .auth-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-xl);
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      text-align: center;
+      position: relative;
+    }
+
+    .auth-badge-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold-subtle);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 50%;
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.2);
+    }
+
+    .auth-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .auth-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .auth-form {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-input-wrap {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      padding: 12px 14px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+      background: #0f1c34;
+    }
+
+    .pw-toggle-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 4px;
+    }
+
+    .pw-toggle-btn:hover {
+      color: #fff;
+    }
+
+    .auth-remember-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .auth-remember-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .auth-submit-btn {
+      background: linear-gradient(135deg, var(--gold), var(--gold-hover));
+      color: #000;
+      border: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+      transition: all 0.2s ease;
+      margin-top: 8px;
+    }
+
+    .auth-submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
+    }
+
+    .auth-error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+      font-size: 0.825rem;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ==========================================================================
+       MAIN ADMIN APP LAYOUT
+       ========================================================================== */
+    .admin-app {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Top Navigation Bar */
+    .admin-navbar {
+      height: 68px;
+      background: rgba(14, 26, 48, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-medium);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(16px, 3vw, 36px);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .admin-emblem {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .admin-title-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-brand-title {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .admin-badge-pill {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--gold-subtle);
+      color: var(--gold);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 7px;
+      border-radius: var(--radius-sm);
+    }
+
+    .admin-brand-sub {
+      font-size: 0.725rem;
+      color: var(--text-muted);
+    }
+
+    .nav-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.825rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      border-color: var(--border-medium);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-hover));
+      color: #000 !important;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.22);
+      border-color: #ef4444;
+      color: #fff;
+    }
+
+    /* Main Container & Tabbed Sidebar */
+    .admin-body {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      flex: 1;
+      min-height: calc(100vh - 68px);
+    }
+
+    .admin-sidebar {
+      background: #091222;
+      border-right: 1px solid var(--border-medium);
+      padding: 24px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-heading {
+      font-size: 0.6875rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      padding: 8px 12px 4px;
+      margin-top: 10px;
+    }
+
+    .sidebar-heading:first-of-type {
+      margin-top: 0;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+    }
+
+    .tab-btn.active {
+      background: var(--bg-card);
+      border-color: rgba(245, 158, 11, 0.3);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .tab-btn.active svg {
+      color: var(--gold);
+    }
+
+    .admin-content {
+      padding: 32px clamp(20px, 4vw, 48px);
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .content-panel {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .content-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-medium);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .panel-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .panel-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       WORD-PROCESSOR WYSIWYG TOOLBAR
+       ========================================================================== */
+    .editor-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .editor-card-header {
+      background: #11203b;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border-medium);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .editor-card-title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .editor-card-tag {
+      font-size: 0.6875rem;
+      padding: 2px 6px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+    }
+
+    .wysiwyg-toolbar {
+      background: #0b162a;
+      border-bottom: 1px solid var(--border-medium);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+      user-select: none;
+    }
+
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding-right: 8px;
+      margin-right: 8px;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    .toolbar-group:last-child {
+      border-right: none;
+      padding-right: 0;
+      margin-right: 0;
+    }
+
+    .tool-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .tool-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .tool-btn.active {
+      background: var(--gold-subtle);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: var(--gold);
+    }
+
+    .tool-select {
+      height: 32px;
+      background: #11203b;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.775rem;
+      font-weight: 600;
+      padding: 0 8px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .tool-select:focus {
+      border-color: var(--gold);
+    }
+
+    /* Editable Document Content Area */
+    .word-canvas {
+      min-height: 140px;
+      padding: 20px 24px;
+      background: #081120;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .word-canvas[data-serif="true"] {
+      font-family: var(--font-serif);
+    }
+
+    .word-canvas:focus {
+      background: #091325;
+      box-shadow: inset 0 0 0 2px rgba(56, 189, 248, 0.25);
+    }
+
+    .word-canvas p {
+      margin-bottom: 12px;
+    }
+
+    .word-canvas strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .word-canvas a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .word-canvas ul, .word-canvas ol {
+      margin: 10px 0 14px 24px;
+    }
+
+    .word-canvas li {
+      margin-bottom: 4px;
+    }
+
+    .editor-footer {
+      background: #0b162a;
+      border-top: 1px solid var(--border-subtle);
+      padding: 8px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .reset-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.75rem;
+      transition: color 0.2s;
+    }
+
+    .reset-btn:hover {
+      color: var(--gold);
+    }
+
+    /* Toast Notifications */
+    .admin-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #11203b;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 99999;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .admin-toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .admin-body {
+        grid-template-columns: 1fr;
+      }
+      .admin-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-medium);
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 12px;
+      }
+      .tab-btn {
+        white-space: nowrap;
+        padding: 8px 12px;
+      }
+      .sidebar-heading {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================================================
+       1. CRYPTOGRAPHIC PASSWORD LOCK SCREEN (Salted SHA-256)
+       ====================================================================== -->
+  <div id="auth-overlay">
+    <div class="auth-card">
+      <div class="auth-badge-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+
+      <h1 class="auth-title">Executive Management</h1>
+      <p class="auth-subtitle">Prof. E. S. Dwarakadasa Digital Portal &bull; Secure Access</p>
+
+      <div id="auth-error" class="auth-error">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="auth-error-msg">Incorrect username or password. Please try again.</span>
+      </div>
+
+      <form class="auth-form" id="login-form">
+        <div>
+          <label for="auth-username" class="form-label">Authorized Username</label>
+          <div class="form-input-wrap">
+            <input type="text" id="auth-username" class="form-input" required autocomplete="username" placeholder="Enter username">
+          </div>
+        </div>
+
+        <div>
+          <label for="auth-password" class="form-label">Master Passcode</label>
+          <div class="form-input-wrap">
+            <input type="password" id="auth-password" class="form-input" required autocomplete="current-password" placeholder="••••••••••••">
+            <button type="button" class="pw-toggle-btn" id="pw-toggle-btn" aria-label="Toggle password visibility">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-remember-row">
+          <label class="auth-remember-label">
+            <input type="checkbox" id="auth-remember" checked>
+            <span>Stay signed in on this device</span>
+          </label>
+        </div>
+
+        <button type="submit" class="auth-submit-btn" id="auth-submit-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            <polyline points="10 17 15 12 10 7"></polyline>
+            <line x1="15" y1="12" x2="3" y2="12"></line>
+          </svg>
+          Sign In to Workspace
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       2. ADMIN WORKSPACE APPLICATION
+       ====================================================================== -->
+  <div class="admin-app">
+    
+    <!-- Header -->
+    <header class="admin-navbar">
+      <div class="brand-group">
+        <div class="admin-emblem">
+          <!-- Option B Luminary Crest -->
+          <svg viewBox="0 0 44 44" fill="none" width="34" height="34">
+            <polygon points="22 4, 38 13.2, 38 31.6, 22 40.8, 6 31.6, 6 13.2" fill="url(#hexCrestGradAdmin)" stroke="#d97706" stroke-width="1.8"/>
+            <polygon points="22 8, 34 14.9, 34 29.1, 22 36, 10 29.1, 10 14.9" fill="none" stroke="#fef3c7" stroke-width="0.8" opacity="0.6"/>
+            <circle cx="22" cy="4" r="1.5" fill="#fde047"/>
+            <circle cx="38" cy="13.2" r="1.5" fill="#fde047"/>
+            <circle cx="38" cy="31.6" r="1.5" fill="#fde047"/>
+            <circle cx="22" cy="40.8" r="1.5" fill="#fde047"/>
+            <circle cx="6" cy="31.6" r="1.5" fill="#fde047"/>
+            <circle cx="6" cy="13.2" r="1.5" fill="#fde047"/>
+            <ellipse cx="22" cy="22" rx="17" ry="6.5" transform="rotate(-25 22 22)" fill="none" stroke="#67e8f9" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.85"/>
+            <text x="22" y="27" text-anchor="middle" font-family="'Merriweather', Georgia, serif" font-weight="900" font-size="12.5" fill="#ffffff" letter-spacing="0.5">ESD</text>
+            <defs>
+              <linearGradient id="hexCrestGradAdmin" x1="6" y1="4" x2="38" y2="40.8" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#b45309"/>
+                <stop offset="50%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#78350f"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <div class="admin-title-wrap">
+          <div class="admin-brand-title">
+            <span>Prof. Dwarakadasa</span>
+            <span class="admin-badge-pill">Admin Workspace</span>
+          </div>
+          <span class="admin-brand-sub">IISc Emeritus &bull; CEO &amp; MD, KHMD &bull; Digital Content Editor</span>
+        </div>
+      </div>
+
+      <div class="nav-actions-group">
+        <a href="index.html" target="_blank" class="btn btn-outline" title="Open the main portal in a new tab">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          View Live Site
+        </a>
+
+        <button type="button" class="btn btn-gold" id="save-all-btn" title="Save changes (Ctrl+S)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          Save Changes
+        </button>
+
+        <button type="button" class="btn btn-danger" id="signout-btn" title="Sign out and lock workspace">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Sign Out
+        </button>
+      </div>
+    </header>
+
+    <!-- App Body: Sidebar & Editor Content -->
+    <div class="admin-body">
+      
+      <!-- Sidebar Navigation -->
+      <aside class="admin-sidebar">
+        <div class="sidebar-heading">Portal Sections</div>
+        
+        <button type="button" class="tab-btn active" data-tab="tab-hero">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="7" r="4"></circle>
+            <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2"></path>
+          </svg>
+          1. Hero Profile &amp; Bio
+        </button>
+
+        <button type="button" class="tab-btn" data-tab="tab-stats">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 20V10"></path>
+            <path d="M12 20V4"></path>
+            <path d="M6 20v-6"></path>
+          </svg>
+          2. Strategic Metrics
+        </button>
+
+        <button type="button" class="tab-btn" data-tab="tab-about">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          3. Heritage &amp; Dynasty
+        </button>
+
+        <button type="button" class="tab-btn" data-tab="tab-breakthroughs">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          4. Defense Innovations
+        </button>
+
+        <button type="button" class="tab-btn" data-tab="tab-industry">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          5. KHMD &amp; Microelectronics
+        </button>
+
+        <button type="button" class="tab-btn" data-tab="tab-contact">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          6. Office &amp; Inquiries
+        </button>
+
+        <div class="sidebar-heading">Publishing &amp; Backup</div>
+
+        <button type="button" class="tab-btn" data-tab="tab-publish">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          7. Worldwide Web Publish
+        </button>
+      </aside>
+
+      <!-- Main Editing Content Pane -->
+      <main class="admin-content">
+
+        <!-- ==============================================================
+             PANEL 1: HERO PROFILE & BIO
+             ============================================================== -->
+        <section id="tab-hero" class="content-panel active">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Hero Profile &amp; Bio</h2>
+              <p class="panel-desc">Manage primary titles, status badge, academic credentials, and the executive summary.</p>
+            </div>
+            <button type="button" class="btn btn-outline btn-save-section">💾 Save Section</button>
+          </div>
+
+          <!-- Hero Name -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Official Display Name</span>
+              <span class="editor-card-tag">H1 Header</span>
+            </div>
+            <div class="wysiwyg-toolbar" data-target="hero-name">
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="bold" title="Bold (Ctrl+B)">B</button>
+                <button type="button" class="tool-btn" data-cmd="italic" title="Italic (Ctrl+I)"><em>I</em></button>
+                <button type="button" class="tool-btn" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
+              </div>
+            </div>
+            <div class="word-canvas" id="hero-name" contenteditable="true" data-key="hero.name"></div>
+            <div class="editor-footer">
+              <span>Standard: Prof. E. S. Dwarakadasa</span>
+              <button type="button" class="reset-btn" data-field="hero.name">↺ Reset</button>
+            </div>
+          </div>
+
+          <!-- Hero Full Academic Degrees -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Full Name &amp; Academic Degrees</span>
+              <span class="editor-card-tag">Subtitle</span>
+            </div>
+            <div class="wysiwyg-toolbar" data-target="hero-fullname">
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="bold" title="Bold">B</button>
+                <button type="button" class="tool-btn" data-cmd="italic" title="Italic"><em>I</em></button>
+              </div>
+            </div>
+            <div class="word-canvas" id="hero-fullname" contenteditable="true" data-key="hero.fullname"></div>
+            <div class="editor-footer">
+              <span>Includes B.Sc., B.E., M.Sc.(Engg.), Ph.D.(IISc)</span>
+              <button type="button" class="reset-btn" data-field="hero.fullname">↺ Reset</button>
+            </div>
+          </div>
+
+          <!-- Executive Title -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Professional Executive Designation</span>
+              <span class="editor-card-tag">H2 Subheading</span>
+            </div>
+            <div class="wysiwyg-toolbar" data-target="hero-title">
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="bold" title="Bold">B</button>
+                <button type="button" class="tool-btn" data-cmd="italic" title="Italic"><em>I</em></button>
+                <button type="button" class="tool-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+              </div>
+            </div>
+            <div class="word-canvas" id="hero-title" contenteditable="true" data-key="hero.title"></div>
+            <div class="editor-footer">
+              <span>Appears as the prominent gold subhead under his name</span>
+              <button type="button" class="reset-btn" data-field="hero.title">↺ Reset</button>
+            </div>
+          </div>
+
+          <!-- Live Status Pill -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Active Status Pill</span>
+              <span class="editor-card-tag">Header Badge</span>
+            </div>
+            <div class="word-canvas" id="hero-live-status" contenteditable="true" data-key="hero.live_status" style="min-height: 50px;"></div>
+            <div class="editor-footer">
+              <span>Displays with the green live pulse dot</span>
+              <button type="button" class="reset-btn" data-field="hero.live_status">↺ Reset</button>
+            </div>
+          </div>
+
+          <!-- Executive Summary Paragraph -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Executive Lifetime Summary Paragraph</span>
+              <span class="editor-card-tag">Lead Text</span>
+            </div>
+            <!-- Full Word Toolbar -->
+            <div class="wysiwyg-toolbar" data-target="hero-summary">
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="bold" title="Bold (Ctrl+B)">B</button>
+                <button type="button" class="tool-btn" data-cmd="italic" title="Italic (Ctrl+I)"><em>I</em></button>
+                <button type="button" class="tool-btn" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
+                <button type="button" class="tool-btn" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
+              </div>
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="insertUnorderedList" title="Bullet List">• List</button>
+                <button type="button" class="tool-btn" data-cmd="insertOrderedList" title="Numbered List">1. List</button>
+              </div>
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="createLink" title="Insert Link">🔗 Link</button>
+                <button type="button" class="tool-btn" data-cmd="removeFormat" title="Clear Formatting">T̸</button>
+              </div>
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="undo" title="Undo">↶</button>
+                <button type="button" class="tool-btn" data-cmd="redo" title="Redo">↷</button>
+              </div>
+            </div>
+            <div class="word-canvas" id="hero-summary" contenteditable="true" data-key="hero.summary" data-serif="true" style="min-height: 180px;"></div>
+            <div class="editor-footer">
+              <span>Main narrative displayed to all visitors on the landing fold</span>
+              <button type="button" class="reset-btn" data-field="hero.summary">↺ Reset to Default</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==============================================================
+             PANEL 2: STRATEGIC METRICS
+             ============================================================== -->
+        <section id="tab-stats" class="content-panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Strategic Metrics &amp; Milestones</h2>
+              <p class="panel-desc">Update the 4 prominent highlight statistics displayed across the banner.</p>
+            </div>
+            <button type="button" class="btn btn-outline btn-save-section">💾 Save Section</button>
+          </div>
+
+          <div id="stats-editor-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+            <!-- Dynamically populated stat cards -->
+          </div>
+        </section>
+
+        <!-- ==============================================================
+             PANEL 3: HERITAGE & DYNASTY
+             ============================================================== -->
+        <section id="tab-about" class="content-panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Biography &amp; Eswarahalli Dynasty</h2>
+              <p class="panel-desc">Details concerning family roots, the 14 engineer siblings feat, and scholarship.</p>
+            </div>
+            <button type="button" class="btn btn-outline btn-save-section">💾 Save Section</button>
+          </div>
+
+          <!-- Section Subtitle -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Birth &amp; Ancestral Heritage Subtitle</span>
+            </div>
+            <div class="wysiwyg-toolbar" data-target="about-subtitle">
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="bold">B</button>
+                <button type="button" class="tool-btn" data-cmd="italic"><em>I</em></button>
+              </div>
+            </div>
+            <div class="word-canvas" id="about-subtitle" contenteditable="true" data-key="about.section_subtitle"></div>
+          </div>
+
+          <!-- Paragraph 1 -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">14 Engineer Siblings Paragraph</span>
+            </div>
+            <div class="wysiwyg-toolbar" data-target="about-p1">
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="bold">B</button>
+                <button type="button" class="tool-btn" data-cmd="italic"><em>I</em></button>
+                <button type="button" class="tool-btn" data-cmd="underline"><u>U</u></button>
+              </div>
+            </div>
+            <div class="word-canvas" id="about-p1" contenteditable="true" data-key="about.heritage_p1"></div>
+          </div>
+
+          <!-- Paragraph 2 -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Ph.D. &amp; IISc Alumni Feat Paragraph</span>
+            </div>
+            <div class="wysiwyg-toolbar" data-target="about-p2">
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="bold">B</button>
+                <button type="button" class="tool-btn" data-cmd="italic"><em>I</em></button>
+                <button type="button" class="tool-btn" data-cmd="underline"><u>U</u></button>
+              </div>
+            </div>
+            <div class="word-canvas" id="about-p2" contenteditable="true" data-key="about.heritage_p2"></div>
+          </div>
+
+          <!-- Heritage Quote -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Heritage Motto Quote</span>
+            </div>
+            <div class="word-canvas" id="about-quote" contenteditable="true" data-key="about.heritage_quote" style="font-style: italic; color: var(--gold);"></div>
+          </div>
+        </section>
+
+        <!-- ==============================================================
+             PANEL 4: DEFENSE & INNOVATIONS
+             ============================================================== -->
+        <section id="tab-breakthroughs" class="content-panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Defense &amp; Strategic Breakthroughs</h2>
+              <p class="panel-desc">Manage technological breakthroughs for LCA Tejas, Indian Navy, and ISRO.</p>
+            </div>
+            <button type="button" class="btn btn-outline btn-save-section">💾 Save Section</button>
+          </div>
+
+          <div id="breakthroughs-editor-list" style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Dynamically populated breakthrough cards -->
+          </div>
+        </section>
+
+        <!-- ==============================================================
+             PANEL 5: KHMD & INDUSTRY
+             ============================================================== -->
+        <section id="tab-industry" class="content-panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">KHMD &amp; Microelectronics</h2>
+              <p class="panel-desc">Corporate overview of Karnataka Hybrid Micro Devices Limited leadership.</p>
+            </div>
+            <button type="button" class="btn btn-outline btn-save-section">💾 Save Section</button>
+          </div>
+
+          <!-- KHMD Title -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Industry Leadership Heading</span>
+            </div>
+            <div class="word-canvas" id="industry-title" contenteditable="true" data-key="industry.title"></div>
+          </div>
+
+          <!-- KHMD Description -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Corporate &amp; Space Systems Narrative</span>
+            </div>
+            <div class="wysiwyg-toolbar" data-target="industry-desc">
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn" data-cmd="bold">B</button>
+                <button type="button" class="tool-btn" data-cmd="italic"><em>I</em></button>
+                <button type="button" class="tool-btn" data-cmd="underline"><u>U</u></button>
+                <button type="button" class="tool-btn" data-cmd="createLink">🔗</button>
+              </div>
+            </div>
+            <div class="word-canvas" id="industry-desc" contenteditable="true" data-key="industry.desc" style="min-height: 140px;"></div>
+          </div>
+        </section>
+
+        <!-- ==============================================================
+             PANEL 6: OFFICE & CONTACT
+             ============================================================== -->
+        <section id="tab-contact" class="content-panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Office &amp; Inquiries</h2>
+              <p class="panel-desc">Official email address and corporate &amp; academic headquarters.</p>
+            </div>
+            <button type="button" class="btn btn-outline btn-save-section">💾 Save Section</button>
+          </div>
+
+          <!-- Official Email -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">Official Inquiries Email Address</span>
+            </div>
+            <div class="word-canvas" id="contact-email" contenteditable="true" data-key="contact.email" style="min-height: 50px; font-family: var(--font-mono); color: var(--gold);"></div>
+            <div class="editor-footer">
+              <span>All contact forms and inquiries forward to this address</span>
+            </div>
+          </div>
+
+          <!-- KHMD Address -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">KHMD Corporate Headquarters Address</span>
+            </div>
+            <div class="word-canvas" id="contact-khmd-addr" contenteditable="true" data-key="contact.khmd_address" style="white-space: pre-line;"></div>
+          </div>
+
+          <!-- IISc Address -->
+          <div class="editor-card">
+            <div class="editor-card-header">
+              <span class="editor-card-title">IISc Academic Affiliation Address</span>
+            </div>
+            <div class="word-canvas" id="contact-iisc-addr" contenteditable="true" data-key="contact.iisc_address" style="white-space: pre-line;"></div>
+          </div>
+        </section>
+
+        <!-- ==============================================================
+             PANEL 7: WORLDWIDE PUBLISH & BACKUP
+             ============================================================== -->
+        <section id="tab-publish" class="content-panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Worldwide Web Publishing &amp; Backup</h2>
+              <p class="panel-desc">Publish your edits permanently to GitHub Pages so all visitors across the globe see them.</p>
+            </div>
+          </div>
+
+          <!-- Live Status Card -->
+          <div class="editor-card" style="padding: 24px;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: #fff; margin-bottom: 8px;">
+              🚀 How Publishing Works
+            </h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6;">
+              When you edit on this page, clicking <strong>"Save Changes"</strong> updates your content immediately on this computer. 
+              To push these changes permanently to the live worldwide website (<a href="https://vijaykd.github.io/profdwarakadasa/" target="_blank" style="color: var(--accent);">vijaykd.github.io/profdwarakadasa/</a>), you can either export your content or connect a GitHub Personal Access Token.
+            </p>
+
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <button type="button" class="btn btn-gold" id="export-json-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download Backup Copy (content.json)
+              </button>
+
+              <button type="button" class="btn btn-outline" id="import-json-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Restore from Backup JSON
+              </button>
+              <input type="file" id="json-file-input" accept=".json" style="display: none;">
+
+              <button type="button" class="btn btn-danger" id="factory-reset-btn">
+                ↺ Restore Original Portal Text
+              </button>
+            </div>
+          </div>
+
+          <!-- Direct GitHub Sync Card -->
+          <div class="editor-card" style="padding: 24px;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: #fff; margin-bottom: 8px;">
+              🌐 One-Click Direct GitHub Publisher
+            </h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
+              Enter a GitHub Personal Access Token (PAT) with <code>repo</code> write permission. This allows Prof. Dwarakadasa to publish updates to the global website in one single click, without needing terminal commands or Git software.
+            </p>
+
+            <div style="max-width: 500px; margin-bottom: 16px;">
+              <label for="github-token-input" class="form-label">GitHub Token (Saved privately on this device)</label>
+              <div class="form-input-wrap">
+                <input type="password" id="github-token-input" class="form-input" placeholder="github_pat_... or ghp_...">
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-gold" id="publish-github-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              Publish Worldwide Now
+            </button>
+            <div id="github-publish-status" style="margin-top: 12px; font-size: 0.85rem;"></div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast Notification element -->
+  <div id="admin-toast" class="admin-toast">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </svg>
+    <span id="toast-message">Changes saved successfully!</span>
+  </div>
+
+  <!-- ======================================================================
+       JAVASCRIPT APPLICATION LOGIC
+       ====================================================================== -->
+  <script>
+    /* ------------------------------------------------------------------------
+       1. SECURITY & CRYPTOGRAPHIC AUTHENTICATION (Salted SHA-256)
+       ------------------------------------------------------------------------ */
+    const AUTH_SALT = 'esd_admin_salt_2026_dwarakadasa_secure';
+    const EXPECTED_USER_HASH = 'bb7627f86af54273153aedef6222f86013b6d85155f5272b17601c4e99e9c413';
+    const EXPECTED_PW_HASH = '54a36f36849b813c967083d7f3da21dfb0c3349f09942457deec4578d4515c46';
+    const SESSION_KEY = 'esd_admin_authenticated_session';
+
+    async function sha256(str) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function checkExistingSession() {
+      const stored = sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY);
+      if (!stored) return false;
+      try {
+        const data = JSON.parse(stored);
+        return data && data.auth === true && data.pw_hash === EXPECTED_PW_HASH;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function recordSession(remember) {
+      const payload = JSON.stringify({
+        auth: true,
+        pw_hash: EXPECTED_PW_HASH,
+        timestamp: Date.now()
+      });
+      sessionStorage.setItem(SESSION_KEY, payload);
+      if (remember) {
+        localStorage.setItem(SESSION_KEY, payload);
+      }
+    }
+
+    function signOut() {
+      sessionStorage.removeItem(SESSION_KEY);
+      localStorage.removeItem(SESSION_KEY);
+      document.getElementById('auth-overlay').classList.remove('hidden');
+      document.getElementById('auth-password').value = '';
+      document.getElementById('auth-error').style.display = 'none';
+      setTimeout(() => document.getElementById('auth-username').focus(), 100);
+    }
+
+    // Toggle password visibility
+    document.getElementById('pw-toggle-btn').addEventListener('click', () => {
+      const pwInput = document.getElementById('auth-password');
+      pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
+    });
+
+    // Handle Login Submit
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const userVal = document.getElementById('auth-username').value.trim();
+      const pwVal = document.getElementById('auth-password').value;
+      const remember = document.getElementById('auth-remember').checked;
+      const errorDiv = document.getElementById('auth-error');
+
+      const computedUserHash = await sha256(userVal.toLowerCase() + ':' + AUTH_SALT);
+      const computedPwHash = await sha256(pwVal + ':' + AUTH_SALT);
+
+      if (computedUserHash === EXPECTED_USER_HASH && computedPwHash === EXPECTED_PW_HASH) {
+        recordSession(remember);
+        errorDiv.style.display = 'none';
+        document.getElementById('auth-overlay').classList.add('hidden');
+        showToast('Welcome, Prof. Dwarakadasa! Secure workspace unlocked.');
+      } else {
+        errorDiv.style.display = 'flex';
+        document.getElementById('auth-error-msg').textContent = 'Invalid credentials. Access restricted to authorized personnel.';
+        document.getElementById('auth-password').value = '';
+        document.getElementById('auth-password').focus();
+      }
+    });
+
+    document.getElementById('signout-btn').addEventListener('click', signOut);
+
+    /* ------------------------------------------------------------------------
+       2. TAB NAVIGATION
+       ------------------------------------------------------------------------ */
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const contentPanels = document.querySelectorAll('.content-panel');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-tab');
+        tabBtns.forEach(b => b.classList.remove('active'));
+        contentPanels.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const activePanel = document.getElementById(targetId);
+        if (activePanel) activePanel.classList.add('active');
+      });
+    });
+
+    /* ------------------------------------------------------------------------
+       3. WORD-PROCESSOR WYSIWYG TOOLBAR ACTIONS
+       ------------------------------------------------------------------------ */
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tool-btn');
+      if (!btn) return;
+
+      const cmd = btn.getAttribute('data-cmd');
+      const toolbar = btn.closest('.wysiwyg-toolbar');
+      const targetId = toolbar ? toolbar.getAttribute('data-target') : null;
+      const targetCanvas = targetId ? document.getElementById(targetId) : null;
+
+      if (!cmd) return;
+
+      e.preventDefault();
+      if (targetCanvas) targetCanvas.focus();
+
+      if (cmd === 'createLink') {
+        const url = prompt('Enter Destination URL (e.g. https://iisc.ac.in):', 'https://');
+        if (url) document.execCommand('createLink', false, url);
+      } else {
+        document.execCommand(cmd, false, null);
+      }
+    });
+
+    /* ------------------------------------------------------------------------
+       4. CONTENT STORE & DATA MANAGEMENT
+       ------------------------------------------------------------------------ */
+    const STORAGE_KEY = 'esd_site_content';
+    let currentData = {};
+    let defaultData = {};
+
+    async function loadDefaultData() {
+      try {
+        const res = await fetch('data/content.json?v=' + Date.now());
+        if (res.ok) {
+          defaultData = await res.json();
+        }
+      } catch (e) {
+        console.warn('Could not load data/content.json, using fallback default.', e);
+      }
+      
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          currentData = JSON.parse(saved);
+        } catch (e) {
+          currentData = JSON.parse(JSON.stringify(defaultData));
+        }
+      } else {
+        currentData = JSON.parse(JSON.stringify(defaultData));
+      }
+
+      populateFields();
+    }
+
+    function getNestedValue(obj, path) {
+      return path.split('.').reduce((prev, curr) => prev ? prev[curr] : undefined, obj);
+    }
+
+    function setNestedValue(obj, path, value) {
+      const keys = path.split('.');
+      let current = obj;
+      for (let i = 0; i < keys.length - 1; i++) {
+        if (!current[keys[i]]) current[keys[i]] = {};
+        current = current[keys[i]];
+      }
+      current[keys[keys.length - 1]] = value;
+    }
+
+    function populateFields() {
+      // 1. Single fields with data-key
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        const val = getNestedValue(currentData, key);
+        if (val !== undefined) {
+          el.innerHTML = val;
+        }
+      });
+
+      // 2. Stats Grid
+      const statsContainer = document.getElementById('stats-editor-grid');
+      if (statsContainer && currentData.stats) {
+        statsContainer.innerHTML = '';
+        currentData.stats.forEach((st, idx) => {
+          const card = document.createElement('div');
+          card.className = 'editor-card';
+          card.innerHTML = `
+            <div class="editor-card-header">
+              <span class="editor-card-title">Stat Card #${idx + 1}</span>
+            </div>
+            <div style="padding: 14px 18px; display: flex; flex-direction: column; gap: 10px;">
+              <div>
+                <label class="form-label">Number / Metric</label>
+                <input type="text" class="form-input stat-num" data-idx="${idx}" value="${st.number || ''}">
+              </div>
+              <div>
+                <label class="form-label">Primary Label</label>
+                <input type="text" class="form-input stat-lbl" data-idx="${idx}" value="${st.label || ''}">
+              </div>
+              <div>
+                <label class="form-label">Detail Sublabel</label>
+                <input type="text" class="form-input stat-sub" data-idx="${idx}" value="${st.sublabel || ''}">
+              </div>
+            </div>
+          `;
+          statsContainer.appendChild(card);
+        });
+      }
+
+      // 3. Breakthroughs List
+      const breakContainer = document.getElementById('breakthroughs-editor-list');
+      if (breakContainer && currentData.breakthroughs) {
+        breakContainer.innerHTML = '';
+        currentData.breakthroughs.forEach((bk, idx) => {
+          const card = document.createElement('div');
+          card.className = 'editor-card';
+          card.innerHTML = `
+            <div class="editor-card-header">
+              <span class="editor-card-title">Breakthrough #${idx + 1}: ${bk.title || 'Innovation'}</span>
+              <span class="editor-card-tag">${bk.domain || 'Defense'}</span>
+            </div>
+            <div style="padding: 14px 18px; display: flex; flex-direction: column; gap: 12px;">
+              <div>
+                <label class="form-label">Breakthrough Title</label>
+                <input type="text" class="form-input bk-title" data-idx="${idx}" value="${bk.title || ''}">
+              </div>
+              <div>
+                <label class="form-label">Domain Subtitle</label>
+                <input type="text" class="form-input bk-domain" data-idx="${idx}" value="${bk.domain || ''}">
+              </div>
+              <div>
+                <label class="form-label">Detailed Description</label>
+                <div class="word-canvas bk-desc" data-idx="${idx}" contenteditable="true" style="min-height: 90px; border: 1px solid var(--border-medium); border-radius: var(--radius-sm);">${bk.desc || ''}</div>
+              </div>
+            </div>
+          `;
+          breakContainer.appendChild(card);
+        });
+      }
+    }
+
+    function collectFields() {
+      // 1. Collect all elements with data-key
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        setNestedValue(currentData, key, el.innerHTML);
+      });
+
+      // 2. Collect stats
+      if (currentData.stats) {
+        document.querySelectorAll('.stat-num').forEach(el => {
+          const idx = parseInt(el.getAttribute('data-idx'), 10);
+          if (currentData.stats[idx]) currentData.stats[idx].number = el.value;
+        });
+        document.querySelectorAll('.stat-lbl').forEach(el => {
+          const idx = parseInt(el.getAttribute('data-idx'), 10);
+          if (currentData.stats[idx]) currentData.stats[idx].label = el.value;
+        });
+        document.querySelectorAll('.stat-sub').forEach(el => {
+          const idx = parseInt(el.getAttribute('data-idx'), 10);
+          if (currentData.stats[idx]) currentData.stats[idx].sublabel = el.value;
+        });
+      }
+
+      // 3. Collect breakthroughs
+      if (currentData.breakthroughs) {
+        document.querySelectorAll('.bk-title').forEach(el => {
+          const idx = parseInt(el.getAttribute('data-idx'), 10);
+          if (currentData.breakthroughs[idx]) currentData.breakthroughs[idx].title = el.value;
+        });
+        document.querySelectorAll('.bk-domain').forEach(el => {
+          const idx = parseInt(el.getAttribute('data-idx'), 10);
+          if (currentData.breakthroughs[idx]) currentData.breakthroughs[idx].domain = el.value;
+        });
+        document.querySelectorAll('.bk-desc').forEach(el => {
+          const idx = parseInt(el.getAttribute('data-idx'), 10);
+          if (currentData.breakthroughs[idx]) currentData.breakthroughs[idx].desc = el.innerHTML;
+        });
+      }
+
+      currentData.last_updated = new Date().toISOString();
+    }
+
+    function saveChanges() {
+      collectFields();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(currentData));
+      showToast('Changes saved! Updates are now live on this device.');
+    }
+
+    document.getElementById('save-all-btn').addEventListener('click', saveChanges);
+    document.querySelectorAll('.btn-save-section').forEach(b => b.addEventListener('click', saveChanges));
+
+    // Keyboard shortcut (Ctrl+S / Cmd+S)
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        saveChanges();
+      }
+    });
+
+    // Reset single field
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.reset-btn');
+      if (!btn) return;
+      const field = btn.getAttribute('data-field');
+      const defaultVal = getNestedValue(defaultData, field);
+      if (defaultVal !== undefined) {
+        setNestedValue(currentData, field, defaultVal);
+        populateFields();
+        showToast('Field reset to default.');
+      }
+    });
+
+    // Factory Reset
+    document.getElementById('factory-reset-btn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to reset all portal content to the original default?')) {
+        currentData = JSON.parse(JSON.stringify(defaultData));
+        localStorage.removeItem(STORAGE_KEY);
+        populateFields();
+        showToast('All sections restored to factory default.');
+      }
+    });
+
+    // Export JSON
+    document.getElementById('export-json-btn').addEventListener('click', () => {
+      collectFields();
+      const blob = new Blob([JSON.stringify(currentData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'content.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('content.json backup downloaded.');
+    });
+
+    // Import JSON
+    document.getElementById('import-json-btn').addEventListener('click', () => {
+      document.getElementById('json-file-input').click();
+    });
+
+    document.getElementById('json-file-input').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const parsed = JSON.parse(event.target.result);
+          currentData = parsed;
+          saveChanges();
+          populateFields();
+          showToast('Content successfully imported from file!');
+        } catch (err) {
+          alert('Invalid JSON file format.');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    /* ------------------------------------------------------------------------
+       5. GITHUB DIRECT WORLDWIDE PUBLISH
+       ------------------------------------------------------------------------ */
+    const GITHUB_TOKEN_KEY = 'esd_github_pat';
+    const GITHUB_REPO = 'vijaykd/profdwarakadasa';
+    const GITHUB_FILE_PATH = 'data/content.json';
+
+    // Pre-populate saved token
+    const savedToken = localStorage.getItem(GITHUB_TOKEN_KEY);
+    if (savedToken) {
+      document.getElementById('github-token-input').value = savedToken;
+    }
+
+    document.getElementById('publish-github-btn').addEventListener('click', async () => {
+      const tokenInput = document.getElementById('github-token-input');
+      const token = tokenInput.value.trim();
+      const statusEl = document.getElementById('github-publish-status');
+
+      if (!token) {
+        statusEl.innerHTML = '<span style="color: var(--danger);">Please enter a valid GitHub Personal Access Token to publish worldwide.</span>';
+        tokenInput.focus();
+        return;
+      }
+
+      localStorage.setItem(GITHUB_TOKEN_KEY, token);
+      collectFields();
+
+      statusEl.innerHTML = '<span style="color: var(--accent);">Connecting to GitHub repository and preparing commit...</span>';
+
+      try {
+        // Step 1: Get current file sha from GitHub
+        const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`, {
+          headers: {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+
+        let fileSha = null;
+        if (getRes.ok) {
+          const fileData = await getRes.json();
+          fileSha = fileData.sha;
+        }
+
+        // Step 2: Push commit to GitHub
+        const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(currentData, null, 2))));
+        const putRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: `Update portal content by Prof. Dwarakadasa (Admin Workspace)`,
+            content: contentBase64,
+            sha: fileSha || undefined
+          })
+        });
+
+        if (putRes.ok) {
+          statusEl.innerHTML = '<span style="color: var(--success); font-weight: 700;">✓ Successfully published to GitHub! Changes will be live worldwide in ~60 seconds.</span>';
+          showToast('Published worldwide! GitHub Pages build triggered.');
+        } else {
+          const errData = await putRes.json();
+          statusEl.innerHTML = `<span style="color: var(--danger);">GitHub Error: ${errData.message || 'Could not commit file. Check token permissions.'}</span>`;
+        }
+      } catch (err) {
+        statusEl.innerHTML = `<span style="color: var(--danger);">Network / API Error: ${err.message}</span>`;
+      }
+    });
+
+    /* ------------------------------------------------------------------------
+       6. TOAST HELPER
+       ------------------------------------------------------------------------ */
+    function showToast(msg) {
+      const toast = document.getElementById('admin-toast');
+      document.getElementById('toast-message').textContent = msg;
+      toast.classList.add('visible');
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 3500);
+    }
+
+    /* ------------------------------------------------------------------------
+       INITIALIZATION ON LOAD
+       ------------------------------------------------------------------------ */
+    window.addEventListener('DOMContentLoaded', () => {
+      // Check session
+      if (checkExistingSession()) {
+        document.getElementById('auth-overlay').classList.add('hidden');
+      } else {
+        document.getElementById('auth-overlay').classList.remove('hidden');
+        setTimeout(() => document.getElementById('auth-username').focus(), 150);
+      }
+
+      loadDefaultData();
+    });
+  </script>
+</body>
+</html>

@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initNavigation();
   initReadingProgress();
+  initDynamicContent();
   initInteractiveMap();
   initPublications();
   initContactForm();
@@ -1002,4 +1003,119 @@ function initInteractiveMap() {
     renderLocation('bengaluru', false);
   }, 100);
 }
+
+/* --------------------------------------------------------------------------
+   8. Dynamic Content Hydration (Synchronized with Admin Portal)
+   -------------------------------------------------------------------------- */
+async function initDynamicContent() {
+  const STORAGE_KEY = 'esd_site_content';
+  let content = null;
+
+  // 1. Check local device overrides from Admin Portal
+  const localSaved = localStorage.getItem(STORAGE_KEY);
+  if (localSaved) {
+    try {
+      content = JSON.parse(localSaved);
+    } catch (e) {
+      console.warn('Error reading local content overrides:', e);
+    }
+  }
+
+  // 2. If not in localStorage, fetch published data/content.json
+  if (!content) {
+    try {
+      const res = await fetch('data/content.json?v=' + Date.now());
+      if (res.ok) {
+        content = await res.json();
+      }
+    } catch (e) {
+      // Graceful fallback: default static HTML remains active with zero impact
+    }
+  }
+
+  if (!content) return;
+
+  // 3. Hydrate Hero Section
+  if (content.hero) {
+    if (content.hero.name) {
+      document.querySelectorAll('.hero-name').forEach(el => el.innerHTML = content.hero.name);
+      document.querySelectorAll('.brand-name').forEach(el => el.innerHTML = content.hero.name);
+    }
+    if (content.hero.fullname) {
+      const el = document.querySelector('.hero-fullname');
+      if (el) el.innerHTML = content.hero.fullname;
+    }
+    if (content.hero.title) {
+      const el = document.querySelector('.hero-title');
+      if (el) el.innerHTML = content.hero.title;
+    }
+    if (content.hero.live_status) {
+      const el = document.querySelector('.hero-live-status span:last-child');
+      if (el) el.innerHTML = content.hero.live_status;
+    }
+    if (content.hero.summary) {
+      const el = document.querySelector('.hero-summary');
+      if (el) el.innerHTML = content.hero.summary;
+    }
+  }
+
+  // 4. Hydrate Strategic Stats
+  if (content.stats && Array.isArray(content.stats)) {
+    const statCards = document.querySelectorAll('.strategic-strip .stat-card');
+    content.stats.forEach((st, idx) => {
+      const card = statCards[idx];
+      if (card) {
+        const numEl = card.querySelector('.stat-number');
+        const lblEl = card.querySelector('.stat-label');
+        const subEl = card.querySelector('.stat-sublabel');
+        if (numEl && st.number) numEl.innerHTML = st.number;
+        if (lblEl && st.label) lblEl.innerHTML = st.label;
+        if (subEl && st.sublabel) subEl.innerHTML = st.sublabel;
+      }
+    });
+  }
+
+  // 5. Hydrate About & Heritage
+  if (content.about) {
+    if (content.about.section_subtitle) {
+      const el = document.querySelector('#about .section-subtitle');
+      if (el) el.innerHTML = content.about.section_subtitle;
+    }
+    const heritageParas = document.querySelectorAll('#about .heritage-text');
+    if (heritageParas.length >= 3) {
+      if (content.about.heritage_p1) heritageParas[0].innerHTML = content.about.heritage_p1;
+      if (content.about.heritage_p2) heritageParas[1].innerHTML = content.about.heritage_p2;
+      if (content.about.heritage_quote) {
+        const cleanQuote = content.about.heritage_quote.replace(/^["“”]|["“”]$/g, '').trim();
+        heritageParas[2].innerHTML = `"${cleanQuote}"`;
+      }
+    }
+  }
+
+  // 6. Hydrate Breakthroughs
+  if (content.breakthroughs && Array.isArray(content.breakthroughs)) {
+    const cards = document.querySelectorAll('.breakthrough-card');
+    content.breakthroughs.forEach((bk, idx) => {
+      const card = cards[idx];
+      if (card) {
+        const domEl = card.querySelector('.breakthrough-domain');
+        const titleEl = card.querySelector('.breakthrough-title');
+        const descEl = card.querySelector('.breakthrough-desc');
+        if (domEl && bk.domain) domEl.innerHTML = bk.domain;
+        if (titleEl && bk.title) titleEl.innerHTML = bk.title;
+        if (descEl && bk.desc) descEl.innerHTML = bk.desc;
+      }
+    });
+  }
+
+  // 7. Hydrate Contact Info
+  if (content.contact && content.contact.email) {
+    const emailLink = document.querySelector('a[href^="mailto:"]');
+    if (emailLink) {
+      emailLink.href = `mailto:${content.contact.email}`;
+      emailLink.innerHTML = content.contact.email;
+    }
+  }
+}
+
 
