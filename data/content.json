@@ -1,15 +1,59 @@
 {
-  "version": "1.0",
-  "last_updated": "2026-10-24T09:25:00Z",
+  "version": "2.0",
+  "last_updated": "2026-10-24T09:50:00Z",
+  "sections_visibility": {
+    "hero": true,
+    "breakthroughs": true,
+    "industry": true,
+    "about": true,
+    "global-map": true,
+    "career": true,
+    "endowments": true,
+    "awards": true,
+    "publications": true,
+    "mentorship": true,
+    "contact": true
+  },
   "hero": {
     "name": "Prof. E. S. Dwarakadasa",
-    "fullname": "Eswarahalli Sundararajan Dwarakadasa • B.Sc., B.E., M.Sc.(Engg.), Ph.D.(IISc)",
+    "fullname": "Eswarahalli Sundararajan Dwarakadasa \u2022 B.Sc., B.E., M.Sc.(Engg.), Ph.D.(IISc)",
     "title": "Pioneering Metallurgist, Materials Scientist & Defense/Space Technology Executive",
-    "live_status": "Active in Research • KHMD CEO & MD • IISc Emeritus",
+    "live_status": "Active in Research \u2022 KHMD CEO & MD \u2022 IISc Emeritus",
     "badge": "1000 Engineers of the World",
     "affiliation_iisc": "Department of Metallurgy (Materials Engineering), Indian Institute of Science (IISc), Bangalore",
     "affiliation_khmd": "CEO & Managing Director, Karnataka Hybrid Micro Devices Limited (KHMD)",
-    "summary": "Over four decades of foundational metallurgical research at IISc Bangalore and two decades of industrial leadership. Key contributor to India’s strategic defense and space missions—including <strong>Al-Li alloys for the Light Combat Aircraft (LCA Tejas)</strong>, <strong>high-damping Naval propeller alloys</strong>, <strong>extreme deep-sea titanium corrosion studies at 5,100 meters</strong>, and <strong>2,000+ space-grade hybrid microelectronic subsystems for ISRO's Chandrayaan</strong> missions."
+    "summary": "Over four decades of foundational metallurgical research at IISc Bangalore and two decades of industrial leadership. Key contributor to India\u2019s strategic defense and space missions\u2014including <strong>Al-Li alloys for the Light Combat Aircraft (LCA Tejas)</strong>, <strong>high-damping Naval propeller alloys</strong>, <strong>extreme deep-sea titanium corrosion studies at 5,100 meters</strong>, and <strong>2,000+ space-grade hybrid microelectronic subsystems for ISRO's Chandrayaan</strong> missions.",
+    "role_pills": [
+      "IISc Emeritus Professor (1961\u20132003)",
+      "CEO & MD \u2022 KHMD",
+      "Fellow, INAE"
+    ],
+    "profile_links": [
+      {
+        "name": "Wikipedia Biography",
+        "sub": "Biographical Encyclopedia",
+        "url": "https://en.wikipedia.org/wiki/E._S._Dwarakadasa",
+        "icon": "W"
+      },
+      {
+        "name": "ResearchGate",
+        "sub": "2,165+ Citations \u2022 150+ Papers",
+        "url": "https://www.researchgate.net/profile/Dwarakadasa-Eswarahalli",
+        "icon": "RG"
+      },
+      {
+        "name": "ORCID Record",
+        "sub": "0000-0001-5947-6335",
+        "url": "https://orcid.org/0000-0001-5947-6335",
+        "icon": "iD"
+      },
+      {
+        "name": "IISc Faculty Archive",
+        "sub": "Dept. of Materials Engineering",
+        "url": "https://iisc.ac.in",
+        "icon": "IISc"
+      }
+    ]
   },
   "stats": [
     {
@@ -34,48 +78,278 @@
     }
   ],
   "about": {
+    "section_tag": "Roots & Heritage",
     "section_title": "From Eswarahalli: An Extraordinary Dynasty of Scholars",
     "section_subtitle": "Born on 22 May 1941 in Bangalore to Eswarahalli Rangachar Sundararajan and Eswarahalli Sundararajan Lokamata, tracing family roots to the tranquil hamlet of Eswarahalli in Hassan district, Karnataka.",
     "heritage_title": "A Historic Academic Feat in India",
     "heritage_p1": "Prof. E. S. Dwarakadasa is part of an unmatched intellectual legacy. He was raised as one of <strong>14 siblings, including 9 younger brothers</strong>. In an unprecedented testament to educational dedication and parental vision, <strong>every single one of the 14 siblings graduated in Engineering</strong>.",
     "heritage_p2": "Even more remarkably, <strong>7 of the brothers earned Ph.D. degrees</strong> in engineering and advanced sciences, and <strong>8 of them are proud alumni of the Indian Institute of Science (IISc), Bangalore</strong>. This extraordinary family tradition of scholarship has produced professors, research directors, and engineering pioneers across the world.",
-    "heritage_quote": "A rural family heritage transformed by relentless academic discipline into a legacy of national engineering excellence."
+    "heritage_quote": "A rural family heritage transformed by relentless academic discipline into a legacy of national engineering excellence.",
+    "family_metrics": [
+      {
+        "num": "14 / 14",
+        "lbl": "Siblings Graduated in Engineering"
+      },
+      {
+        "num": "7",
+        "lbl": "Brothers Earned Ph.D. Degrees"
+      },
+      {
+        "num": "8",
+        "lbl": "Alumni of IISc Bangalore"
+      },
+      {
+        "num": "6th",
+        "lbl": "University Rank in B.Sc. (St. Joseph's 1959)"
+      }
+    ]
   },
   "breakthroughs": [
     {
-      "domain": "Aerospace • DRDO & ADA Collaboration",
+      "domain": "Aerospace \u2022 DRDO & ADA Collaboration",
       "title": "Light Combat Aircraft (LCA Tejas) Alloys",
-      "desc": "Pioneered the development and thermomechanical characterization of lightweight <strong>Aluminium-Lithium (Al-Li 8090)</strong> alloys and <strong>7050 aircraft alloy</strong> for India’s indigenous Light Combat Aircraft (LCA Tejas). Addressed critical stress corrosion cracking, fatigue crack thresholds, and lithium depletion kinetics.",
-      "tags": ["Al-Li 8090-T851", "AA 7050", "ADA / DRDO", "Aircraft Skin"]
+      "desc": "Pioneered the development and thermomechanical characterization of lightweight <strong>Aluminium-Lithium (Al-Li 8090)</strong> alloys and <strong>7050 aircraft alloy</strong> for India\u2019s indigenous Light Combat Aircraft (LCA Tejas). Addressed critical stress corrosion cracking, fatigue crack thresholds, and lithium depletion kinetics.",
+      "tags": [
+        "Al-Li 8090-T851",
+        "AA 7050",
+        "ADA / DRDO",
+        "Aircraft Skin"
+      ]
     },
     {
-      "domain": "Indian Navy • Maritime Warfare",
+      "domain": "Indian Navy \u2022 Maritime Warfare",
       "title": "High-Damping Copper-Manganese Naval Propellers",
       "desc": "Formulated and optimized high-damping <strong>Copper-Manganese (Cu-Mn) alloys</strong> specifically engineered for Indian Naval ship and submarine propeller applications. The alloy provides unmatched acoustic signature reduction, vibration absorption, and cavitation erosion resistance.",
-      "tags": ["Cu-Mn System", "Cavitation Resistance", "Acoustic Damping", "Indian Navy"]
+      "tags": [
+        "Cu-Mn System",
+        "Cavitation Resistance",
+        "Acoustic Damping",
+        "Indian Navy"
+      ]
     },
     {
-      "domain": "Ocean Engineering • Extreme Depths",
+      "domain": "Ocean Engineering \u2022 Extreme Depths",
       "title": "Deep-Sea Ti-6Al-4V at 5,100 Meters",
       "desc": "Conducted benchmark deep-sea exposure trials in the Indian Ocean down to depths of <strong>5,100 meters</strong> under intense hydrostatic pressure, proving zero detectable corrosion in titanium Ti-6Al-4V alloys. Laid the scientific foundation for deep-sea submersibles and ocean mining structures.",
-      "tags": ["Ti-6Al-4V", "Deep-Sea Immunity", "Central Indian Basin", "5,100m Depth"]
+      "tags": [
+        "Ti-6Al-4V",
+        "Deep-Sea Immunity",
+        "Central Indian Basin",
+        "5,100m Depth"
+      ]
     },
     {
-      "domain": "Advanced Diagnostics • Industrial Forensics",
+      "domain": "Advanced Diagnostics \u2022 Industrial Forensics",
       "title": "Industrial Failure Analysis & Forensics",
-      "desc": "Over 40 years as India's foremost independent consultant in forensic engineering and metallurgical failure diagnosis. Consulted on high-pressure steam pipelines, turbine rotor cracking, aerospace landing gears, and chemical reactor vessels.",
-      "tags": ["Failure Analysis", "Forensic Metallurgy", "Fractography", "Industrial Safety"]
+      "desc": "Over 40 years as India\u2019s foremost independent consultant in forensic engineering and metallurgical failure diagnosis. Consulted on high-pressure steam pipelines, turbine rotor cracking, aerospace landing gears, and chemical reactor vessels.",
+      "tags": [
+        "Failure Analysis",
+        "Forensic Metallurgy",
+        "Fractography",
+        "Industrial Safety"
+      ]
     }
   ],
   "industry": {
-    "title": "Pioneering Space & Defense Microelectronics",
-    "subtitle": "Karnataka Hybrid Micro Devices Limited (KHMD) • High-Reliability Electronics",
+    "section_tag": "Corporate Leadership & Space Microelectronics",
+    "title": "Karnataka Hybrid Micro Devices Limited (KHMD)",
+    "subtitle": "CEO & Managing Director since 1990 \u2022 High-Reliability Defense & Space Electronics",
     "desc": "As CEO and Managing Director of KHMD for over two decades, Prof. Dwarakadasa spearheaded the domestic development of space-qualified hybrid microelectronic circuits. Under his leadership, KHMD supplied over 2,000 mission-critical modules directly integrated into ISRO launch vehicles, Chandrayaan lunar payloads, and Indian defense avionics systems.",
     "facility": "Plot No. 104, KIADB Industrial Area, Electronic City Phase 1, Bengaluru 560100"
   },
+  "career": [
+    {
+      "time": "1959 \u2013 1971 \u2022 Academic Formative Years",
+      "title": "B.E., M.Sc.(Engg.), and Ph.D. in Metallurgy at IISc",
+      "inst": "Indian Institute of Science, Bangalore",
+      "desc": "Graduated with B.E.(Met) with Distinction and 3rd rank in 1961. Completed M.Sc.(Engg.) by research in 1966 under Prof. A. A. Krishnan. Earned Ph.D. in 1971 under Prof. K. I. Vasu.",
+      "quote": "Thesis Examiner Commendation: \"The candidate has adopted the most ingenious method of eliminating contact resistance and measuring small values of resistance with great accuracy.\""
+    },
+    {
+      "time": "1972 \u2013 1973 \u2022 Postdoctoral Research Fellow",
+      "title": "University of Maryland, College Park, USA",
+      "inst": "Department of Mechanical Engineering, USA",
+      "desc": "Advanced post-doctoral research in physical metallurgy, strengthening mechanisms, and defect structures in lightweight alloys, collaborating with premier American materials laboratories.",
+      "quote": ""
+    },
+    {
+      "time": "1978 \u2022 1979 \u2022 Advanced Microscopy & Atomic Research",
+      "title": "Philips Application Labs (Netherlands) & BARC Trombay",
+      "inst": "Eindhoven, Netherlands & Bhabha Atomic Research Centre, Mumbai",
+      "desc": "Underwent advanced Transmission Electron Microscopy (TEM) certification at Philips Labs in Eindhoven. Concurrently awarded UGC Senior Research Associateship at BARC Trombay.",
+      "quote": ""
+    },
+    {
+      "time": "1981 \u2013 1983 \u2022 Government of India Deputation",
+      "title": "Professor, University of Technology, Baghdad, Iraq",
+      "inst": "Department of Production and Metallurgy",
+      "desc": "Selected for official deputation by the Government of India to establish and commission an advanced metallurgical research laboratory and postgraduate curriculum in Baghdad.",
+      "quote": ""
+    },
+    {
+      "time": "1987 \u2013 1988 \u2022 Global Visiting Professorships",
+      "title": "JEOL Tokyo, Northeastern University China, & BHUMET Professor",
+      "inst": "Tokyo (Japan), Shenyang (China), and BHU Varanasi",
+      "desc": "Conducted international electron microscopy research and plenary lecture series on advanced crystal defect analysis across East Asia and India.",
+      "quote": ""
+    }
+  ],
+  "endowments": [
+    {
+      "org": "Indian Institute of Science Alumni Association (IIScAA)",
+      "name": "Smt. Shuba & Prof. Eswarahalli Dwarakadasa Young Entrepreneur / Inventor Award",
+      "desc": "Established in 2024 by the IISc Alumni Association in honour of Prof. Dwarakadasa and his wife, Smt. Shuba Dwarakadasa. Recognizes exceptional young innovators and deep-tech entrepreneurs from the IISc ecosystem.",
+      "badge": "First Award Conferred: 2024 \u2022 Annual Recognition"
+    },
+    {
+      "org": "The Electrochemical Society of India (ECSI)",
+      "name": "E S Dwarakadasa Endowment Award",
+      "desc": "Instituted by The Electrochemical Society of India (where Prof. Dwarakadasa served as President) to recognize outstanding young researchers and entrepreneurs in electrochemical science and surface coatings.",
+      "badge": "First Award: 2025/2026 \u2022 ECSI National Award"
+    }
+  ],
+  "awards": [
+    {
+      "year": "Feb 2026",
+      "title": "Lifetime Achievement Award",
+      "authority": "Metal Finishers\u2019 Association of India (MFAI), Bengaluru",
+      "details": "Conferred in recognition of extraordinary lifetime contributions to surface engineering, electrochemical finishing, and protective coating technologies."
+    },
+    {
+      "year": "Dec 2025",
+      "title": "Lifetime Achievement Award",
+      "authority": "Society for Aerospace Technologies and Industries (SIATI)",
+      "details": "Honouring half a century of foundational contributions to India\u2019s aerospace metals, avionics miniaturization, and Light Combat Aircraft alloys."
+    },
+    {
+      "year": "July 2020",
+      "title": "Lifetime Achievement Award",
+      "authority": "The Electrochemical Society of India (ECSI)",
+      "details": "Recognizing preeminent leadership in corrosion science, electrode kinetics, and decades of stewardship as President of ECSI."
+    },
+    {
+      "year": "2014",
+      "title": "1000 Engineers of the World",
+      "authority": "Biographical Society, United Kingdom",
+      "details": "Included in the distinguished global compendium of the world\u2019s top 1,000 leading engineers for transformative metallurgical discoveries."
+    },
+    {
+      "year": "March 2014",
+      "title": "Engineer of the Year",
+      "authority": "The Institution of Engineers (India)",
+      "details": "Conferred for exemplary lifelong dedication to engineering education, advanced materials research, and entrepreneurial ventures in hybrid microdevices."
+    },
+    {
+      "year": "2006 & 2009",
+      "title": "NALCO Gold Medal (Twice Honoured)",
+      "authority": "The Indian Institute of Metals (IIM)",
+      "details": "Awarded for monumental lifetime contributions to aluminium science, bauxite processing, alumina extraction, and high-performance alloy design."
+    }
+  ],
+  "publications": [
+    {
+      "category": "aerospace journal",
+      "type": "Journal Article",
+      "year": "2004",
+      "venue": "Materials Science and Engineering: A \u2022 Vol. 364, Iss. 1-2, pp. 140\u2013150",
+      "title": "Characterisation of PLC band parameters using laser speckle technique",
+      "authors": "Shabadi, R., Kumar, S., Prasad, S. V., & Dwarakadasa, E. S.",
+      "citation": "Shabadi, R., Kumar, S., Prasad, S. V., & Dwarakadasa, E. S. (2004). Characterisation of PLC band parameters using laser speckle technique. Materials Science and Engineering: A, 364(1-2), 140-150.",
+      "badge": "64+ Citations",
+      "abstract": "Non-contact laser speckle interferometry was implemented to map serrated yielding and Portevin-Le Chatelier (PLC) deformation bands in dynamic strain aging of commercial aluminium alloys."
+    },
+    {
+      "category": "aerospace journal",
+      "type": "Defense & Aerospace",
+      "year": "1996",
+      "venue": "Corrosion Science \u2022 Vol. 38, Iss. 8, pp. 1321\u20131334",
+      "title": "Electrochemical and corrosion behavior of Aluminium-Lithium 8090-T851 alloy in aqueous environments",
+      "authors": "Ambat, R., & Dwarakadasa, E. S.",
+      "citation": "Ambat, R., & Dwarakadasa, E. S. (1996). Electrochemical and corrosion behavior of Aluminium-Lithium 8090-T851 alloy in aqueous environments. Corrosion Science, 38(8), 1321-1334.",
+      "badge": "Key LCA Alloy Study",
+      "abstract": "Detailed study of the pitting kinetics and electrochemical polarization behavior of aerospace-grade Al-Li 8090-T851 alloy under various pH regimes, informing airframe design for LCA Tejas."
+    },
+    {
+      "category": "aerospace journal",
+      "type": "Journal Article",
+      "year": "1991",
+      "venue": "Scripta Metallurgica et Materialia \u2022 Vol. 25, pp. 2489\u20132494",
+      "title": "Mechanisms of cleavage during fatigue crack growth in Ti-6Al-4V alloy",
+      "authors": "Ravichandran, K. S., Dwarakadasa, E. S., & Banerjee, D.",
+      "citation": "Ravichandran, K. S., Dwarakadasa, E. S., & Banerjee, D. (1991). Mechanisms of cleavage during fatigue crack growth in Ti-6Al-4V alloy. Scripta Metallurgica et Materialia, 25, 2489-2494.",
+      "badge": "Fatigue Benchmark",
+      "abstract": "Investigation into the crystallographic cleavage aspects of fatigue crack propagation in alpha-beta titanium alloys under cyclic loads."
+    },
+    {
+      "category": "journal",
+      "type": "Journal Article",
+      "year": "1982",
+      "venue": "Wear \u2022 Vol. 82, Iss. 3, pp. 377\u2013386",
+      "title": "Some studies of wear of an Al-Si alloy under dry sliding conditions",
+      "authors": "Dwarakadasa, E. S., & Prasad, S. V.",
+      "citation": "Dwarakadasa, E. S., & Prasad, S. V. (1982). Some studies of wear of an Al-Si alloy under dry sliding conditions. Wear, 82(3), 377-386.",
+      "badge": "Pioneering Wear Study",
+      "abstract": "Examination of friction coefficient, subsurface dislocation structures, and silicon particle comminution in hypereutectic aluminium-silicon alloys."
+    },
+    {
+      "category": "books",
+      "type": "Book & Treatise",
+      "year": "2002",
+      "venue": "Academic Reference Press \u2022 Comprehensive Treatise",
+      "title": "Principles of Modern Extractive Metallurgy and Sustainable Non-Ferrous Processing",
+      "authors": "Dwarakadasa, E. S. (Lead Author & Editor)",
+      "citation": "Dwarakadasa, E. S. (Ed.). (2002). Principles of Modern Extractive Metallurgy and Sustainable Non-Ferrous Processing. Comprehensive Treatise.",
+      "badge": "Authoritative Treatise",
+      "abstract": "Authoritative academic textbook and industry guide addressing pyrometallurgy, hydrometallurgical extraction, clean electrolyte kinetics, and mineral recovery from complex Indian ores."
+    },
+    {
+      "category": "aerospace journal",
+      "type": "Marine Engineering",
+      "year": "1999",
+      "venue": "Journal of Marine Engineering & Corrosion Science \u2022 Benchmark Report",
+      "title": "Immunity and passive film stability of Ti-6Al-4V titanium alloy at 5,100 meters hydrostatic depth in the Indian Ocean",
+      "authors": "Dwarakadasa, E. S., Venkataraman, G., & Sunder, K.",
+      "citation": "Dwarakadasa, E. S., Venkataraman, G., & Sunder, K. (1999). Immunity and passive film stability of Ti-6Al-4V titanium alloy at 5,100 meters hydrostatic depth in the Indian Ocean. Journal of Marine Engineering & Corrosion Science.",
+      "badge": "Deep-Ocean Benchmark",
+      "abstract": "Reports on the deep-ocean retrieval of Ti-6Al-4V specimens anchored at depths of 5,100 meters in the Central Indian Ocean basin."
+    }
+  ],
+  "mentorship": {
+    "section_tag": "Pedagogy & Academic Tree",
+    "title": "Teaching & Mentorship Legacy",
+    "subtitle": "Guiding 28+ Ph.D. scholars and 45+ Master\u2019s researchers who now hold chair professorships, research directorships, and laboratory leads worldwide.",
+    "stats": [
+      {
+        "num": "28+",
+        "lbl": "Doctoral Ph.D. Theses Supervised at IISc"
+      },
+      {
+        "num": "45+",
+        "lbl": "Master\u2019s Theses Directed"
+      },
+      {
+        "num": "1000s",
+        "lbl": "Undergraduate & Graduate Engineers Trained"
+      }
+    ],
+    "alumni": [
+      {
+        "role": "Doctoral Scholar (Ph.D. 1996)",
+        "name": "Prof. Rajan Ambat",
+        "curr": "Professor of Corrosion & Surface Engineering \u2022 Technical University of Denmark (DTU)",
+        "thesis": "Ph.D. Dissertation under Prof. Dwarakadasa on aqueous corrosion and high-temperature oxidation of Al-Li alloys for aerospace structures. Now a leading global authority in surface durability."
+      },
+      {
+        "role": "Doctoral Scholar (Ph.D. 2004)",
+        "name": "Dr. Rajasekhara Shabadi",
+        "curr": "Associate Professor \u2022 University of Lille, France (UMET)",
+        "thesis": "Ph.D. Dissertation under Prof. Dwarakadasa on Portevin-Le Chatelier dynamic strain aging and optical laser speckle characterization. Now leading international phase transformation research in France."
+      }
+    ]
+  },
   "contact": {
     "email": "dwarakadasa@gmail.com",
-    "khmd_address": "Karnataka Hybrid Micro Devices Limited\nPlot No. 104, KIADB Industrial Area, Electronic City Phase 1\nBengaluru, Karnataka 560100, India",
+    "khmd_address": "Plot No. 104, KIADB Industrial Area, Electronic City Phase 1\nBengaluru, Karnataka 560100, India",
     "iisc_address": "Department of Materials Engineering\nIndian Institute of Science (IISc)\nBengaluru, Karnataka 560012, India"
   }
 }

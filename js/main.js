@@ -1005,7 +1005,7 @@ function initInteractiveMap() {
 }
 
 /* --------------------------------------------------------------------------
-   8. Dynamic Content Hydration (Synchronized with Admin Portal)
+   8. Comprehensive Dynamic Content Hydration (Synchronized with Admin Portal)
    -------------------------------------------------------------------------- */
 async function initDynamicContent() {
   const STORAGE_KEY = 'esd_site_content';
@@ -1035,7 +1035,23 @@ async function initDynamicContent() {
 
   if (!content) return;
 
-  // 3. Hydrate Hero Section
+  // 3. Section-Level Visibility Toggles (Hide unneeded sections & navbar links)
+  if (content.sections_visibility && typeof content.sections_visibility === 'object') {
+    Object.keys(content.sections_visibility).forEach(secId => {
+      const isVisible = content.sections_visibility[secId] !== false;
+      const secEl = document.getElementById(secId);
+      if (secEl) {
+        secEl.style.display = isVisible ? '' : 'none';
+      }
+      // Corresponding navbar link
+      const navLink = document.querySelector(`.nav-menu a[href="#${secId}"]`);
+      if (navLink && navLink.closest('li')) {
+        navLink.closest('li').style.display = isVisible ? '' : 'none';
+      }
+    });
+  }
+
+  // 4. Hero Profile & Bio
   if (content.hero) {
     if (content.hero.name) {
       document.querySelectorAll('.hero-name').forEach(el => el.innerHTML = content.hero.name);
@@ -1053,30 +1069,55 @@ async function initDynamicContent() {
       const el = document.querySelector('.hero-live-status span:last-child');
       if (el) el.innerHTML = content.hero.live_status;
     }
+    if (content.hero.badge) {
+      const el = document.querySelector('.hero-badge-floating span');
+      if (el) el.innerHTML = content.hero.badge;
+    }
     if (content.hero.summary) {
       const el = document.querySelector('.hero-summary');
       if (el) el.innerHTML = content.hero.summary;
     }
-  }
 
-  // 4. Hydrate Strategic Stats
-  if (content.stats && Array.isArray(content.stats)) {
-    const statCards = document.querySelectorAll('.strategic-strip .stat-card');
-    content.stats.forEach((st, idx) => {
-      const card = statCards[idx];
-      if (card) {
-        const numEl = card.querySelector('.stat-number');
-        const lblEl = card.querySelector('.stat-label');
-        const subEl = card.querySelector('.stat-sublabel');
-        if (numEl && st.number) numEl.innerHTML = st.number;
-        if (lblEl && st.label) lblEl.innerHTML = st.label;
-        if (subEl && st.sublabel) subEl.innerHTML = st.sublabel;
+    // Role Pills
+    if (Array.isArray(content.hero.role_pills) && content.hero.role_pills.length > 0) {
+      const honorific = document.querySelector('.hero-honorific');
+      if (honorific) {
+        honorific.innerHTML = '';
+        content.hero.role_pills.forEach((pillText, idx) => {
+          const pill = document.createElement('span');
+          pill.className = `role-pill ${idx === 0 ? 'iisc' : idx === 1 ? 'ceo' : 'fellow'}`;
+          pill.innerHTML = pillText;
+          honorific.appendChild(pill);
+        });
       }
-    });
+    }
   }
 
-  // 5. Hydrate About & Heritage
+  // 5. Strategic Stats (Auto-adjusting cards)
+  if (Array.isArray(content.stats) && content.stats.length > 0) {
+    const strip = document.querySelector('.strategic-strip');
+    if (strip) {
+      strip.innerHTML = '';
+      content.stats.forEach((st, idx) => {
+        const card = document.createElement('div');
+        const isGold = idx % 2 === 1;
+        card.className = `stat-card ${isGold ? 'gold-border' : ''}`;
+        card.innerHTML = `
+          <div class="stat-number ${isGold ? 'gold-text' : ''}">${st.number || ''}</div>
+          <div class="stat-label">${st.label || ''}</div>
+          <div class="stat-sublabel">${st.sublabel || ''}</div>
+        `;
+        strip.appendChild(card);
+      });
+    }
+  }
+
+  // 6. About & Heritage
   if (content.about) {
+    if (content.about.section_title) {
+      const el = document.querySelector('#about .section-title');
+      if (el) el.innerHTML = content.about.section_title;
+    }
     if (content.about.section_subtitle) {
       const el = document.querySelector('#about .section-subtitle');
       if (el) el.innerHTML = content.about.section_subtitle;
@@ -1090,32 +1131,261 @@ async function initDynamicContent() {
         heritageParas[2].innerHTML = `"${cleanQuote}"`;
       }
     }
-  }
 
-  // 6. Hydrate Breakthroughs
-  if (content.breakthroughs && Array.isArray(content.breakthroughs)) {
-    const cards = document.querySelectorAll('.breakthrough-card');
-    content.breakthroughs.forEach((bk, idx) => {
-      const card = cards[idx];
-      if (card) {
-        const domEl = card.querySelector('.breakthrough-domain');
-        const titleEl = card.querySelector('.breakthrough-title');
-        const descEl = card.querySelector('.breakthrough-desc');
-        if (domEl && bk.domain) domEl.innerHTML = bk.domain;
-        if (titleEl && bk.title) titleEl.innerHTML = bk.title;
-        if (descEl && bk.desc) descEl.innerHTML = bk.desc;
+    // Family Metrics Boxes
+    if (Array.isArray(content.about.family_metrics) && content.about.family_metrics.length > 0) {
+      const famGrid = document.querySelector('.family-metrics-grid');
+      if (famGrid) {
+        famGrid.innerHTML = '';
+        content.about.family_metrics.forEach(m => {
+          const box = document.createElement('div');
+          box.className = 'family-metric-box';
+          box.innerHTML = `
+            <div class="family-num">${m.num || ''}</div>
+            <div class="family-lbl">${m.lbl || ''}</div>
+          `;
+          famGrid.appendChild(box);
+        });
       }
-    });
+    }
   }
 
-  // 7. Hydrate Contact Info
-  if (content.contact && content.contact.email) {
-    const emailLink = document.querySelector('a[href^="mailto:"]');
-    if (emailLink) {
-      emailLink.href = `mailto:${content.contact.email}`;
-      emailLink.innerHTML = content.contact.email;
+  // 7. Defense Breakthroughs (Auto-adjusting cards)
+  if (Array.isArray(content.breakthroughs) && content.breakthroughs.length > 0) {
+    const bkGrid = document.querySelector('.breakthrough-grid');
+    if (bkGrid) {
+      bkGrid.innerHTML = '';
+      const iconTypes = ['icon-aerospace', 'icon-navy', 'icon-deepsea', 'icon-lab'];
+      content.breakthroughs.forEach((bk, idx) => {
+        const card = document.createElement('div');
+        card.className = 'breakthrough-card';
+        const iconClass = iconTypes[idx % iconTypes.length];
+        const tagsHtml = (bk.tags || []).map(t => `<span class="tech-tag">${t}</span>`).join('');
+        card.innerHTML = `
+          <div class="breakthrough-icon-box ${iconClass}">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <span class="breakthrough-domain">${bk.domain || ''}</span>
+          <h3 class="breakthrough-title">${bk.title || ''}</h3>
+          <p class="breakthrough-desc">${bk.desc || ''}</p>
+          <div class="breakthrough-tags">${tagsHtml}</div>
+        `;
+        bkGrid.appendChild(card);
+      });
+    }
+  }
+
+  // 8. KHMD & Industry
+  if (content.industry) {
+    if (content.industry.title) {
+      const el = document.querySelector('#industry .section-title');
+      if (el) el.innerHTML = content.industry.title;
+    }
+    if (content.industry.subtitle) {
+      const el = document.querySelector('#industry .section-subtitle');
+      if (el) el.innerHTML = content.industry.subtitle;
+    }
+    if (content.industry.desc) {
+      const el = document.querySelector('#industry .industry-overview p') || document.querySelector('#industry p');
+      if (el) el.innerHTML = content.industry.desc;
+    }
+  }
+
+  // 9. Career Timeline (Auto-adjusting nodes)
+  if (Array.isArray(content.career) && content.career.length > 0) {
+    const timelineWrap = document.querySelector('.career-timeline-wrapper');
+    if (timelineWrap) {
+      timelineWrap.innerHTML = '';
+      content.career.forEach((c, idx) => {
+        const isGold = idx % 2 === 0;
+        const node = document.createElement('div');
+        node.className = 'timeline-node';
+        node.innerHTML = `
+          <div class="node-bullet ${isGold ? 'gold' : ''}"></div>
+          <div class="node-card">
+            <div class="node-time ${isGold ? 'gold' : ''}">${c.time || ''}</div>
+            <h3 class="node-title">${c.title || ''}</h3>
+            <div class="node-inst">${c.inst || ''}</div>
+            <p class="node-desc">${c.desc || ''}</p>
+            ${c.quote ? `<div class="node-quote">${c.quote}</div>` : ''}
+          </div>
+        `;
+        timelineWrap.appendChild(node);
+      });
+    }
+  }
+
+  // 10. Endowments & Tributes (Auto-adjusting cards)
+  if (Array.isArray(content.endowments) && content.endowments.length > 0) {
+    const endowGrid = document.querySelector('.endowment-grid');
+    if (endowGrid) {
+      endowGrid.innerHTML = '';
+      content.endowments.forEach(endow => {
+        const card = document.createElement('div');
+        card.className = 'endowment-card';
+        card.innerHTML = `
+          <div class="endowment-org">${endow.org || ''}</div>
+          <h3 class="endowment-name">${endow.name || ''}</h3>
+          <p class="endowment-desc">${endow.desc || ''}</p>
+          ${endow.badge ? `
+          <span class="endowment-badge">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            ${endow.badge}
+          </span>` : ''}
+        `;
+        endowGrid.appendChild(card);
+      });
+    }
+  }
+
+  // 11. Awards & Honors (Auto-adjusting masonry boxes)
+  if (Array.isArray(content.awards) && content.awards.length > 0) {
+    const masonry = document.querySelector('.awards-masonry');
+    if (masonry) {
+      masonry.innerHTML = '';
+      content.awards.forEach(aw => {
+        const box = document.createElement('div');
+        box.className = 'award-box';
+        box.innerHTML = `
+          <div class="award-header-row">
+            <span class="award-year-tag">${aw.year || ''}</span>
+            <svg class="award-icon-gold" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <h3 class="award-heading">${aw.title || ''}</h3>
+          <div class="award-authority">${aw.authority || ''}</div>
+          <p class="award-details">${aw.details || ''}</p>
+        `;
+        masonry.appendChild(box);
+      });
+    }
+  }
+
+  // 12. Publications & Books (Auto-adjusting publication list)
+  if (Array.isArray(content.publications) && content.publications.length > 0) {
+    const pubList = document.getElementById('pub-list');
+    if (pubList) {
+      pubList.innerHTML = '';
+      content.publications.forEach(pub => {
+        const article = document.createElement('article');
+        article.className = 'pub-item';
+        article.setAttribute('data-category', pub.category || 'journal');
+        article.innerHTML = `
+          <div class="pub-meta-row">
+            <span class="pub-type-badge">${pub.type || 'Journal Article'}</span>
+            <span class="pub-year">${pub.year || ''}</span>
+            <span class="pub-venue">${pub.venue || ''}</span>
+          </div>
+          <h3 class="pub-title">${pub.title || ''}</h3>
+          <p class="pub-authors">${pub.authors || ''}</p>
+          <div class="pub-actions">
+            <button class="btn btn-sm btn-outline btn-abstract-toggle">View Abstract</button>
+            <button class="btn btn-sm btn-outline btn-copy-citation" data-citation="${pub.citation || (pub.title + ' (' + pub.year + ')') }">Copy Citation</button>
+            ${pub.badge ? `<span class="btn btn-sm btn-outline" style="cursor: default; opacity: 0.85;">${pub.badge}</span>` : ''}
+          </div>
+          ${pub.abstract ? `
+          <div class="abstract-collapse">
+            <strong>Abstract:</strong> ${pub.abstract}
+          </div>` : ''}
+        `;
+        pubList.appendChild(article);
+      });
+
+      // Re-attach abstract toggle listeners
+      pubList.querySelectorAll('.btn-abstract-toggle').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const pubCard = e.target.closest('.pub-item');
+          const abstractBox = pubCard.querySelector('.abstract-collapse');
+          if (abstractBox) {
+            const isOpen = abstractBox.classList.toggle('open');
+            btn.textContent = isOpen ? 'Hide Abstract' : 'View Abstract';
+          }
+        });
+      });
+
+      // Re-attach citation copy listeners
+      pubList.querySelectorAll('.btn-copy-citation').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const citationText = btn.getAttribute('data-citation');
+          if (citationText) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(citationText).then(() => {
+                showToast('Citation copied to clipboard!');
+              }).catch(() => {
+                alert('Citation: ' + citationText);
+              });
+            } else {
+              alert('Citation: ' + citationText);
+            }
+          }
+        });
+      });
+    }
+  }
+
+  // 13. Mentorship Stats & Alumni
+  if (content.mentorship) {
+    if (Array.isArray(content.mentorship.stats) && content.mentorship.stats.length > 0) {
+      const statsStrip = document.querySelector('.mentorship-stats-strip');
+      if (statsStrip) {
+        statsStrip.innerHTML = '';
+        content.mentorship.stats.forEach(st => {
+          const card = document.createElement('div');
+          card.className = 'mentor-card';
+          card.innerHTML = `
+            <div class="mentor-num">${st.num || ''}</div>
+            <div class="mentor-lbl">${st.lbl || ''}</div>
+          `;
+          statsStrip.appendChild(card);
+        });
+      }
+    }
+
+    if (Array.isArray(content.mentorship.alumni) && content.mentorship.alumni.length > 0) {
+      const alumniGrid = document.querySelector('.alumni-grid');
+      if (alumniGrid) {
+        alumniGrid.innerHTML = '';
+        content.mentorship.alumni.forEach(al => {
+          const card = document.createElement('div');
+          card.className = 'alumni-card';
+          card.innerHTML = `
+            <div class="alumni-role">${al.role || ''}</div>
+            <h3 class="alumni-name">${al.name || ''}</h3>
+            <div class="alumni-curr">${al.curr || ''}</div>
+            <p class="alumni-thesis">${al.thesis || ''}</p>
+          `;
+          alumniGrid.appendChild(card);
+        });
+      }
+    }
+  }
+
+  // 14. Contact Info
+  if (content.contact) {
+    if (content.contact.email) {
+      const emailLink = document.querySelector('a[href^="mailto:"]');
+      if (emailLink) {
+        emailLink.href = `mailto:${content.contact.email}`;
+        emailLink.innerHTML = content.contact.email;
+      }
+    }
+    if (content.contact.khmd_address) {
+      const khmdEl = document.querySelectorAll('.contact-item-val')[0];
+      if (khmdEl) khmdEl.innerHTML = `<strong>Karnataka Hybrid Micro Devices Limited</strong><br>${content.contact.khmd_address.replace(/\n/g, '<br>')}`;
+    }
+    if (content.contact.iisc_address) {
+      const iiscEl = document.querySelectorAll('.contact-item-val')[1];
+      if (iiscEl) iiscEl.innerHTML = `Department of Materials Engineering<br><strong>Indian Institute of Science (IISc)</strong><br>${content.contact.iisc_address.replace(/\n/g, '<br>')}`;
     }
   }
 }
+
 
 
